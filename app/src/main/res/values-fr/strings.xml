@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Blague sonore</string>
+    <string name="string_start">Commencer</string>
+    <string name="string_next">Suivant</string>
+    <string name="string_favourite">Préféré</string>
+    <string name="string_language">Langue</string>
+    <string name="string_rate">Taux</string>
+    <string name="string_about">À propos</string>
+    <string name="string_policy">Politique</string>
+    <string name="string_scary">Effrayant</string>
+
+    <string name="string_fart">Pet</string>
+    <string name="string_hair_clipper">Tondeuse à cheveux</string>
+    <string name="string_air_horn">Avertisseur pneumatique</string>
+    <string name="string_animals">Animaux</string>
+    <string name="string_alarm">Alarme</string>
+    <string name="string_cough">Toux</string>
+    <string name="string_burp">Rot</string>
+    <string name="string_breaking">Rupture</string>
+    <string name="string_meme_sound">Son mème</string>
+    <string name="string_toilet">Toilettes</string>
+    <string name="string_gun">Pistolet</string>
+    <string name="string_bomb">Bombe</string>
+    <string name="string_snoring">Ronflement</string>
+    <string name="string_crying">Pleurs</string>
+    <string name="string_door_bell">Sonnette de porte</string>
+    <string name="string_cat">Chat</string>
+    <string name="string_dog">Chien</string>
+    <string name="string_scissors">Ciseaux</string>
+    <string name="string_sneezing">Éternuer</string>
+    <string name="string_car_horn">Klaxon de voiture</string>
+
+    <string name="string_oh_no">Oh non!</string>
+    <string name="string_please_give_us_some_feedback">Merci de nous faire part de vos commentaires</string>
+    <string name="string_we_like_you_too">Nous vous aimons aussi!</string>
+    <string name="string_thanks_for_your_feedback">Merci pour vos commentaires</string>
+    <string name="string_exit">Sortie</string>
+    <string name="string_the_best_we_can_get">Le meilleur que nous puissions obtenir :)</string>
+    <string name="string_let_us_know_your_experience">Faites nous part de votre expérience. 5 étoiles est le meilleur sur Google Play !</string>
+    <string name="string_do_you_like_the_app">Aimez-vous l\'application?</string>
+    <string name="string_loop">Boucle</string>
+</resources>

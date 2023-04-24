@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">शरारत ध्वनि</string>
+    <string name="string_start">शुरू</string>
+    <string name="string_next">अगला</string>
+    <string name="string_favourite">पसंदीदा</string>
+    <string name="string_language">भाषा</string>
+    <string name="string_rate">दर</string>
+    <string name="string_about">के बारे में</string>
+    <string name="string_policy">नीति</string>
+    <string name="string_scary">डरावना</string>
+
+    <string name="string_fart">अपान वायु</string>
+    <string name="string_hair_clipper">बालो का क्लिप</string>
+    <string name="string_air_horn">हवाई भोंपू</string>
+    <string name="string_animals">जानवरों</string>
+    <string name="string_alarm">खतरे की घंटी</string>
+    <string name="string_cough">खाँसी</string>
+    <string name="string_burp">बर्प</string>
+    <string name="string_breaking">टूटने के</string>
+    <string name="string_meme_sound">मेम ध्वनि</string>
+    <string name="string_toilet">शौचालय</string>
+    <string name="string_gun">बंदूक</string>
+    <string name="string_bomb">बम</string>
+    <string name="string_snoring">खर्राटे</string>
+    <string name="string_crying">रोना</string>
+    <string name="string_door_bell">दरवाजे की घंटी</string>
+    <string name="string_cat">बिल्ली</string>
+    <string name="string_dog">कुत्ता</string>
+    <string name="string_scissors">कैंची</string>
+    <string name="string_sneezing">छींक आना</string>
+    <string name="string_car_horn">कार हार्न</string>
+
+    <string name="string_oh_no">ओह तेरी!</string>
+    <string name="string_please_give_us_some_feedback">कृपया हमें कुछ प्रतिक्रिया दें</string>
+    <string name="string_we_like_you_too">हम भी आपको पसंद करते हैं!</string>
+    <string name="string_thanks_for_your_feedback">आपकी प्रतिक्रिया के लिए धन्यवाद</string>
+    <string name="string_exit">बाहर निकलना</string>
+    <string name="string_the_best_we_can_get">सबसे अच्छा हम प्राप्त कर सकते हैं :)</string>
+    <string name="string_let_us_know_your_experience">हमें अपना अनुभव बताएं। Google Play पर 5 सितारे सर्वश्रेष्ठ हैं!</string>
+    <string name="string_do_you_like_the_app">क्या आपको ऐप पसंद है?</string>
+    <string name="string_loop">कुंडली</string>
+</resources>

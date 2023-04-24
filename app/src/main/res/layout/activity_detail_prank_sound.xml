@@ -1,0 +1,185 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ic_arrow_left"
+        app:layout_constraintBottom_toBottomOf="@id/tv_prank_sound"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_prank_sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/fredoka_one"
+        android:text="Fart 1"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/nunito_sans_extralight"
+        android:text="Set timer for this sound"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/btn_time"
+        app:layout_constraintStart_toEndOf="@id/btn_lock"
+        app:layout_constraintTop_toBottomOf="@id/tv_prank_sound" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/layout_inform_time"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="14dp"
+        android:visibility="gone"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toTopOf="@id/img_sound"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvt">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="7dp">
+
+            <TextView
+                android:id="@+id/tv_inform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_extralight"
+                android:text="The sound will be played in:"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_time"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:fontFamily="@font/nunito_sans_extralight"
+                android:text="0:29"
+                android:textColor="#F5871A"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_inform"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ImageButton
+        android:id="@+id/btn_lock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/ic_time"
+        app:layout_constraintBottom_toBottomOf="@id/tvt"
+        app:layout_constraintEnd_toStartOf="@id/tvt"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_prank_sound"
+        app:layout_constraintTop_toTopOf="@id/tvt" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_time"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/bg_btn_app"
+        android:drawableRight="@drawable/ic_show"
+        android:padding="5dp"
+        android:paddingEnd="10dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvt"
+        app:layout_constraintTop_toBottomOf="@id/tv_prank_sound"
+        app:layout_constraintTop_toTopOf="@id/tvt" />
+
+    <ImageView
+        android:id="@+id/img_sound"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/bg_item_sound"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvt" />
+
+    <ImageButton
+        android:id="@+id/btn_play_or_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_btn_play_pause"
+        android:padding="16dp"
+        android:src="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="@id/img_sound"
+        app:layout_constraintEnd_toEndOf="@id/img_sound"
+        app:layout_constraintStart_toStartOf="@id/img_sound"
+        app:layout_constraintTop_toBottomOf="@id/img_sound" />
+
+    <ImageButton
+        android:id="@+id/btn_favourite"
+        android:layout_width="36dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/ic_favourite_f"
+        app:layout_constraintStart_toStartOf="@id/img_sound"
+        app:layout_constraintTop_toBottomOf="@id/btn_play_or_pause" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_favourite"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/btn_favourite"
+        app:layout_constraintStart_toStartOf="@id/btn_favourite"
+        app:layout_constraintTop_toBottomOf="@id/btn_favourite" />
+
+    <ImageButton
+        android:id="@+id/btn_loop"
+        android:layout_width="36dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/ic_loop_f"
+        app:layout_constraintEnd_toEndOf="@id/img_sound"
+        app:layout_constraintTop_toBottomOf="@id/btn_play_or_pause" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_loop"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/btn_loop"
+        app:layout_constraintStart_toStartOf="@id/btn_loop"
+        app:layout_constraintTop_toBottomOf="@id/btn_loop" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
