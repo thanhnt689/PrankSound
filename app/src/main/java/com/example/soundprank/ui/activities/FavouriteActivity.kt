@@ -14,10 +14,7 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSoundFavourite {
     private lateinit var binding: ActivityFavouriteBinding
     private lateinit var adapter: SoundFavouriteAdapter
     private var sounds = arrayListOf<Sound>(
-        Sound("F1", "", R.drawable.ic_air_horn, true),
-        Sound("F2", "", R.drawable.ic_air_horn, true),
-        Sound("F3", "", R.drawable.ic_air_horn, true),
-        Sound("F4", "", R.drawable.ic_air_horn, true),
+
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
