@@ -77,7 +77,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         if (mMediaState == Const.MEDIA_IDLE || mMediaState == Const.MEDIA_STOP) {
             mediaPlayer.reset()
             if (binding.btnTime.text == "Off") {
-
+                Log.d("ntt", "Loop 1 $loop")
                 mediaPlayer.isLooping = loop
 
                 val descriptor: AssetFileDescriptor =
@@ -100,7 +100,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                 val result = string.filter { it.isDigit() }
 
                 binding.layoutInformTime.visibility = View.VISIBLE
-
+                Log.d("ntt", "Loop 1 $loop")
                 mediaPlayer.isLooping = loop
 
                 val descriptor: AssetFileDescriptor =
@@ -141,10 +141,13 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
         } else if (mMediaState == Const.MEDIA_PLAYING) {
             mediaPlayer.pause()
+            mediaPlayer.isLooping = loop
             checkSoundPlayOrStop(mediaPlayer)
             mMediaState = Const.MEDIA_PAUSE
+
         } else if (mMediaState == Const.MEDIA_PAUSE) {
             mediaPlayer.start()
+            mediaPlayer.isLooping = loop
             checkSoundPlayOrStop(mediaPlayer)
             mMediaState = Const.MEDIA_PLAYING
         }
@@ -154,12 +157,18 @@ class DetailPrankSoundActivity : AppCompatActivity() {
     private fun setLoopSound() {
         if (!loop) {
             binding.btnLoop.background = resources.getDrawable(R.drawable.ic_loop_t)
-            mediaPlayer.
             loop = true
         } else {
             binding.btnLoop.background = resources.getDrawable(R.drawable.ic_loop_f)
+            if (mediaPlayer.isPlaying) {
+                mediaPlayer.pause()
+                checkSoundPlayOrStop(mediaPlayer)
+            }
+
             loop = false
         }
+
+
     }
 
     private fun setFavouriteSound() {
@@ -179,6 +188,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         loadFavourite()
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun loadFavourite() {
         if (sound.favourite) {
             binding.btnFavourite.background = resources.getDrawable(R.drawable.ic_favourite_t)
@@ -195,12 +205,12 @@ class DetailPrankSoundActivity : AppCompatActivity() {
     }
 
     private fun checkSoundPlayOrStop(mediaPlayer: MediaPlayer) {
-        if (mediaPlayer.isPlaying) {
+        mMediaState = if (mediaPlayer.isPlaying) {
             binding.btnPlayOrPause.setImageResource(R.drawable.ic_pause)
-            mMediaState = Const.MEDIA_PLAYING
+            Const.MEDIA_PLAYING
         } else {
             binding.btnPlayOrPause.setImageResource(R.drawable.ic_play)
-            mMediaState = Const.MEDIA_PAUSE
+            Const.MEDIA_PAUSE
         }
         mediaPlayer.setOnCompletionListener {
             binding.btnPlayOrPause.setImageResource(R.drawable.ic_play)
@@ -243,6 +253,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                         binding.layoutInformTime.visibility = View.GONE
                     }
                 }
+
                 "5s" -> {
                     btnTimeOff.background = bgNChoose
                     btnTimeOff.setTextColor(Color.parseColor("#000000"))
@@ -251,6 +262,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                     btnTime15s.background = bgNChoose
                     btnTime30s.background = bgNChoose
                 }
+
                 "10s" -> {
                     btnTimeOff.setTextColor(Color.parseColor("#000000"))
                     btnTimeOff.background = bgNChoose
@@ -259,6 +271,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                     btnTime15s.background = bgNChoose
                     btnTime30s.background = bgNChoose
                 }
+
                 "15s" -> {
                     btnTimeOff.setTextColor(Color.parseColor("#000000"))
                     btnTimeOff.background = bgNChoose
@@ -267,6 +280,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                     btnTime15s.background = bgChoose
                     btnTime30s.background = bgNChoose
                 }
+
                 "30s" -> {
                     btnTimeOff.setTextColor(Color.parseColor("#000000"))
                     btnTimeOff.background = bgNChoose
