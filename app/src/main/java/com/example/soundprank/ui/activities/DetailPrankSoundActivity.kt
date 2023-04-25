@@ -117,8 +117,6 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
                 mediaPlayer.prepare()
 
-                //mediaPlayer.isLooping = loop
-
                 val timer = object : CountDownTimer((result.toInt() * 1000).toLong(), 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val timeText = String.format(

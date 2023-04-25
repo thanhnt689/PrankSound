@@ -25,4 +25,7 @@ interface SoundDAO {
     @Query("SELECT * FROM sound WHERE _path=:path")
     suspend fun getSoundByPath(path: String): Sound
 
+    @Query("SELECT * FROM sound WHERE _favourite = '1'")
+    fun getListSoundFavourite(): LiveData<List<Sound>>
+
 }

@@ -24,7 +24,6 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
     private lateinit var binding: ActivitySoundBinding
     private lateinit var soundPrank: SoundPrank
     private lateinit var adapter: SoundAdapter
-    private val sounds: ArrayList<Sound> = arrayListOf()
 
     private val viewModel: SoundViewModel by viewModels() {
         SoundViewModelFactory(application)
@@ -50,7 +49,6 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
                     list.add(sound)
                 }
             }
-            Log.d("ntt", sounds.toString())
             binding.tvPrankSound.text = soundPrank.name
             adapter = SoundAdapter(list, this)
             binding.rvSoundPrank.adapter = adapter

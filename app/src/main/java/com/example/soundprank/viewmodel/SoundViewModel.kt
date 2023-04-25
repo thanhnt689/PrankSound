@@ -18,6 +18,8 @@ class SoundViewModel(private val app: Application) : ViewModel() {
 
     val sounds = soundRepository.getAllSound()
 
+    val soundFavourite = soundRepository.getListSoundFavourite()
+
     fun insertSound(sound: Sound) {
         viewModelScope.launch(Dispatchers.IO) {
             soundRepository.insertSound(sound)

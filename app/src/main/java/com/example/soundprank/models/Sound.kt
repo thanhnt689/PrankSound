@@ -17,5 +17,5 @@ data class Sound(
     @ColumnInfo(name = "_image")
     var image: Int,
     @ColumnInfo(name = "_favourite")
-    var favourite: Boolean,
+    var favourite: Boolean
 ) : Serializable

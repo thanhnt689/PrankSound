@@ -1,18 +1,26 @@
 package com.example.soundprank.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.soundprank.callback.OnClickItemSoundFavourite
+import com.example.soundprank.callback.OnClickCbSound
+import com.example.soundprank.callback.OnClickItemSound
 import com.example.soundprank.databinding.LayoutItemSoundFavouriteBinding
 import com.example.soundprank.models.Sound
 
 class SoundFavouriteAdapter(
     private val soundFavourites: ArrayList<Sound>,
-    private val onClickItemSoundFavourite: OnClickItemSoundFavourite
+    private val onClickItemSound: OnClickItemSound,
+    private val onClickCbSound: OnClickCbSound
 ) :
     RecyclerView.Adapter<SoundFavouriteAdapter.ViewHolder>() {
+
+    var showCheckBox = false
+
+    var checkAll = false
+
     class ViewHolder(val binding: LayoutItemSoundFavouriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(sound: Sound) {
@@ -24,6 +32,7 @@ class SoundFavouriteAdapter(
                 .into(binding.imgSound)
 
             binding.tvSoundName.isSelected = true
+
         }
 
     }
@@ -46,12 +55,33 @@ class SoundFavouriteAdapter(
         holder.bind(soundFavourites[position])
         holder.binding.checkBox.setOnCheckedChangeListener { compoundButton, b ->
             if (b) {
-                onClickItemSoundFavourite.onClickItemSoundFavourite(soundFavourites[position])
+                onClickCbSound.onClickCbSound(true)
+            } else {
+                onClickCbSound.onClickCbSound(false)
             }
-        }
-        holder.binding.root.setOnClickListener {
 
         }
+        holder.binding.root.setOnClickListener {
+            onClickItemSound.onCLickItemSound(soundFavourites[position])
+        }
+
+        if (showCheckBox) {
+            holder.binding.checkBox.visibility = View.VISIBLE
+        } else {
+            holder.binding.checkBox.visibility = View.GONE
+        }
+
+        holder.binding.checkBox.isChecked = checkAll
+    }
+
+    fun setShowOrHideCheckBox(check: Boolean) {
+        showCheckBox = check
+        notifyDataSetChanged()
+    }
+
+    fun setCheckBoxAll(sCheckAll: Boolean) {
+        checkAll = sCheckAll
+        notifyDataSetChanged()
     }
 
 }

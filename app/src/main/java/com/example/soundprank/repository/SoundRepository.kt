@@ -21,6 +21,10 @@ class SoundRepository(private val soundDAO: SoundDAO) {
         return soundDAO.getAllSound()
     }
 
+    fun getListSoundFavourite(): LiveData<List<Sound>> {
+        return soundDAO.getListSoundFavourite()
+    }
+
     suspend fun checkExist(path: String): Boolean {
         return soundDAO.exists(path)
     }
