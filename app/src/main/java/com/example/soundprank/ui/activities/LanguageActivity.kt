@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,15 +53,25 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
     }
 
     private fun clickButtonDone() {
-        val localeHelper = LocaleHelper()
-        val editor: SharedPreferences.Editor =
-            getSharedPreferences("MY_PRE", Context.MODE_PRIVATE).edit()
-        editor.putBoolean("openLanguage", true)
-        editor.apply()
-        mLanguage?.let { localeHelper.setPreLanguage(this@LanguageActivity, it.languageCode) }
-        localeHelper.setLanguage(this)
-        val intent = Intent(this, HomeScreenActivity::class.java)
-        startActivity(intent)
+//        val localeHelper = LocaleHelper()
+//        val editor: SharedPreferences.Editor =
+//            getSharedPreferences("MY_PRE", Context.MODE_PRIVATE).edit()
+//        editor.putBoolean("openLanguage", true)
+//        editor.apply()
+
+        if (mLanguage == null) {
+            Toast.makeText(this, "Please select language", Toast.LENGTH_SHORT).show()
+        } else {
+            val localeHelper = LocaleHelper()
+            val editor: SharedPreferences.Editor =
+                getSharedPreferences("MY_PRE", Context.MODE_PRIVATE).edit()
+            editor.putBoolean("openLanguage", true)
+            editor.apply()
+            mLanguage?.let { localeHelper.setPreLanguage(this@LanguageActivity, it.languageCode) }
+            localeHelper.setLanguage(this)
+            val intent = Intent(this, HomeScreenActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onClick(language: Language) {
@@ -72,16 +83,14 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
         val languages: MutableList<Language> = ArrayList()
         val localeHelper = LocaleHelper()
         val key: String = localeHelper.getLanguage(this).toString()
-
+        Log.d("ntt", key)
         languages.add(Language(R.drawable.language_english, "English", "en", false))
         languages.add(Language(R.drawable.language_spanish, "Spanish", "es", false))
         languages.add(Language(R.drawable.language_french, "French", "fr", false))
         languages.add(Language(R.drawable.language_hindi, "Hindi", "hi", false))
         languages.add(Language(R.drawable.language_portuguese, "Portuguese", "pt", false))
 
-        var lang = "en"
-
-        lang = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        val lang = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Resources.getSystem().configuration.locales[0].language
         } else {
             Resources.getSystem().configuration.locale.language
@@ -92,16 +101,19 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
                 count++
             }
         }
-        if (count == 0) {
-            mLanguage = Language(R.drawable.language_english, "English", "en", false)
-            adapter?.setSelectLanguage(mLanguage!!)
-        }
-        Log.e("", "setLanguageDefault: $key")
+//        if (count == 0) {
+//            Toast.makeText(this,"Please select language",Toast.LENGTH_SHORT).show()
+//            mLanguage = Language(R.drawable.language_english, "English", "en", false)
+//            adapter?.setSelectLanguage(mLanguage!!)
+//        }
+
         for (i in languages.indices) {
             if (key == languages[i].languageCode) {
                 languages[i].isSelected = true
             }
         }
+        adapter?.setSelectLanguage(mLanguage!!)
+
         return languages
     }
 }

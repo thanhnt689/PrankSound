@@ -37,32 +37,30 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
 
         soundPrank = intent.getSerializableExtra("sound_prank") as SoundPrank
 
-        lifecycleScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch(Dispatchers.IO) {
             listAssetFile(soundPrank.path)
         }
 
         viewModel.sounds.observe(this) {
-            for (sound: Sound in it){
-                if(sound.path == soundPrank.path){
-                    sounds.add(sound)
+            Log.d("ntt", it.toString())
+            val list = arrayListOf<Sound>()
+
+            for (sound: Sound in it) {
+                if (sound.folder == soundPrank.path) {
+                    list.add(sound)
                 }
             }
-
+            Log.d("ntt", sounds.toString())
             binding.tvPrankSound.text = soundPrank.name
-            adapter = SoundAdapter(sounds, this)
+            adapter = SoundAdapter(list, this)
             binding.rvSoundPrank.adapter = adapter
             binding.rvSoundPrank.layoutManager = GridLayoutManager(this, 2)
-        }
 
+        }
 
         binding.btnBack.setOnClickListener {
             finish()
         }
-
-//        binding.tvPrankSound.text = soundPrank.name
-//        adapter = SoundAdapter(sounds, this)
-//        binding.rvSoundPrank.adapter = adapter
-//        binding.rvSoundPrank.layoutManager = GridLayoutManager(this, 2)
 
     }
 
@@ -71,7 +69,6 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
         val bundle = Bundle()
         bundle.putSerializable("sound", sound)
         intent.putExtras(bundle)
-        intent.putExtra("soundPrank", soundPrank.name.lowercase())
         startActivity(intent)
     }
 
@@ -88,18 +85,22 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
                             Sound(
                                 name = "${soundPrank.name} ${list.indexOf(file)}",
                                 path = file,
+                                folder = soundPrank.path,
                                 image = soundPrank.image,
                                 favourite = false
                             )
                         )
-//                        sounds.add(
-//                            Sound(
-//                                name = "${soundPrank.name} ${list.indexOf(file)}",
-//                                path = file,
-//                                image = soundPrank.image,
-//                                favourite = false
-//                            )
-//                        )
+                    } else {
+                        val sound = viewModel.getSoundByPath(file)
+                        viewModel.updateSound(
+                            Sound(
+                                name = "${soundPrank.name} ${list.indexOf(file)}",
+                                path = sound.path,
+                                folder = sound.folder,
+                                image = sound.image,
+                                favourite = sound.favourite
+                            )
+                        )
                     }
                     if (file.indexOf(".") < 0) { // <<-- check if filename has a . then it is a file - hopefully directory names dont have .
                         if (path == "") {

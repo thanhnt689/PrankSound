@@ -46,7 +46,6 @@ class LanguageAdapter(
     @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(languages[position])
-        // holder.binding.rbLanguage.isChecked = position == selectedPosition
         holder.binding.rbLanguage.setOnCheckedChangeListener { compoundButton, b ->
             if (b) {
                 selectedPosition = holder.adapterPosition

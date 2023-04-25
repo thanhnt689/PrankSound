@@ -13,7 +13,7 @@ class SoundRepository(private val soundDAO: SoundDAO) {
         soundDAO.updateSound(sound)
     }
 
-    suspend fun deleteSoundByPath(path:String) {
+    suspend fun deleteSoundByPath(path: String) {
         soundDAO.deleteSoundByPath(path)
     }
 
@@ -21,7 +21,11 @@ class SoundRepository(private val soundDAO: SoundDAO) {
         return soundDAO.getAllSound()
     }
 
-    fun checkExist(path: String): Boolean {
+    suspend fun checkExist(path: String): Boolean {
         return soundDAO.exists(path)
+    }
+
+    suspend fun getSoundByPath(path: String): Sound {
+        return soundDAO.getSoundByPath(path)
     }
 }

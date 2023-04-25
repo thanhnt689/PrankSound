@@ -9,21 +9,12 @@ class MyViewModel : ViewModel() {
     val time: LiveData<String>
         get() = _time
 
-    private val _loop = MutableLiveData<Boolean>()
-    val loop: LiveData<Boolean>
-        get() = _loop
-
-
     init {
         _time.postValue("Off")
-        _loop.postValue(false)
     }
 
     fun setValueTime(time: String) {
         _time.postValue(time)
     }
 
-    fun setValueLoop(loop: Boolean) {
-        _loop.postValue(loop)
-    }
 }

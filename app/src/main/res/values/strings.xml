@@ -40,12 +40,12 @@
     <string name="string_do_you_like_the_app">Do you like the app?</string>
     <string name="string_loop">Loop</string>
 
-    <array name="time">
-        <item>Off</item>
-        <item>5s</item>
-        <item>10s</item>
-        <item>15s</item>
-        <item>30s</item>
-    </array>
+    <string name="string_off">Off</string>
+    <string name="string_5s">5s</string>
+    <string name="string_10s">10s</string>
+    <string name="string_15s">15s</string>
+    <string name="string_30s">30s</string>
+    <string name="string_set_timer_for_this_sound">Set timer for this sound</string>
+
 </resources>
 

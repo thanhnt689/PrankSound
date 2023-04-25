@@ -1,6 +1,7 @@
 package com.example.soundprank.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.soundprank.db.SoundDatabase
@@ -42,5 +43,11 @@ class SoundViewModel(private val app: Application) : ViewModel() {
         return exist.await()
     }
 
+    suspend fun getSoundByPath(path: String): Sound {
+        val sound = viewModelScope.async(Dispatchers.IO) {
+            soundRepository.getSoundByPath(path)
+        }
 
+        return sound.await()
+    }
 }

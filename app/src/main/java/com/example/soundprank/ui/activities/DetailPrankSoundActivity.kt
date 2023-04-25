@@ -14,6 +14,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -22,11 +23,18 @@ import com.example.soundprank.databinding.ActivityDetailPrankSoundBinding
 import com.example.soundprank.models.Sound
 import com.example.soundprank.utils.Const
 import com.example.soundprank.viewmodel.MyViewModel
+import com.example.soundprank.viewmodel.SoundViewModel
+import com.example.soundprank.viewmodel.SoundViewModelFactory
 import java.util.concurrent.TimeUnit
 
 class DetailPrankSoundActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailPrankSoundBinding
+
     private lateinit var viewModel: MyViewModel
+
+    private val soundViewModel: SoundViewModel by viewModels() {
+        SoundViewModelFactory(application)
+    }
     private lateinit var sound: Sound
     private var nameSoundPrank: String = ""
     private var loop: Boolean = false
@@ -40,11 +48,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
         sound = intent.getSerializableExtra("sound") as Sound
 
-        nameSoundPrank = intent.getStringExtra("soundPrank").toString()
-
         init()
-
-        viewModel = ViewModelProvider(this)[MyViewModel::class.java]
 
         binding.btnTime.setOnClickListener {
             showDialogChooseTime()
@@ -73,15 +77,14 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
     private fun playSound(loop: Boolean) {
         Log.d("ntt", "Loop $loop")
-//        mediaPlayer.isLooping = loop
         if (mMediaState == Const.MEDIA_IDLE || mMediaState == Const.MEDIA_STOP) {
             mediaPlayer.reset()
-            if (binding.btnTime.text == "Off") {
+            if (binding.btnTime.text == getString(R.string.string_off)) {
                 Log.d("ntt", "Loop 1 $loop")
                 mediaPlayer.isLooping = loop
 
                 val descriptor: AssetFileDescriptor =
-                    this.assets.openFd("${nameSoundPrank}/${sound.path}")
+                    this.assets.openFd("${sound.folder}/${sound.path}")
                 mediaPlayer.setDataSource(
                     descriptor.fileDescriptor,
                     descriptor.startOffset,
@@ -104,7 +107,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                 mediaPlayer.isLooping = loop
 
                 val descriptor: AssetFileDescriptor =
-                    this.assets.openFd("${nameSoundPrank}/${sound.path}")
+                    this.assets.openFd("${sound.folder}/${sound.path}")
                 mediaPlayer.setDataSource(
                     descriptor.fileDescriptor,
                     descriptor.startOffset,
@@ -160,6 +163,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
             loop = true
         } else {
             binding.btnLoop.background = resources.getDrawable(R.drawable.ic_loop_f)
+
             if (mediaPlayer.isPlaying) {
                 mediaPlayer.pause()
                 checkSoundPlayOrStop(mediaPlayer)
@@ -168,22 +172,33 @@ class DetailPrankSoundActivity : AppCompatActivity() {
             loop = false
         }
 
-
     }
 
     private fun setFavouriteSound() {
         sound.favourite = !sound.favourite
+
+        soundViewModel.updateSound(
+            Sound(sound.name, sound.path, sound.folder, sound.image, sound.favourite)
+        )
+
         loadFavourite()
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun init() {
+
+        viewModel = ViewModelProvider(this)[MyViewModel::class.java]
+
         Glide.with(binding.imgSound)
             .load(sound.image)
             .centerCrop()
             .into(binding.imgSound)
 
         binding.tvPrankSound.text = sound.name
+
+        binding.tvt.isSelected = true
+
+        viewModel.setValueTime(getString(R.string.string_off))
 
         loadFavourite()
     }
@@ -243,7 +258,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
         viewModel.time.observe(this) {
             when (it) {
-                "Off" -> {
+                getString(R.string.string_off) -> {
                     btnTimeOff.background = bgChoose
                     btnTime5s.background = bgNChoose
                     btnTime10s.background = bgNChoose
@@ -254,7 +269,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                     }
                 }
 
-                "5s" -> {
+                getString(R.string.string_5s) -> {
                     btnTimeOff.background = bgNChoose
                     btnTimeOff.setTextColor(Color.parseColor("#000000"))
                     btnTime5s.background = bgChoose
@@ -263,7 +278,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                     btnTime30s.background = bgNChoose
                 }
 
-                "10s" -> {
+                getString(R.string.string_10s) -> {
                     btnTimeOff.setTextColor(Color.parseColor("#000000"))
                     btnTimeOff.background = bgNChoose
                     btnTime5s.background = bgNChoose
@@ -272,7 +287,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                     btnTime30s.background = bgNChoose
                 }
 
-                "15s" -> {
+                getString(R.string.string_15s) -> {
                     btnTimeOff.setTextColor(Color.parseColor("#000000"))
                     btnTimeOff.background = bgNChoose
                     btnTime5s.background = bgNChoose
@@ -281,7 +296,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                     btnTime30s.background = bgNChoose
                 }
 
-                "30s" -> {
+                getString(R.string.string_30s) -> {
                     btnTimeOff.setTextColor(Color.parseColor("#000000"))
                     btnTimeOff.background = bgNChoose
                     btnTime5s.background = bgNChoose
@@ -297,27 +312,27 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         }
 
         btnTimeOff.setOnClickListener {
-            viewModel.setValueTime("Off")
+            viewModel.setValueTime(getString(R.string.string_off))
             dialog.dismiss()
         }
 
         btnTime5s.setOnClickListener {
-            viewModel.setValueTime("5s")
+            viewModel.setValueTime(getString(R.string.string_5s))
             dialog.dismiss()
         }
 
         btnTime10s.setOnClickListener {
-            viewModel.setValueTime("10s")
+            viewModel.setValueTime(getString(R.string.string_10s))
             dialog.dismiss()
         }
 
         btnTime15s.setOnClickListener {
-            viewModel.setValueTime("15s")
+            viewModel.setValueTime(getString(R.string.string_15s))
             dialog.dismiss()
         }
 
         btnTime30s.setOnClickListener {
-            viewModel.setValueTime("30s")
+            viewModel.setValueTime(getString(R.string.string_30s))
             dialog.dismiss()
         }
         dialog.show()
