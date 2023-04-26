@@ -70,6 +70,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 }
             })
         } catch (exception: Exception) {
+            Log.d("ntt",exception.toString())
         }
     }
 }

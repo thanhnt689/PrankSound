@@ -130,6 +130,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                                     )
                         );
                         binding.tvTime.text = timeText
+
                     }
 
                     override fun onFinish() {
