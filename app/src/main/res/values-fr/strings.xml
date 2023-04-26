@@ -47,4 +47,9 @@
     <string name="string_15s">15s</string>
     <string name="string_30s">30s</string>
     <string name="string_set_timer_for_this_sound">Régler la minuterie pour ce son</string>
+
+    <string name="string_select_all">Tout sélectionner</string>
+    <string name="string_remove_all">Enlever tout</string>
+    <string name="string_no_favourite_yet">Pas encore de favori</string>
+    <string name="string_remove_from_favourite">Supprimer des favoris</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.soundprank.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,14 +54,16 @@ class SoundFavouriteAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(soundFavourites[position])
+
+        holder.binding.checkBox.isChecked = checkAll
+
         holder.binding.checkBox.setOnCheckedChangeListener { compoundButton, b ->
-            if (b) {
-                onClickCbSound.onClickCbSound(true)
-            } else {
-                onClickCbSound.onClickCbSound(false)
-            }
+
+            onClickCbSound.onClickCbSound(b, soundFavourites[position])
 
         }
+
+
         holder.binding.root.setOnClickListener {
             onClickItemSound.onCLickItemSound(soundFavourites[position])
         }
@@ -71,7 +74,6 @@ class SoundFavouriteAdapter(
             holder.binding.checkBox.visibility = View.GONE
         }
 
-        holder.binding.checkBox.isChecked = checkAll
     }
 
     fun setShowOrHideCheckBox(check: Boolean) {

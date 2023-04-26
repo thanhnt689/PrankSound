@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.soundprank.R
 import com.example.soundprank.adapters.SoundFavouriteAdapter
 import com.example.soundprank.callback.OnClickCbSound
 import com.example.soundprank.callback.OnClickItemSound
@@ -19,13 +20,16 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
 
     private lateinit var binding: ActivityFavouriteBinding
     private lateinit var adapter: SoundFavouriteAdapter
+
     private var show = false
+
     private var showAll = false
+
+    private var listSoundCheck = arrayListOf<Sound>()
 
     private val soundViewModel: SoundViewModel by viewModels() {
         SoundViewModelFactory(application)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +44,7 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
 
         binding.btnCheck.setOnClickListener {
             show = !show
-            adapter.setShowOrHideCheckBox(show)
+            adapter.setShowOrHideCheckBox(true)
             binding.btnRemoveAll.visibility = View.GONE
             binding.btnSelectAll.visibility = View.VISIBLE
             binding.btnCheck.visibility = View.GONE
@@ -48,13 +52,38 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
 
         binding.btnSelectAll.setOnClickListener {
             showAll = !showAll
-            adapter.setCheckBoxAll(show)
-            binding.btnCheck.visibility = View.GONE
+
+            if (showAll) {
+                binding.btnSelectAll.text = getString(R.string.string_remove_all)
+            } else {
+                binding.btnSelectAll.text = getString(R.string.string_select_all)
+            }
+
+            adapter.setCheckBoxAll(showAll)
             binding.btnRemoveAll.visibility = View.VISIBLE
+        }
+
+        binding.btnRemoveAll.setOnClickListener {
+            for (sound: Sound in listSoundCheck) {
+                soundViewModel.updateSound(
+                    Sound(
+                        sound.name,
+                        sound.path,
+                        sound.folder,
+                        sound.image,
+                        false
+                    )
+                )
+            }
+
+            binding.btnSelectAll.visibility = View.GONE
+            binding.btnCheck.visibility = View.VISIBLE
+            binding.btnRemoveAll.visibility = View.GONE
         }
     }
 
     private fun init() {
+
         soundViewModel.soundFavourite.observe(this) {
             Log.d("ntt", it.toString())
             val listSoundFavourite = arrayListOf<Sound>()
@@ -63,7 +92,21 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
             binding.rvSoundPrank.adapter = adapter
             binding.rvSoundPrank.layoutManager =
                 GridLayoutManager(this, 2)
+
+            if (it.isEmpty()) {
+                binding.layoutNoFavourite.visibility = View.VISIBLE
+                binding.btnRemoveAll.visibility = View.GONE
+                binding.btnCheck.visibility = View.GONE
+                binding.btnSelectAll.visibility = View.GONE
+            }
+
+            if (it.isNotEmpty()) {
+                binding.layoutNoFavourite.visibility = View.GONE
+            }
         }
+
+        binding.btnSelectAll.isSelected = true
+        binding.tvNoFavouriteYet.isSelected = true
     }
 
     override fun onCLickItemSound(sound: Sound) {
@@ -74,11 +117,20 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
         startActivity(intent)
     }
 
-    override fun onClickCbSound(check: Boolean) {
+    override fun onClickCbSound(check: Boolean, sound: Sound) {
         if (check) {
-            binding.btnRemoveAll.visibility = View.VISIBLE
+            listSoundCheck.add(sound)
         } else {
+            listSoundCheck.remove(sound)
+        }
+
+        Log.d("ntt", listSoundCheck.toString())
+
+        if (listSoundCheck.isEmpty()) {
             binding.btnRemoveAll.visibility = View.GONE
+        } else {
+            binding.btnRemoveAll.visibility = View.VISIBLE
         }
     }
+
 }

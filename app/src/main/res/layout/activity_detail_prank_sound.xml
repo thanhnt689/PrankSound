@@ -31,7 +31,7 @@
 
     <TextView
         android:id="@+id/tvt"
-        android:layout_width="200dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/nunito_sans_extralight"
@@ -115,7 +115,7 @@
         android:id="@+id/btn_time"
         android:layout_width="80dp"
         android:layout_height="30dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/bg_btn_app"
         android:drawableRight="@drawable/ic_show"
         android:padding="5dp"

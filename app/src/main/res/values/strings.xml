@@ -47,5 +47,10 @@
     <string name="string_30s">30s</string>
     <string name="string_set_timer_for_this_sound">Set timer for this sound</string>
 
+    <string name="string_select_all">Select all</string>
+    <string name="string_remove_all">Remove all</string>
+    <string name="string_no_favourite_yet">No favourite yet</string>
+    <string name="string_remove_from_favourite">Remove from favourite</string>
+
 </resources>
 

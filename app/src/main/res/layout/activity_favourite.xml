@@ -42,14 +42,20 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_select_all"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:background="@android:color/transparent"
-        android:text="Select all"
-        android:textSize="18sp"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="@string/string_select_all"
         android:textAllCaps="false"
+        android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,6 +72,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_prank_sound" />
 
+    <LinearLayout
+        android:id="@+id/layout_no_favourite"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_favourite_n" />
+
+        <TextView
+            android:id="@+id/tv_no_favourite_yet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/fredoka_one"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/string_no_favourite_yet"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+    </LinearLayout>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_remove_all"
         android:layout_width="0dp"
@@ -75,7 +116,7 @@
         android:layout_marginBottom="24dp"
         android:background="@drawable/bg_btn_app"
         android:fontFamily="@font/fredoka_one"
-        android:text="Remove from favourite"
+        android:text="@string/string_remove_from_favourite"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:visibility="gone"
