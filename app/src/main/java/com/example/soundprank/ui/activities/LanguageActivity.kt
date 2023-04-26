@@ -78,7 +78,6 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
         val languages: MutableList<Language> = ArrayList()
         val localeHelper = LocaleHelper()
         val key: String = localeHelper.getLanguage(this).toString()
-        Log.d("ntt", key)
 
         when (key) {
             "en" -> mLanguage = Language(R.drawable.language_english, "English", "en", false)

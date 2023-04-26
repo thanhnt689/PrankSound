@@ -47,6 +47,10 @@ class LanguageAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(languages[position])
 
+        holder.binding.rbLanguage.setOnClickListener {
+            onClickItemLanguage.onClick(languages[position])
+        }
+
         holder.binding.root.setOnClickListener {
             onClickItemLanguage.onClick(languages[position])
         }
