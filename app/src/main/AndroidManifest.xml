@@ -17,15 +17,16 @@
         android:theme="@style/Theme.SoundPrank"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.AboutActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.SplashScreenActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.activities.DetailPrankSoundActivity"
@@ -41,10 +42,7 @@
             android:exported="true" />
         <activity
             android:name=".ui.activities.IntroActivity"
-            android:exported="true">
-
-        </activity>
-
+            android:exported="true"></activity>
         <activity
             android:name=".ui.activities.FavouriteActivity"
             android:exported="true" />
@@ -52,11 +50,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />
-
     </application>
 
 </manifest>

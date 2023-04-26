@@ -125,8 +125,8 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
             }
 
             R.id.menu_about -> {
-//                val intent = Intent(this, MiniGameActivity::class.java)
-//                startActivity(intent)
+                val intent = Intent(this, AboutActivity::class.java)
+                startActivity(intent)
                 true
             }
 
