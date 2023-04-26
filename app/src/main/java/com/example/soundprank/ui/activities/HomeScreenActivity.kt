@@ -112,25 +112,30 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                 startActivity(intent)
                 true
             }
+
             R.id.menu_language -> {
                 val intent = Intent(this, LanguageActivity::class.java)
                 startActivity(intent)
                 true
             }
+
             R.id.menu_rate -> {
                 openRatingDialog()
                 true
             }
+
             R.id.menu_about -> {
 //                val intent = Intent(this, MiniGameActivity::class.java)
 //                startActivity(intent)
                 true
             }
+
             R.id.menu_policy -> {
 //                val intent = Intent(this, MiniGameActivity::class.java)
 //                startActivity(intent)
                 true
             }
+
             else -> throw IllegalArgumentException()
         }
     }
@@ -160,11 +165,18 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         ratingBar.onRatingBarChangeListener =
             RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
                 when (ratingBar?.rating.toString()) {
+                    "0.0" -> {
+                        tvTitle.text = getString(R.string.string_do_you_like_the_app)
+                        tvContent.text = getString(R.string.string_let_us_know_your_experience)
+                        imgIcon.setImageResource(R.drawable.rate_0)
+                    }
+
                     "1.0" -> {
                         tvTitle.text = getString(R.string.string_oh_no)
                         tvContent.text = getString(R.string.string_please_give_us_some_feedback)
                         imgIcon.setImageResource(R.drawable.rate_1)
                     }
+
                     "2.0" -> {
                         tvTitle.text = getString(R.string.string_oh_no)
                         tvContent.text = getString(R.string.string_please_give_us_some_feedback)
@@ -176,11 +188,13 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                         tvContent.text = getString(R.string.string_please_give_us_some_feedback)
                         imgIcon.setImageResource(R.drawable.rate_3)
                     }
+
                     "4.0" -> {
                         tvTitle.text = getString(R.string.string_we_like_you_too)
                         tvContent.text = getString(R.string.string_thanks_for_your_feedback)
                         imgIcon.setImageResource(R.drawable.rate_4)
                     }
+
                     "5.0" -> {
                         tvTitle.text = getString(R.string.string_we_like_you_too)
                         tvContent.text = getString(R.string.string_thanks_for_your_feedback)
@@ -190,7 +204,7 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
             }
 
         btnRate.setOnClickListener {
-            if (ratingBar.rating.toString() == "0") {
+            if (ratingBar.rating.toString() == "0.0") {
                 Toast.makeText(
                     this,
                     "Please feedback",

@@ -53,11 +53,6 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
     }
 
     private fun clickButtonDone() {
-//        val localeHelper = LocaleHelper()
-//        val editor: SharedPreferences.Editor =
-//            getSharedPreferences("MY_PRE", Context.MODE_PRIVATE).edit()
-//        editor.putBoolean("openLanguage", true)
-//        editor.apply()
 
         if (mLanguage == null) {
             Toast.makeText(this, "Please select language", Toast.LENGTH_SHORT).show()
@@ -84,28 +79,20 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
         val localeHelper = LocaleHelper()
         val key: String = localeHelper.getLanguage(this).toString()
         Log.d("ntt", key)
+
+        when (key) {
+            "en" -> mLanguage = Language(R.drawable.language_english, "English", "en", false)
+            "es" -> mLanguage = Language(R.drawable.language_spanish, "Spanish", "es", false)
+            "fr" -> mLanguage = Language(R.drawable.language_french, "French", "fr", false)
+            "hi" -> mLanguage = Language(R.drawable.language_hindi, "Hindi", "hi", false)
+            "pt" -> mLanguage = Language(R.drawable.language_portuguese, "Portuguese", "pt", false)
+        }
+
         languages.add(Language(R.drawable.language_english, "English", "en", false))
         languages.add(Language(R.drawable.language_spanish, "Spanish", "es", false))
         languages.add(Language(R.drawable.language_french, "French", "fr", false))
         languages.add(Language(R.drawable.language_hindi, "Hindi", "hi", false))
         languages.add(Language(R.drawable.language_portuguese, "Portuguese", "pt", false))
-
-        val lang = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Resources.getSystem().configuration.locales[0].language
-        } else {
-            Resources.getSystem().configuration.locale.language
-        }
-        var count = 0
-        for (language: Language in languages) {
-            if (language.languageCode == lang) {
-                count++
-            }
-        }
-//        if (count == 0) {
-//            Toast.makeText(this,"Please select language",Toast.LENGTH_SHORT).show()
-//            mLanguage = Language(R.drawable.language_english, "English", "en", false)
-//            adapter?.setSelectLanguage(mLanguage!!)
-//        }
 
         for (i in languages.indices) {
             if (key == languages[i].languageCode) {
