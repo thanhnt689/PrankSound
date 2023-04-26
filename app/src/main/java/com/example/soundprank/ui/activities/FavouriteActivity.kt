@@ -79,6 +79,7 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
             binding.btnSelectAll.visibility = View.GONE
             binding.btnCheck.visibility = View.VISIBLE
             binding.btnRemoveAll.visibility = View.GONE
+            binding.btnSelectAll.text = getString(R.string.string_select_all)
         }
     }
 
