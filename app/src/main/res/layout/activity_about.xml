@@ -11,17 +11,17 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/ic_arrow_left"
-        app:layout_constraintBottom_toBottomOf="@id/tv_prank_sound"
+        app:layout_constraintBottom_toBottomOf="@id/tv_about"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_prank_sound"
+        android:id="@+id/tv_about"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/fredoka_one"
-        android:text="About"
+        android:text="@string/string_about"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"

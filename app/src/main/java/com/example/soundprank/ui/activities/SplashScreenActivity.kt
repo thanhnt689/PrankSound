@@ -59,7 +59,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun showActivity() {
         try {
-            Admob.getInstance().showInterAds(this, AdsInter.inter_intro, object : InterCallback() {
+            Admob.getInstance().showInterAds(this@SplashScreenActivity, AdsInter.inter_intro, object : InterCallback() {
                 override fun onNextAction() {
                     super.onNextAction()
                     val intent = Intent(this@SplashScreenActivity, IntroActivity::class.java)

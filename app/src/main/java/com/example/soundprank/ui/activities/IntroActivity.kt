@@ -6,17 +6,24 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
+import com.amazic.ads.callback.InterCallback
+import com.amazic.ads.util.Admob
 import com.example.soundprank.R
 import com.example.soundprank.adapters.IntroSlideAdapter
 import com.example.soundprank.databinding.ActivityIntroBinding
 import com.example.soundprank.models.IntroSlide
+import com.example.soundprank.utils.AdsInter
 import com.example.soundprank.utils.LocaleHelper
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
 
 class IntroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntroBinding
@@ -36,6 +43,8 @@ class IntroActivity : AppCompatActivity() {
 
         initData()
 
+        loadInter()
+
         binding.vpIntroSlider.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -47,6 +56,7 @@ class IntroActivity : AppCompatActivity() {
         binding.btnNext.setOnClickListener {
             clickButtonNext()
         }
+
     }
 
     private fun clickButtonNext() {
@@ -58,11 +68,37 @@ class IntroActivity : AppCompatActivity() {
             }
         } else {
             if (sharedPreferences?.getBoolean("openLanguage", false) == true) {
-                startActivity(Intent(this, HomeScreenActivity::class.java))
+                try {
+                    Admob.getInstance().showInterAds(this@IntroActivity, AdsInter.inter_intro, object : InterCallback() {
+                        override fun onNextAction() {
+                            super.onNextAction()
+                            val intent = Intent(this@IntroActivity, HomeScreenActivity::class.java)
+                            startActivity(
+                                intent
+                            )
+                            finish()
+                        }
+                    })
+                } catch (exception: Exception) {
+                    Log.d("ntt",exception.toString())
+                }
             } else {
-                startActivity(Intent(this, LanguageActivity::class.java))
+                try {
+                    Admob.getInstance().showInterAds(this@IntroActivity, AdsInter.inter_intro, object : InterCallback() {
+                        override fun onNextAction() {
+                            super.onNextAction()
+                            val intent = Intent(this@IntroActivity, LanguageActivity::class.java)
+                            startActivity(
+                                intent
+                            )
+                            finish()
+                        }
+                    })
+                } catch (exception: Exception) {
+                    Log.d("ntt",exception.toString())
+                }
             }
-            finish()
+            //finish()
         }
     }
 
@@ -126,6 +162,52 @@ class IntroActivity : AppCompatActivity() {
                     )
                 )
             }
+        }
+    }
+
+    private fun loadInter() {
+        if (AdsInter.inter_intro == null) {
+            Admob.getInstance()
+                .loadInterAds(this, getString(R.string.id_ads_inter), object : InterCallback() {
+                    override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
+                        super.onInterstitialLoad(interstitialAd2)
+                        AdsInter.inter_intro = interstitialAd2
+                        Log.d("ntt", "Load true")
+                        // Show button
+                        binding.btnNext.visibility = View.VISIBLE
+                    }
+
+                    override fun onAdFailedToLoad(i: LoadAdError?) {
+                        super.onAdFailedToLoad(i)
+                        Log.d("ntt", "Load false to load")
+                        // Show button
+                        binding.btnNext.visibility = View.VISIBLE
+                    }
+
+                    override fun onAdFailedToShow(adError: AdError?) {
+                        super.onAdFailedToShow(adError)
+                        Log.d("ntt", "Load false to show")
+                        // Show button
+                        binding.btnNext.visibility = View.VISIBLE
+                    }
+                })
+        }
+    }
+
+    private fun showActivity() {
+        try {
+            Admob.getInstance().showInterAds(this, AdsInter.inter_intro, object : InterCallback() {
+                override fun onNextAction() {
+                    super.onNextAction()
+                    val intent = Intent(this@IntroActivity, IntroActivity::class.java)
+                    startActivity(
+                        intent
+                    )
+                    finish()
+                }
+            })
+        } catch (exception: Exception) {
+            Log.d("ntt",exception.toString())
         }
     }
 }
