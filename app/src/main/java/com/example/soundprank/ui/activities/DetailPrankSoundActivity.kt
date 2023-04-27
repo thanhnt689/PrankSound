@@ -130,11 +130,13 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                                     )
                         );
                         binding.tvTime.text = timeText
+                        binding.btnPlayOrPause.isClickable = false
 
                     }
 
                     override fun onFinish() {
                         mediaPlayer.start()
+                        binding.btnPlayOrPause.isClickable = true
                         checkSoundPlayOrStop(mediaPlayer)
                     }
                 }

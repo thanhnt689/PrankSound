@@ -6,31 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.LanguageActivity">
 
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ic_arrow_left"
+        app:layout_constraintBottom_toBottomOf="@id/tv_language"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_language"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/fredoka_one"
         android:text="@string/string_language"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/rv_language"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="22dp"
-        android:background="@drawable/bg_check_language_sc"
-        android:padding="4dp"
-        android:src="@drawable/ic_check"
-        app:layout_constraintBottom_toBottomOf="@id/tv_language"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_language" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_language"
@@ -40,22 +40,16 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@id/include"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fr_ads3"
         app:layout_constraintTop_toBottomOf="@id/tv_language" />
 
-    <FrameLayout
-        android:id="@+id/fr_ads3"
+    <include
+        android:id="@+id/include"
+        layout="@layout/layout_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <include layout="@layout/ads_navite_shimer_2" />
-
-    </FrameLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

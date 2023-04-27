@@ -1,6 +1,8 @@
 package com.example.soundprank.ui.activities
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,16 +12,29 @@ import com.amazic.ads.util.Admob
 import com.example.soundprank.utils.AdsInter
 import com.example.soundprank.R
 import com.example.soundprank.databinding.ActivitySplashScreenBinding
+import com.example.soundprank.utils.LocaleHelper
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 
 class SplashScreenActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivitySplashScreenBinding
+    private var sharedPreferences: SharedPreferences? = null
+    private val localeHelper = LocaleHelper()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
+
+        if (sharedPreferences?.getBoolean("openLanguage", false) == true) {
+            Log.d("ntt", "open")
+            localeHelper.setLanguage(this)
+            binding.btnStart.text = getText(R.string.string_start)
+        }
 
         loadInter()
 
@@ -37,21 +52,21 @@ class SplashScreenActivity : AppCompatActivity() {
                         AdsInter.inter_intro = interstitialAd2
                         Log.d("ntt", "Load true")
                         // Show button
-                        binding.btnStart.visibility = View.VISIBLE
+                        //binding.btnStart.visibility = View.VISIBLE
                     }
 
                     override fun onAdFailedToLoad(i: LoadAdError?) {
                         super.onAdFailedToLoad(i)
                         Log.d("ntt", "Load false to load")
                         // Show button
-                        binding.btnStart.visibility = View.VISIBLE
+                        //binding.btnStart.visibility = View.VISIBLE
                     }
 
                     override fun onAdFailedToShow(adError: AdError?) {
                         super.onAdFailedToShow(adError)
                         Log.d("ntt", "Load false to show")
                         // Show button
-                        binding.btnStart.visibility = View.VISIBLE
+                        //binding.btnStart.visibility = View.VISIBLE
                     }
                 })
         }
@@ -59,7 +74,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun showActivity() {
         try {
-            Admob.getInstance().showInterAds(this@SplashScreenActivity, AdsInter.inter_intro, object : InterCallback() {
+            Admob.getInstance().showInterAds(this, AdsInter.inter_intro, object : InterCallback() {
                 override fun onNextAction() {
                     super.onNextAction()
                     val intent = Intent(this@SplashScreenActivity, IntroActivity::class.java)
@@ -70,7 +85,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 }
             })
         } catch (exception: Exception) {
-            Log.d("ntt",exception.toString())
+            Log.d("ntt", exception.toString())
         }
     }
 }

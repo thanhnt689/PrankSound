@@ -6,19 +6,27 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amazic.ads.callback.InterCallback
+import com.amazic.ads.util.Admob
 import com.example.soundprank.R
 import com.example.soundprank.adapters.PrankSoundAdapter
 import com.example.soundprank.callback.OnClickItemSoundPrank
 import com.example.soundprank.databinding.ActivityHomeScreenBinding
 import com.example.soundprank.models.SoundPrank
+import com.example.soundprank.utils.AdsInter
 import com.example.soundprank.utils.LocaleHelper
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
@@ -29,8 +37,7 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     private lateinit var binding: ActivityHomeScreenBinding
     private lateinit var adapter: PrankSoundAdapter
 
-    private var manager: ReviewManager? = null
-    private var reviewInfo: ReviewInfo? = null
+    private var mInterstitialAd: InterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +58,10 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         binding.rvListSoundPrank.adapter = adapter
         binding.rvListSoundPrank.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+
+        loadInter()
     }
 
     private fun onClickButtonMore() {
@@ -96,12 +107,35 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     }
 
     override fun onClickItemSoundPrank(soundPrank: SoundPrank, position: Int) {
-        val intent = Intent(this, SoundActivity::class.java)
-        val bundle = Bundle()
-        bundle.putSerializable("sound_prank", soundPrank)
-        intent.putExtras(bundle)
-        intent.putExtra("position", position)
-        startActivity(intent)
+
+        try {
+            Admob.getInstance()
+                .showInterAds(this@HomeScreenActivity, mInterstitialAd, object : InterCallback() {
+                    override fun onNextAction() {
+                        super.onNextAction()
+                        val intent = Intent(this@HomeScreenActivity, SoundActivity::class.java)
+                        val bundle = Bundle()
+                        bundle.putSerializable("sound_prank", soundPrank)
+                        intent.putExtras(bundle)
+                        intent.putExtra("position", position)
+                        startActivity(intent)
+                    }
+                })
+        } catch (exception: Exception) {
+            Log.d("ntt", exception.toString())
+        }
+    }
+
+    private fun loadInter() {
+        Admob.getInstance()
+            .loadInterAds(this, getString(R.string.id_ads_inter), object : InterCallback() {
+                override fun onInterstitialLoad(interstitialAd: InterstitialAd?) {
+                    super.onInterstitialLoad(interstitialAd)
+
+                    mInterstitialAd = interstitialAd
+
+                }
+            })
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -114,7 +148,7 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
             }
 
             R.id.menu_language -> {
-                val intent = Intent(this, LanguageActivity::class.java)
+                val intent = Intent(this, LanguageSettingActivity::class.java)
                 startActivity(intent)
                 true
             }
@@ -131,8 +165,6 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
             }
 
             R.id.menu_policy -> {
-//                val intent = Intent(this, MiniGameActivity::class.java)
-//                startActivity(intent)
                 true
             }
 

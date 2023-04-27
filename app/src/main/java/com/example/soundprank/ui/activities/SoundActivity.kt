@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.amazic.ads.util.Admob
 import com.example.soundprank.R
 import com.example.soundprank.adapters.SoundAdapter
 import com.example.soundprank.callback.OnClickItemSound
@@ -35,6 +36,8 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
         setContentView(binding.root)
 
         soundPrank = intent.getSerializableExtra("sound_prank") as SoundPrank
+
+        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
         lifecycleScope.launch(Dispatchers.IO) {
             listAssetFile(soundPrank.path)

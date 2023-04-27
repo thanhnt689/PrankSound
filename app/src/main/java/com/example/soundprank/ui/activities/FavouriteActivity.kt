@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.amazic.ads.util.Admob
 import com.example.soundprank.R
 import com.example.soundprank.adapters.SoundFavouriteAdapter
 import com.example.soundprank.callback.OnClickCbSound
@@ -112,6 +113,8 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
                 binding.layoutNoFavourite.visibility = View.GONE
             }
         }
+
+        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
         binding.btnSelectAll.isSelected = true
         binding.tvNoFavouriteYet.isSelected = true

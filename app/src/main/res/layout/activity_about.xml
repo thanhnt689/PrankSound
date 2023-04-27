@@ -64,5 +64,13 @@
         app:layout_constraintEnd_toEndOf="@id/img_logo"
         app:layout_constraintStart_toStartOf="@id/img_logo"
         app:layout_constraintTop_toBottomOf="@id/img_logo" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/layout_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
