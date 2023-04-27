@@ -199,7 +199,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <include layout="@layout/ads_navite_shimer_2" />
+        <include layout="@layout/ads_native_shimer_3" />
 
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

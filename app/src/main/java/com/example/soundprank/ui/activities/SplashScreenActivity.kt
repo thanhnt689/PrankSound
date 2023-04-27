@@ -31,7 +31,6 @@ class SplashScreenActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
 
         if (sharedPreferences?.getBoolean("openLanguage", false) == true) {
-            Log.d("ntt", "open")
             localeHelper.setLanguage(this)
             binding.btnStart.text = getText(R.string.string_start)
         }
@@ -52,21 +51,21 @@ class SplashScreenActivity : AppCompatActivity() {
                         AdsInter.inter_intro = interstitialAd2
                         Log.d("ntt", "Load true")
                         // Show button
-                        //binding.btnStart.visibility = View.VISIBLE
+                        binding.btnStart.visibility = View.VISIBLE
                     }
 
                     override fun onAdFailedToLoad(i: LoadAdError?) {
                         super.onAdFailedToLoad(i)
                         Log.d("ntt", "Load false to load")
                         // Show button
-                        //binding.btnStart.visibility = View.VISIBLE
+                        binding.btnStart.visibility = View.VISIBLE
                     }
 
                     override fun onAdFailedToShow(adError: AdError?) {
                         super.onAdFailedToShow(adError)
                         Log.d("ntt", "Load false to show")
                         // Show button
-                        //binding.btnStart.visibility = View.VISIBLE
+                        binding.btnStart.visibility = View.VISIBLE
                     }
                 })
         }

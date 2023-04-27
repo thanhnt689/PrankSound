@@ -9,6 +9,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -17,6 +18,8 @@ import android.widget.ImageButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.amazic.ads.callback.NativeCallback
+import com.amazic.ads.util.Admob
 import com.bumptech.glide.Glide
 import com.example.soundprank.R
 import com.example.soundprank.databinding.ActivityDetailPrankSoundBinding
@@ -25,6 +28,8 @@ import com.example.soundprank.utils.Const
 import com.example.soundprank.viewmodel.MyViewModel
 import com.example.soundprank.viewmodel.SoundViewModel
 import com.example.soundprank.viewmodel.SoundViewModelFactory
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
 import java.util.concurrent.TimeUnit
 
 class DetailPrankSoundActivity : AppCompatActivity() {
@@ -73,6 +78,27 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         binding.btnPlayOrPause.setOnClickListener {
             playSound(loop)
         }
+
+        Admob.getInstance().loadNativeAd(
+            this,
+            getString(R.string.id_ads_native),
+            object : NativeCallback() {
+                override fun onNativeAdLoaded(nativeAd: NativeAd?) {
+                    super.onNativeAdLoaded(nativeAd)
+                    Log.d("ThanhNT", "onNativeAdLoaded")
+                    val adView = LayoutInflater.from(this@DetailPrankSoundActivity)
+                        .inflate(R.layout.ads_navite_small, null) as NativeAdView
+                    binding.frAds3.removeAllViews()
+                    binding.frAds3.addView(adView)
+
+                    Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
+                }
+
+                override fun onAdFailedToLoad() {
+                    binding.frAds3.visibility = View.GONE
+                    binding.frAds3.removeAllViews()
+                }
+            })
     }
 
     private fun playSound(loop: Boolean) {
