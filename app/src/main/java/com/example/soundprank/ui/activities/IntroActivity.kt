@@ -31,9 +31,13 @@ import com.google.android.gms.ads.nativead.NativeAdView
 
 class IntroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntroBinding
+
     private lateinit var adapter: IntroSlideAdapter
+
     private var sharedPreferences: SharedPreferences? = null
+
     private val localeHelper = LocaleHelper()
+
     private val introSlides: List<IntroSlide> = listOf(
         IntroSlide(R.drawable.intro_slide_1),
         IntroSlide(R.drawable.intro_slide_2),

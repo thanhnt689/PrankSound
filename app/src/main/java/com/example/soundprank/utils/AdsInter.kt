@@ -7,7 +7,5 @@ class AdsInter {
     companion object {
         var inter_splash: InterstitialAd? = null
         var inter_intro: InterstitialAd? = null
-        var inter_voice_lock: InterstitialAd? = null
-        var inter_theme: InterstitialAd? = null
     }
 }

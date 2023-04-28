@@ -18,9 +18,9 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amazic.ads.callback.InterCallback
@@ -30,7 +30,7 @@ import com.example.soundprank.adapters.PrankSoundAdapter
 import com.example.soundprank.callback.OnClickItemSoundPrank
 import com.example.soundprank.databinding.ActivityHomeScreenBinding
 import com.example.soundprank.models.SoundPrank
-import com.example.soundprank.utils.LocaleHelper
+import com.example.soundprank.utils.Const
 import com.example.soundprank.viewmodel.MyViewModel
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
@@ -40,17 +40,27 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityHomeScreenBinding
+
     private lateinit var adapter: PrankSoundAdapter
 
     private lateinit var mRefreshReceiver: BroadcastReceiver
 
     private var mInterstitialAd: InterstitialAd? = null
 
+    private lateinit var sharedPreferences: SharedPreferences
+
+    private lateinit var editTor: SharedPreferences.Editor
+
+    private lateinit var myViewModel: MyViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        myViewModel = ViewModelProvider(this)[MyViewModel::class.java]
+
+        init()
 
         binding.btnMore.setOnClickListener {
             onClickButtonMore()
@@ -58,11 +68,15 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
         setReloadDataChangeLanguage()
 
-        init()
+
     }
 
     private fun init() {
         binding.navHome.setNavigationItemSelectedListener(this)
+
+        sharedPreferences = this.getSharedPreferences("MY_PRE", Context.MODE_PRIVATE);
+
+        editTor = sharedPreferences.edit()
 
         adapter = PrankSoundAdapter(getDataListPrankSound(), this)
         binding.rvListSoundPrank.adapter = adapter
@@ -72,6 +86,7 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
         loadInter()
+
     }
 
     private fun setReloadDataChangeLanguage() {
@@ -154,22 +169,43 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     }
 
     override fun onClickItemSoundPrank(soundPrank: SoundPrank, position: Int) {
-        try {
-            Admob.getInstance()
-                .showInterAds(this@HomeScreenActivity, mInterstitialAd, object : InterCallback() {
-                    override fun onNextAction() {
-                        super.onNextAction()
-                        val intent = Intent(this@HomeScreenActivity, SoundActivity::class.java)
-                        val bundle = Bundle()
-                        bundle.putSerializable("sound_prank", soundPrank)
-                        intent.putExtras(bundle)
-                        intent.putExtra("position", position)
-                        startActivity(intent)
-                    }
-                })
-        } catch (exception: Exception) {
-            Log.d("ntt", exception.toString())
+
+        val num = sharedPreferences.getInt(Const.NUM_SHOW_INTER, 1)
+
+        if (num % 2 == 1) {
+            try {
+                Admob.getInstance()
+                    .showInterAds(
+                        this@HomeScreenActivity,
+                        mInterstitialAd,
+                        object : InterCallback() {
+                            override fun onNextAction() {
+                                super.onNextAction()
+                                val intent =
+                                    Intent(this@HomeScreenActivity, SoundActivity::class.java)
+                                val bundle = Bundle()
+                                bundle.putSerializable("sound_prank", soundPrank)
+                                intent.putExtras(bundle)
+                                intent.putExtra("position", position)
+                                startActivity(intent)
+                            }
+                        })
+            } catch (exception: Exception) {
+                Log.d("ntt", exception.toString())
+            }
+        } else {
+            val intent =
+                Intent(this@HomeScreenActivity, SoundActivity::class.java)
+            val bundle = Bundle()
+            bundle.putSerializable("sound_prank", soundPrank)
+            intent.putExtras(bundle)
+            intent.putExtra("position", position)
+            startActivity(intent)
         }
+
+        editTor.putInt(Const.NUM_SHOW_INTER, num + 1)
+
+        editTor.apply()
     }
 
     private fun loadInter() {

@@ -2,6 +2,9 @@ package com.example.soundprank.ui.activities
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.AssetFileDescriptor
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -18,6 +21,7 @@ import android.widget.ImageButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.amazic.ads.callback.NativeCallback
 import com.amazic.ads.util.Admob
 import com.bumptech.glide.Glide
@@ -30,6 +34,11 @@ import com.example.soundprank.viewmodel.SoundViewModel
 import com.example.soundprank.viewmodel.SoundViewModelFactory
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
 class DetailPrankSoundActivity : AppCompatActivity() {
@@ -41,10 +50,20 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         SoundViewModelFactory(application)
     }
     private lateinit var sound: Sound
-    private var nameSoundPrank: String = ""
+
     private var loop: Boolean = false
+
     private val mediaPlayer = MediaPlayer()
+
     private var mMediaState: Int = Const.MEDIA_IDLE
+
+    private lateinit var sharedPreferences: SharedPreferences
+
+    private lateinit var editTor: SharedPreferences.Editor
+
+    companion object {
+        var check = false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +79,9 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         }
 
         binding.btnBack.setOnClickListener {
+
+            updateNumShowRating()
+
             finish()
         }
 
@@ -99,6 +121,8 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                     binding.frAds3.removeAllViews()
                 }
             })
+
+        check = true
     }
 
     private fun playSound(loop: Boolean) {
@@ -215,6 +239,10 @@ class DetailPrankSoundActivity : AppCompatActivity() {
     private fun init() {
 
         viewModel = ViewModelProvider(this)[MyViewModel::class.java]
+
+        sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
+
+        editTor = sharedPreferences.edit()
 
         Glide.with(binding.imgSound)
             .load(sound.image)
@@ -364,5 +392,22 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         }
         dialog.show()
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        updateNumShowRating()
+
+        finish()
+    }
+
+    private fun updateNumShowRating() {
+        val numShowRating = sharedPreferences.getInt(Const.NUM_SHOW_RATING, 0)
+
+        editTor.putInt(Const.NUM_SHOW_RATING, numShowRating + 1)
+
+        editTor.apply()
+    }
+
 
 }

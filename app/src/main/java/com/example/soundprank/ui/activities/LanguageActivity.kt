@@ -31,7 +31,7 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
 
     private lateinit var binding: ActivityLanguageBinding
 
-    private var sharedPreferences: SharedPreferences? = null
+    private lateinit var sharedPreferences: SharedPreferences
 
     private var mLanguage: Language? = null
 
@@ -44,6 +44,16 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
         binding = ActivityLanguageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        init()
+
+        binding.btnDone.setOnClickListener {
+            clickButtonDone()
+        }
+
+
+    }
+
+    private fun init() {
         localeHelper.setLanguage(this)
 
         sharedPreferences = getSharedPreferences("MY_PRE", MODE_PRIVATE)
@@ -52,10 +62,6 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
         binding.rvLanguage.adapter = adapter
         binding.rvLanguage.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-        binding.btnDone.setOnClickListener {
-            clickButtonDone()
-        }
 
         Admob.getInstance().loadNativeAd(
             this,
@@ -94,6 +100,7 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
             val intent = Intent(this, HomeScreenActivity::class.java)
             startActivity(intent)
         }
+
     }
 
     override fun onClick(language: Language) {

@@ -12,6 +12,7 @@ import com.amazic.ads.util.Admob
 import com.example.soundprank.utils.AdsInter
 import com.example.soundprank.R
 import com.example.soundprank.databinding.ActivitySplashScreenBinding
+import com.example.soundprank.utils.Const
 import com.example.soundprank.utils.LocaleHelper
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.LoadAdError
@@ -20,7 +21,12 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashScreenBinding
-    private var sharedPreferences: SharedPreferences? = null
+
+    private lateinit var sharedPreferences: SharedPreferences
+
+
+    private lateinit var editTor: SharedPreferences.Editor
+
     private val localeHelper = LocaleHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +36,9 @@ class SplashScreenActivity : AppCompatActivity() {
 
         sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
 
-        if (sharedPreferences?.getBoolean("openLanguage", false) == true) {
+        editTor = sharedPreferences.edit()
+
+        if (sharedPreferences.getBoolean("openLanguage", false)) {
             localeHelper.setLanguage(this)
             binding.btnStart.text = getText(R.string.string_start)
         }
@@ -81,6 +89,12 @@ class SplashScreenActivity : AppCompatActivity() {
                         intent
                     )
                     finish()
+
+                    editTor.putInt(Const.NUM_SHOW_INTER, 1)
+
+                    editTor.putInt(Const.NUM_SHOW_RATING, 1)
+
+                    editTor.apply()
                 }
             })
         } catch (exception: Exception) {

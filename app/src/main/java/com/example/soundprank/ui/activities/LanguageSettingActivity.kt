@@ -64,7 +64,9 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         }
 
         Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+
     }
+
 
     override fun onClick(language: Language) {
         adapter?.setSelectLanguage(language)
