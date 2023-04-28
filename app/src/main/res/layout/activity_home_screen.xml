@@ -4,7 +4,7 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="start">
+    tools:openDrawer="">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,11 +13,11 @@
 
         <ImageButton
             android:id="@+id/btn_more"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="20dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/ic_more"
+            android:src="@drawable/ic_more"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/tv_prank_sound"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

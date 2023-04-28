@@ -11,9 +11,9 @@
     <string name="string_scary">Apavorante</string>
 
     <string name="string_fart">Peidar</string>
-    <string name="string_hair_clipper">máquina de cortar cabelo</string>
-    <string name="string_air_horn">buzina de ar</string>
-    <string name="string_animals">animais</string>
+    <string name="string_hair_clipper">Máquina de cortar cabelo</string>
+    <string name="string_air_horn">Buzina de ar</string>
+    <string name="string_animals">Animais</string>
     <string name="string_alarm">Alarme</string>
     <string name="string_cough">Tosse</string>
     <string name="string_burp">Arrotar</string>
@@ -28,7 +28,7 @@
     <string name="string_cat">Gato</string>
     <string name="string_dog">Cachorro</string>
     <string name="string_scissors">Tesoura</string>
-    <string name="string_sneezing">espirros</string>
+    <string name="string_sneezing">Espirros</string>
     <string name="string_car_horn">Buzina de carro</string>
 
     <string name="string_oh_no">Oh não!</string>

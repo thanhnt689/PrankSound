@@ -39,7 +39,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.HomeScreenActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:launchMode="singleTask"
+             />
         <activity
             android:name=".ui.activities.LanguageActivity"
             android:exported="true" />

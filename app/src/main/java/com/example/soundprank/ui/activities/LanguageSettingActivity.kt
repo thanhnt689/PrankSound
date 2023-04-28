@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amazic.ads.util.Admob
 import com.example.soundprank.R
@@ -80,8 +81,12 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
 
         updateSound()
 
-        val intent = Intent(this, HomeScreenActivity::class.java)
-        startActivity(intent)
+        val intent = Intent("My Broadcast")
+
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+
+        finish()
+
     }
 
     private fun setLanguageDefault(): List<Language> {

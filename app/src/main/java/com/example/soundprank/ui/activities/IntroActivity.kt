@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.amazic.ads.callback.InterCallback
+import com.amazic.ads.callback.NativeCallback
 import com.amazic.ads.util.Admob
 import com.example.soundprank.R
 import com.example.soundprank.adapters.IntroSlideAdapter
@@ -24,6 +26,8 @@ import com.example.soundprank.utils.LocaleHelper
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
 
 class IntroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntroBinding
@@ -69,33 +73,41 @@ class IntroActivity : AppCompatActivity() {
         } else {
             if (sharedPreferences?.getBoolean("openLanguage", false) == true) {
                 try {
-                    Admob.getInstance().showInterAds(this@IntroActivity, AdsInter.inter_intro, object : InterCallback() {
-                        override fun onNextAction() {
-                            super.onNextAction()
-                            val intent = Intent(this@IntroActivity, HomeScreenActivity::class.java)
-                            startActivity(
-                                intent
-                            )
-                            finish()
-                        }
-                    })
+                    Admob.getInstance().showInterAds(
+                        this@IntroActivity,
+                        AdsInter.inter_intro,
+                        object : InterCallback() {
+                            override fun onNextAction() {
+                                super.onNextAction()
+                                val intent =
+                                    Intent(this@IntroActivity, HomeScreenActivity::class.java)
+                                startActivity(
+                                    intent
+                                )
+                                finish()
+                            }
+                        })
                 } catch (exception: Exception) {
-                    Log.d("ntt",exception.toString())
+                    Log.d("ntt", exception.toString())
                 }
             } else {
                 try {
-                    Admob.getInstance().showInterAds(this@IntroActivity, AdsInter.inter_intro, object : InterCallback() {
-                        override fun onNextAction() {
-                            super.onNextAction()
-                            val intent = Intent(this@IntroActivity, LanguageActivity::class.java)
-                            startActivity(
-                                intent
-                            )
-                            finish()
-                        }
-                    })
+                    Admob.getInstance().showInterAds(
+                        this@IntroActivity,
+                        AdsInter.inter_intro,
+                        object : InterCallback() {
+                            override fun onNextAction() {
+                                super.onNextAction()
+                                val intent =
+                                    Intent(this@IntroActivity, LanguageActivity::class.java)
+                                startActivity(
+                                    intent
+                                )
+                                finish()
+                            }
+                        })
                 } catch (exception: Exception) {
-                    Log.d("ntt",exception.toString())
+                    Log.d("ntt", exception.toString())
                 }
             }
             //finish()
@@ -103,6 +115,28 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun initData() {
+
+        Admob.getInstance().loadNativeAd(
+            this,
+            getString(R.string.id_ads_native),
+            object : NativeCallback() {
+                override fun onNativeAdLoaded(nativeAd: NativeAd?) {
+                    super.onNativeAdLoaded(nativeAd)
+                    Log.d("ThanhNT", "onNativeAdLoaded")
+                    val adView = LayoutInflater.from(this@IntroActivity)
+                        .inflate(R.layout.ads_navite_small, null) as NativeAdView
+                    binding.frAds3.removeAllViews()
+                    binding.frAds3.addView(adView)
+
+                    Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
+                }
+
+                override fun onAdFailedToLoad() {
+                    binding.frAds3.visibility = View.GONE
+                    binding.frAds3.removeAllViews()
+                }
+            })
+
         sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
 
         if (sharedPreferences?.getBoolean("openLanguage", false) == true) {
@@ -207,7 +241,7 @@ class IntroActivity : AppCompatActivity() {
                 }
             })
         } catch (exception: Exception) {
-            Log.d("ntt",exception.toString())
+            Log.d("ntt", exception.toString())
         }
     }
 }
