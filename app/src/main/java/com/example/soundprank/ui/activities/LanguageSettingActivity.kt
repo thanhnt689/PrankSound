@@ -38,6 +38,10 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
 
     private val localeHelper = LocaleHelper()
 
+    companion object {
+        var checkChangeLanguage = false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLanguageSettingBinding.inflate(layoutInflater)
@@ -67,6 +71,9 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
     }
 
     override fun onClick(language: Language) {
+
+        checkChangeLanguage = true
+
         adapter?.setSelectLanguage(language)
         mLanguage = language
 
@@ -84,6 +91,7 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         val intent = Intent("My Broadcast")
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+
 
         finish()
 
