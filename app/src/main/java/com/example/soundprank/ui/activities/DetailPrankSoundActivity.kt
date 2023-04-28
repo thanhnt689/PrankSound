@@ -80,9 +80,9 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener {
 
-            updateNumShowRating()
-
             finish()
+
+            updateNumShowRating()
         }
 
         viewModel.time.observe(this) {
@@ -396,9 +396,9 @@ class DetailPrankSoundActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
 
-        updateNumShowRating()
-
         finish()
+
+        updateNumShowRating()
     }
 
     private fun updateNumShowRating() {

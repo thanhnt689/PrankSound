@@ -92,7 +92,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
                     editTor.putInt(Const.NUM_SHOW_INTER, 1)
 
-                    editTor.putInt(Const.NUM_SHOW_RATING, 1)
+                    editTor.putInt(Const.NUM_SHOW_RATING, 0)
 
                     editTor.apply()
                 }

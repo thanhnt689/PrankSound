@@ -221,8 +221,21 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        Log.d("ntt", "Back press")
+        //super.onBackPressed()
+
+        val numberShowRate = sharedPreferences.getInt(Const.NUM_SHOW_RATING_EXIT_APP, 0)
+
+        Log.d("ntt", numberShowRate.toString())
+
+        if (numberShowRate % 2 == 0) {
+            openRatingDialog()
+        } else {
+            finish()
+        }
+
+        editTor.putInt(Const.NUM_SHOW_RATING_EXIT_APP, numberShowRate + 1)
+
+        editTor.apply()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -336,11 +349,14 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                     Toast.LENGTH_SHORT
                 ).show()
                 dialog.dismiss()
+
+                finish()
             }
         }
 
         btnExit.setOnClickListener {
             dialog.dismiss()
+            finish()
         }
 
         dialog.show()

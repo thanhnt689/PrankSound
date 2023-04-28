@@ -92,6 +92,10 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
             finish()
         }
 
+        sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
+
+        editTor = sharedPreferences.edit()
+
     }
 
     override fun onResume() {
@@ -100,10 +104,6 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
         if (DetailPrankSoundActivity.check) {
 
             DetailPrankSoundActivity.check = false
-
-            sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
-
-            editTor = sharedPreferences.edit()
 
             val numShowRating = sharedPreferences.getInt(Const.NUM_SHOW_RATING, 1)
 
