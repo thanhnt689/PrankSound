@@ -107,8 +107,12 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
 
             val numShowRating = sharedPreferences.getInt(Const.NUM_SHOW_RATING, 1)
 
-            if (numShowRating % 2 == 1) {
-                openRatingDialog()
+            val checkIsRating = sharedPreferences.getBoolean(Const.CHECK_IS_RATING, false)
+
+            if (!checkIsRating) {
+                if (numShowRating % 2 == 1) {
+                    openRatingDialog()
+                }
             }
 
         }
@@ -248,12 +252,18 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
                     "Thank for the rate: ${ratingBar.rating}",
                     Toast.LENGTH_SHORT
                 ).show()
+
                 dialog.dismiss()
+
+                editTor.putBoolean(Const.CHECK_IS_RATING, true)
+                editTor.apply()
             }
         }
 
         btnExit.setOnClickListener {
             dialog.dismiss()
+            editTor.putBoolean(Const.CHECK_IS_RATING, false)
+            editTor.apply()
         }
 
         dialog.show()

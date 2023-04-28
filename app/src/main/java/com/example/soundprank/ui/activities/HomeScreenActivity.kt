@@ -224,17 +224,24 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
         val numberShowRate = sharedPreferences.getInt(Const.NUM_SHOW_RATING_EXIT_APP, 0)
 
+        val checkIsRating = sharedPreferences.getBoolean(Const.CHECK_IS_RATING, false)
+
         Log.d("ntt", numberShowRate.toString())
 
-        if (numberShowRate % 2 == 0) {
-            openRatingDialog("BackPress")
+        if (!checkIsRating) {
+            if (numberShowRate % 2 == 0) {
+                openRatingDialog("BackPress")
+            } else {
+                finish()
+            }
+
+            editTor.putInt(Const.NUM_SHOW_RATING_EXIT_APP, numberShowRate + 1)
+
+            editTor.apply()
         } else {
             finish()
         }
 
-        editTor.putInt(Const.NUM_SHOW_RATING_EXIT_APP, numberShowRate + 1)
-
-        editTor.apply()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -354,6 +361,10 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                 } else if (start == "NavigationView") {
                     dialog.dismiss()
                 }
+
+                editTor.putBoolean(Const.CHECK_IS_RATING, true)
+
+                editTor.apply()
             }
         }
 
@@ -364,6 +375,10 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                 dialog.dismiss()
                 finish()
             }
+
+            editTor.putBoolean(Const.CHECK_IS_RATING, false)
+
+            editTor.apply()
         }
 
         dialog.show()
