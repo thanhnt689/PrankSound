@@ -221,14 +221,13 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     }
 
     override fun onBackPressed() {
-        //super.onBackPressed()
 
         val numberShowRate = sharedPreferences.getInt(Const.NUM_SHOW_RATING_EXIT_APP, 0)
 
         Log.d("ntt", numberShowRate.toString())
 
         if (numberShowRate % 2 == 0) {
-            openRatingDialog()
+            openRatingDialog("BackPress")
         } else {
             finish()
         }
@@ -254,7 +253,7 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
             }
 
             R.id.menu_rate -> {
-                openRatingDialog()
+                openRatingDialog("NavigationView")
                 true
             }
 
@@ -272,7 +271,7 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         }
     }
 
-    private fun openRatingDialog() {
+    private fun openRatingDialog(start: String) {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.layout_dialog_rating)
@@ -348,15 +347,23 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                     "Thank for the rate: ${ratingBar.rating}",
                     Toast.LENGTH_SHORT
                 ).show()
-                dialog.dismiss()
 
-                finish()
+                if (start == "BackPress") {
+                    dialog.dismiss()
+                    finish()
+                } else if (start == "NavigationView") {
+                    dialog.dismiss()
+                }
             }
         }
 
         btnExit.setOnClickListener {
-            dialog.dismiss()
-            finish()
+            if (start == "NavigationView") {
+                dialog.dismiss()
+            } else if (start == "BackPress") {
+                dialog.dismiss()
+                finish()
+            }
         }
 
         dialog.show()
