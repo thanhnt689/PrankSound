@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sonido de broma</string>
+    <string name="string_start">Comenzar</string>
+    <string name="string_next">Próximo</string>
+    <string name="string_favourite">Favorito</string>
+    <string name="string_language">Idioma</string>
+    <string name="string_rate">Tasa</string>
+    <string name="string_about">Acerca de</string>
+    <string name="string_policy">Política</string>
+    <string name="string_scary">Aterrador</string>
+
+    <string name="string_fart">Pedo</string>
+    <string name="string_hair_clipper">Broche del pelo</string>
+    <string name="string_air_horn">Corneta de aire</string>
+    <string name="string_animals">Animales</string>
+    <string name="string_alarm">Alarma</string>
+    <string name="string_cough">Tos</string>
+    <string name="string_burp">Eructar</string>
+    <string name="string_breaking">Rotura</string>
+    <string name="string_meme_sound">Sonido de meme</string>
+    <string name="string_toilet">Baño</string>
+    <string name="string_gun">Pistola</string>
+    <string name="string_bomb">Bomba</string>
+    <string name="string_snoring">Ronquidos</string>
+    <string name="string_crying">Llanto</string>
+    <string name="string_door_bell">Timbre de la puerta</string>
+    <string name="string_cat">Gato</string>
+    <string name="string_dog">Perro</string>
+    <string name="string_scissors">Tijeras</string>
+    <string name="string_sneezing">Estornudos</string>
+    <string name="string_car_horn">Bocina</string>
+
+    <string name="string_oh_no">¡Oh, no!</string>
+    <string name="string_please_give_us_some_feedback">Por favor, danos tu opinión.</string>
+    <string name="string_we_like_you_too">¡Nosotros también nos gustas!</string>
+    <string name="string_thanks_for_your_feedback">gracias por tus comentarios</string>
+    <string name="string_exit">Salida</string>
+    <string name="string_the_best_we_can_get">Lo mejor que podemos conseguir :)</string>
+    <string name="string_let_us_know_your_experience">Háganos saber su experiencia. ¡5 estrellas es lo mejor en Google Play!</string>
+    <string name="string_do_you_like_the_app">¿Te gusta la aplicación?</string>
+    <string name="string_loop">Bucle</string>
+
+    <string name="string_off">Apagada</string>
+    <string name="string_5s">5s</string>
+    <string name="string_10s">10s</string>
+    <string name="string_15s">15s</string>
+    <string name="string_30s">30s</string>
+    <string name="string_set_timer_for_this_sound">Establecer temporizador para este sonido</string>
+
+    <string name="string_select_all">Seleccionar todo</string>
+    <string name="string_remove_all">Eliminar todo</string>
+    <string name="string_no_favourite_yet">Ningún favorito todavía</string>
+    <string name="string_remove_from_favourite">Quitar de favoritos</string>
+</resources>

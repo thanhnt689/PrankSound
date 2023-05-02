@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Prank Sound</string>
+    <string name="string_start">Start</string>
+    <string name="string_next">Next</string>
+    <string name="string_favourite">Favourite</string>
+    <string name="string_language">Language</string>
+    <string name="string_rate">Rate</string>
+    <string name="string_about">About</string>
+    <string name="string_policy">Policy</string>
+    <string name="string_scary">Scary</string>
+
+    <string name="string_fart">Fart</string>
+    <string name="string_hair_clipper">Hair clipper</string>
+    <string name="string_air_horn">Air horn</string>
+    <string name="string_animals">Animals</string>
+    <string name="string_alarm">Alarm</string>
+    <string name="string_cough">Cough</string>
+    <string name="string_burp">Burp</string>
+    <string name="string_breaking">Breaking</string>
+    <string name="string_meme_sound">Meme sound</string>
+    <string name="string_toilet">Toilet</string>
+    <string name="string_gun">Gun</string>
+    <string name="string_bomb">Bomb</string>
+    <string name="string_snoring">Snoring</string>
+    <string name="string_crying">Crying</string>
+    <string name="string_door_bell">Door bell</string>
+    <string name="string_cat">Cat</string>
+    <string name="string_dog">Dog</string>
+    <string name="string_scissors">Scissors</string>
+    <string name="string_sneezing">Sneezing</string>
+    <string name="string_car_horn">Car horn</string>
+
+    <string name="string_oh_no">Oh, no!</string>
+    <string name="string_please_give_us_some_feedback">Please give us some feedback</string>
+    <string name="string_we_like_you_too">We like you too!</string>
+    <string name="string_thanks_for_your_feedback">Thanks for your feedback</string>
+    <string name="string_exit">Exit</string>
+    <string name="string_the_best_we_can_get">The best we can get:)</string>
+    <string name="string_let_us_know_your_experience">Let us know your experience. 5 stars is the best on Google Play!</string>
+    <string name="string_do_you_like_the_app">Do you like the app?</string>
+    <string name="string_loop">Loop</string>
+
+    <string name="string_off">Off</string>
+    <string name="string_5s">5s</string>
+    <string name="string_10s">10s</string>
+    <string name="string_15s">15s</string>
+    <string name="string_30s">30s</string>
+    <string name="string_set_timer_for_this_sound">Set timer for this sound</string>
+
+    <string name="string_select_all">Select all</string>
+    <string name="string_remove_all">Remove all</string>
+    <string name="string_no_favourite_yet">No favourite yet</string>
+    <string name="string_remove_from_favourite">Remove from favourite</string>
+
+</resources>
+
