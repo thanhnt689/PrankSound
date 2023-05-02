@@ -36,7 +36,6 @@ import com.example.soundprank.viewmodel.MyViewModel
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
 
-
 class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     NavigationView.OnNavigationItemSelectedListener {
 
@@ -61,11 +60,11 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         binding = ActivityHomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        init()
+
         setReloadDataChangeLanguage()
 
         myViewModel = ViewModelProvider(this)[MyViewModel::class.java]
-
-        init()
 
         binding.btnMore.setOnClickListener {
             onClickButtonMore()
@@ -75,6 +74,8 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
     private fun init() {
         binding.navHome.setNavigationItemSelectedListener(this)
+
+        localeHelper.setLanguage(this@HomeScreenActivity)
 
         sharedPreferences = this.getSharedPreferences("MY_PRE", Context.MODE_PRIVATE);
 
@@ -103,32 +104,32 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
                     binding.tvPrankSound.text = getString(R.string.app_name)
 
-                    Log.d("ntt",getString(R.string.app_name))
+                    Log.d("ntt", getString(R.string.app_name))
 
                     val favouriteTitle = binding.navHome.menu.findItem(R.id.menu_favourite)
                     favouriteTitle.title = getString(R.string.string_favourite)
 
-                    Log.d("ntt",getString(R.string.string_favourite))
+                    Log.d("ntt", getString(R.string.string_favourite))
 
                     val languageTitle = binding.navHome.menu.findItem(R.id.menu_language)
                     languageTitle.title = getString(R.string.string_language)
 
-                    Log.d("ntt",getString(R.string.string_language))
+                    Log.d("ntt", getString(R.string.string_language))
 
                     val rateTitle = binding.navHome.menu.findItem(R.id.menu_rate)
                     rateTitle.title = getString(R.string.string_rate)
 
-                    Log.d("ntt",getString(R.string.string_rate))
+                    Log.d("ntt", getString(R.string.string_rate))
 
                     val aboutTitle = binding.navHome.menu.findItem(R.id.menu_about)
                     aboutTitle.title = getString(R.string.string_about)
 
-                    Log.d("ntt",getString(R.string.string_about))
+                    Log.d("ntt", getString(R.string.string_about))
 
                     val policyTitle = binding.navHome.menu.findItem(R.id.menu_policy)
                     policyTitle.title = getString(R.string.string_policy)
 
-                    Log.d("ntt",getString(R.string.string_policy))
+                    Log.d("ntt", getString(R.string.string_policy))
 
                     init()
                 }

@@ -99,6 +99,7 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
             localeHelper.setLanguage(this)
             val intent = Intent(this, HomeScreenActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
     }

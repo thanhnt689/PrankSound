@@ -29,6 +29,7 @@ import com.example.soundprank.R
 import com.example.soundprank.databinding.ActivityDetailPrankSoundBinding
 import com.example.soundprank.models.Sound
 import com.example.soundprank.utils.Const
+import com.example.soundprank.utils.LocaleHelper
 import com.example.soundprank.viewmodel.MyViewModel
 import com.example.soundprank.viewmodel.SoundViewModel
 import com.example.soundprank.viewmodel.SoundViewModelFactory
@@ -60,6 +61,8 @@ class DetailPrankSoundActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var editTor: SharedPreferences.Editor
+
+    private val localeHelper = LocaleHelper()
 
     companion object {
         var check = false
@@ -123,6 +126,32 @@ class DetailPrankSoundActivity : AppCompatActivity() {
             })
 
         check = true
+    }
+
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun init() {
+
+        localeHelper.setLanguage(this)
+
+        viewModel = ViewModelProvider(this)[MyViewModel::class.java]
+
+        sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
+
+        editTor = sharedPreferences.edit()
+
+        Glide.with(binding.imgSound)
+            .load(sound.image)
+            .centerCrop()
+            .into(binding.imgSound)
+
+        binding.tvPrankSound.text = sound.name
+
+        binding.tvt.isSelected = true
+
+        viewModel.setValueTime(getString(R.string.string_off))
+
+        loadFavourite()
     }
 
     private fun playSound(loop: Boolean) {
@@ -231,29 +260,6 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         soundViewModel.updateSound(
             Sound(sound.name, sound.path, sound.folder, sound.image, sound.favourite)
         )
-
-        loadFavourite()
-    }
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun init() {
-
-        viewModel = ViewModelProvider(this)[MyViewModel::class.java]
-
-        sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
-
-        editTor = sharedPreferences.edit()
-
-        Glide.with(binding.imgSound)
-            .load(sound.image)
-            .centerCrop()
-            .into(binding.imgSound)
-
-        binding.tvPrankSound.text = sound.name
-
-        binding.tvt.isSelected = true
-
-        viewModel.setValueTime(getString(R.string.string_off))
 
         loadFavourite()
     }

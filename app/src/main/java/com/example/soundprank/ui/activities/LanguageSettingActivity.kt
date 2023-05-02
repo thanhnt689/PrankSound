@@ -47,15 +47,8 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         binding = ActivityLanguageSettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        localeHelper.setLanguage(this)
-
-        sharedPreferences = getSharedPreferences("MY_PRE", MODE_PRIVATE)
-
-        adapter = LanguageAdapter(setLanguageDefault(), this)
-        binding.rvLanguage.adapter = adapter
-        binding.rvLanguage.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
+        init()
+        
         binding.btnBack.setOnClickListener {
             val intent = Intent(this, HomeScreenActivity::class.java)
             startActivity(intent)
@@ -65,6 +58,20 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
             listSound.clear()
             listSound.addAll(it)
         }
+
+    }
+
+    private fun init(){
+        localeHelper.setLanguage(this)
+
+        binding.tvLanguage.text = getString(R.string.string_language)
+
+        sharedPreferences = getSharedPreferences("MY_PRE", MODE_PRIVATE)
+
+        adapter = LanguageAdapter(setLanguageDefault(), this)
+        binding.rvLanguage.adapter = adapter
+        binding.rvLanguage.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
