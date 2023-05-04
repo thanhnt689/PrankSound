@@ -1,10 +1,8 @@
 package com.example.soundprank.ui.activities
 
 import android.app.Dialog
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -21,7 +19,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.amazic.ads.util.Admob
 import com.example.soundprank.R
@@ -34,10 +31,8 @@ import com.example.soundprank.utils.Const
 import com.example.soundprank.viewmodel.MyViewModel
 import com.example.soundprank.viewmodel.SoundViewModel
 import com.example.soundprank.viewmodel.SoundViewModelFactory
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class SoundActivity : AppCompatActivity(), OnClickItemSound {

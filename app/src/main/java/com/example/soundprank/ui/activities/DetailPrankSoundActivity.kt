@@ -155,11 +155,9 @@ class DetailPrankSoundActivity : AppCompatActivity() {
     }
 
     private fun playSound(loop: Boolean) {
-        Log.d("ntt", "Loop $loop")
         if (mMediaState == Const.MEDIA_IDLE || mMediaState == Const.MEDIA_STOP) {
             mediaPlayer.reset()
             if (binding.btnTime.text == getString(R.string.string_off)) {
-                Log.d("ntt", "Loop 1 $loop")
                 mediaPlayer.isLooping = loop
 
                 val descriptor: AssetFileDescriptor =
@@ -182,7 +180,6 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                 val result = string.filter { it.isDigit() }
 
                 binding.layoutInformTime.visibility = View.VISIBLE
-                Log.d("ntt", "Loop 1 $loop")
                 mediaPlayer.isLooping = loop
 
                 val descriptor: AssetFileDescriptor =

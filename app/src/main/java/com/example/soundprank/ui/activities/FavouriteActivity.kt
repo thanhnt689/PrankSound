@@ -90,10 +90,8 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
     }
 
     private fun init() {
-
         soundViewModel.soundFavourite.observe(this) {
             listSound.clear()
-            Log.d("ntt", it.toString())
             val listSoundFavourite = arrayListOf<Sound>()
             listSoundFavourite.addAll(it)
             listSound.addAll(it)
@@ -136,8 +134,6 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
             listSoundCheck.remove(sound)
         }
 
-        Log.d("ntt", listSoundCheck.toString())
-
         if (listSoundCheck.isEmpty()) {
             binding.btnRemoveAll.visibility = View.GONE
             binding.btnSelectAll.text = getText(R.string.string_select_all)
@@ -145,6 +141,7 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
         } else if (listSoundCheck.size == listSound.size) {
             binding.btnSelectAll.text = getText(R.string.string_remove_all)
             showAll = true
+            binding.btnRemoveAll.visibility = View.VISIBLE
         } else {
             binding.btnRemoveAll.visibility = View.VISIBLE
         }

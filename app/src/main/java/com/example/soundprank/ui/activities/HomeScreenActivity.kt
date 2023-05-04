@@ -278,7 +278,14 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
             }
 
             R.id.menu_rate -> {
-                openRatingDialog("NavigationView")
+                val checkIsRating = sharedPreferences.getBoolean(Const.CHECK_IS_RATING, false)
+
+                if (!checkIsRating) {
+                    openRatingDialog("NavigationView")
+                } else {
+                    Toast.makeText(this, "You have rated the app!", Toast.LENGTH_SHORT).show()
+                }
+
                 true
             }
 

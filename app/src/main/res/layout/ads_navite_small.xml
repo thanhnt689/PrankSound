@@ -101,7 +101,7 @@
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:background="@drawable/bg_btn_app"
                 android:gravity="center"
-                android:text="Install"
+                android:text="@string/string_install"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
