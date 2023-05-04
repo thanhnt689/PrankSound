@@ -61,7 +61,7 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
 
         myViewModel = ViewModelProvider(this)[MyViewModel::class.java]
 
-        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+        //Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
         lifecycleScope.launch(Dispatchers.IO) {
             listAssetFile(soundPrank.path)
@@ -122,6 +122,10 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
         startActivity(intent)
     }
 
+//    private fun getRandomBoolean(): Boolean {
+//        return Math.random() > 0.5
+//    }
+
     private suspend fun listAssetFile(path: String) {
         val list: Array<String>?
 
@@ -133,7 +137,7 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
                     if (!viewModel.checkExist(file)) {
                         viewModel.insertSound(
                             Sound(
-                                name = "${soundPrank.name} ${list.indexOf(file)}",
+                                name = "${soundPrank.name} ${list.indexOf(file) + 1}",
                                 path = file,
                                 folder = soundPrank.path,
                                 image = soundPrank.image,
@@ -144,7 +148,7 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
                         val sound = viewModel.getSoundByPath(file)
                         viewModel.updateSound(
                             Sound(
-                                name = "${soundPrank.name} ${list.indexOf(file)}",
+                                name = "${soundPrank.name} ${list.indexOf(file) + 1}",
                                 path = sound.path,
                                 folder = sound.folder,
                                 image = sound.image,

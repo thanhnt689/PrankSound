@@ -22,8 +22,8 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_marginEnd="22dp"
         android:background="@drawable/bg_check_language_sc"
         android:padding="4dp"
@@ -42,20 +42,20 @@
         android:layout_marginBottom="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fr_ads3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_language" />
 
-    <FrameLayout
-        android:id="@+id/fr_ads3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+<!--    <FrameLayout-->
+<!--        android:id="@+id/fr_ads3"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:visibility="visible"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent">-->
 
-        <include layout="@layout/ads_navite_shimer_2" />
+<!--        <include layout="@layout/ads_navite_shimer_2" />-->
 
-    </FrameLayout>
+<!--    </FrameLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -86,6 +86,7 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
             binding.btnSelectAll.text = getString(R.string.string_select_all)
 
             listSoundCheck.clear()
+            showAll = false
         }
     }
 
@@ -112,7 +113,7 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
             }
         }
 
-        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+        // Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
         binding.btnSelectAll.isSelected = true
         binding.tvNoFavouriteYet.isSelected = true

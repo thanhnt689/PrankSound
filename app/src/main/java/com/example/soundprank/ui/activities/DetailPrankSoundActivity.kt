@@ -2,8 +2,10 @@ package com.example.soundprank.ui.activities
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.res.AssetFileDescriptor
 import android.graphics.Color
@@ -20,6 +22,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.amazic.ads.callback.NativeCallback
@@ -64,6 +67,10 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
     private val localeHelper = LocaleHelper()
 
+    private var timer: CountDownTimer? = null
+
+    private var ntt = false
+
     companion object {
         var check = false
     }
@@ -104,27 +111,28 @@ class DetailPrankSoundActivity : AppCompatActivity() {
             playSound(loop)
         }
 
-        Admob.getInstance().loadNativeAd(
-            this,
-            getString(R.string.id_ads_native),
-            object : NativeCallback() {
-                override fun onNativeAdLoaded(nativeAd: NativeAd?) {
-                    super.onNativeAdLoaded(nativeAd)
-                    Log.d("ThanhNT", "onNativeAdLoaded")
-                    val adView = LayoutInflater.from(this@DetailPrankSoundActivity)
-                        .inflate(R.layout.ads_navite_small, null) as NativeAdView
-                    binding.frAds3.removeAllViews()
-                    binding.frAds3.addView(adView)
-
-                    Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
-                }
-
-                override fun onAdFailedToLoad() {
-                    binding.frAds3.visibility = View.GONE
-                    binding.frAds3.removeAllViews()
-                }
-            })
-
+//        Admob.getInstance().loadNativeAd(
+//            this,
+//            getString(R.string.id_ads_native),
+//            object : NativeCallback() {
+//                override fun onNativeAdLoaded(nativeAd: NativeAd?) {
+//                    super.onNativeAdLoaded(nativeAd)
+//                    Log.d("ThanhNT", "onNativeAdLoaded")
+//                    val adView = LayoutInflater.from(this@DetailPrankSoundActivity)
+//                        .inflate(R.layout.ads_navite_small, null) as NativeAdView
+//
+//
+//                    binding.frAds3.removeAllViews()
+//                    binding.frAds3.addView(adView)
+//
+//                    Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
+//                }
+//
+//                override fun onAdFailedToLoad() {
+//                    binding.frAds3.visibility = View.GONE
+//                    binding.frAds3.removeAllViews()
+//                }
+//            })
         check = true
     }
 
@@ -154,11 +162,11 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         loadFavourite()
     }
 
-    private fun playSound(loop: Boolean) {
+    private fun playSound(isLoop: Boolean) {
         if (mMediaState == Const.MEDIA_IDLE || mMediaState == Const.MEDIA_STOP) {
             mediaPlayer.reset()
             if (binding.btnTime.text == getString(R.string.string_off)) {
-                mediaPlayer.isLooping = loop
+                mediaPlayer.isLooping = isLoop
 
                 val descriptor: AssetFileDescriptor =
                     this.assets.openFd("${sound.folder}/${sound.path}")
@@ -180,7 +188,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                 val result = string.filter { it.isDigit() }
 
                 binding.layoutInformTime.visibility = View.VISIBLE
-                mediaPlayer.isLooping = loop
+                mediaPlayer.isLooping = isLoop
 
                 val descriptor: AssetFileDescriptor =
                     this.assets.openFd("${sound.folder}/${sound.path}")
@@ -193,7 +201,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
                 mediaPlayer.prepare()
 
-                val timer = object : CountDownTimer((result.toInt() * 1000).toLong(), 1000) {
+                timer = object : CountDownTimer((result.toInt() * 1000).toLong(), 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val timeText = String.format(
                             "%d:%d",
@@ -207,30 +215,93 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                         );
                         binding.tvTime.text = timeText
                         binding.btnPlayOrPause.isClickable = false
+                        binding.btnFavourite.isClickable = false
+                        binding.btnLoop.isClickable = false
+                        binding.btnTime.isClickable = false
+                        binding.btnBack.isClickable = false
 
                     }
 
                     override fun onFinish() {
-                        mediaPlayer.start()
+                        if (!ntt) {
+                            mediaPlayer.start()
+                        } else {
+
+                            mediaPlayer.reset()
+
+                            mediaPlayer.prepare()
+
+                            mediaPlayer.isLooping = loop
+
+                            val descriptor: AssetFileDescriptor =
+                                assets.openFd("${sound.folder}/${sound.path}")
+                            mediaPlayer.setDataSource(
+                                descriptor.fileDescriptor,
+                                descriptor.startOffset,
+                                descriptor.length
+                            )
+                            descriptor.close()
+
+                            mediaPlayer.prepare()
+
+                            mediaPlayer.start()
+
+                        }
+
                         binding.btnPlayOrPause.isClickable = true
+                        binding.btnFavourite.isClickable = true
+                        binding.btnLoop.isClickable = true
+                        binding.btnTime.isClickable = true
+                        binding.btnBack.isClickable = true
+
+
                         checkSoundPlayOrStop(mediaPlayer)
+
+                        mediaPlayer.isLooping = false
+
+                        mediaPlayer.setOnCompletionListener {
+                            Log.d("ntt", "Complete")
+                            mMediaState = Const.MEDIA_STOP
+
+                            if (loop) {
+                                playSound(loop)
+                            }
+
+                            checkSoundPlayOrStop(mediaPlayer)
+                        }
+
+
+//                        mediaPlayer.isLooping = false
+//
+//                        mediaPlayer.setOnCompletionListener {
+//                            Log.d("ntt", "Complete")
+//                            mMediaState = Const.MEDIA_STOP
+//
+//                            if (loop) {
+//                                playSound(loop)
+//                            }
+//
+//                            checkSoundPlayOrStop(mediaPlayer)
+//                        }
                     }
                 }
-                timer.start()
+                timer?.start()
+
             }
 
         } else if (mMediaState == Const.MEDIA_PLAYING) {
             mediaPlayer.pause()
-            mediaPlayer.isLooping = loop
+            mediaPlayer.isLooping = isLoop
             checkSoundPlayOrStop(mediaPlayer)
-            mMediaState = Const.MEDIA_PAUSE
-
-        } else if (mMediaState == Const.MEDIA_PAUSE) {
-            mediaPlayer.start()
-            mediaPlayer.isLooping = loop
-            checkSoundPlayOrStop(mediaPlayer)
-            mMediaState = Const.MEDIA_PLAYING
+            mMediaState = Const.MEDIA_STOP
         }
+
+//        } else if (mMediaState == Const.MEDIA_PAUSE) {
+//            mediaPlayer.start()
+//            mediaPlayer.isLooping = loop
+//            checkSoundPlayOrStop(mediaPlayer)
+//            mMediaState = Const.MEDIA_PLAYING
+//        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -270,12 +341,32 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mediaPlayer.pause()
-        mediaPlayer.stop()
-        mediaPlayer.release()
+    override fun onStop() {
+        super.onStop()
+        if (timer != null) {
+            mediaPlayer.pause()
+            mediaPlayer.stop()
+            mediaPlayer.release()
+            timer?.cancel()
+        }
     }
+
+    override fun onStart() {
+        super.onStart()
+        if (timer != null) {
+            ntt = true
+            timer?.start()
+        }
+    }
+
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        if(timer != null) {
+//            mediaPlayer.pause()
+//            mediaPlayer.stop()
+//            mediaPlayer.release()
+//        }
+//    }
 
     private fun checkSoundPlayOrStop(mediaPlayer: MediaPlayer) {
         mMediaState = if (mediaPlayer.isPlaying) {
@@ -283,7 +374,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
             Const.MEDIA_PLAYING
         } else {
             binding.btnPlayOrPause.setImageResource(R.drawable.ic_play)
-            Const.MEDIA_PAUSE
+            Const.MEDIA_STOP
         }
         mediaPlayer.setOnCompletionListener {
             binding.btnPlayOrPause.setImageResource(R.drawable.ic_play)
@@ -397,8 +488,6 @@ class DetailPrankSoundActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-
         finish()
 
         updateNumShowRating()

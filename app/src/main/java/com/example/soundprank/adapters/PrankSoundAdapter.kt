@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.soundprank.callback.OnClickItemSoundPrank
@@ -30,7 +31,7 @@ class PrankSoundAdapter(
 
             val rnd = Random()
             val color: Int = Color.argb(145, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-            binding.clSoundPrank.setBackgroundColor(color)
+            binding.clSoundPrank.setBackgroundColor(soundPrank.colorBgText.toColorInt())
             binding.tvSoundPrank.text = soundPrank.name
 
             val rndR = Random()
@@ -39,7 +40,7 @@ class PrankSoundAdapter(
 
             val background: Drawable = binding.imgSoundPrank.background
             val gradientDrawable = background as GradientDrawable
-            gradientDrawable.setColor(colorR);
+            gradientDrawable.setColor(soundPrank.colorBgImage.toColorInt());
         }
 
     }

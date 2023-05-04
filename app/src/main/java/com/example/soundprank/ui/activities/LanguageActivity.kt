@@ -63,26 +63,26 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
         binding.rvLanguage.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        Admob.getInstance().loadNativeAd(
-            this,
-            getString(R.string.id_ads_native),
-            object : NativeCallback() {
-                override fun onNativeAdLoaded(nativeAd: NativeAd?) {
-                    super.onNativeAdLoaded(nativeAd)
-                    Log.d("ThanhNT", "onNativeAdLoaded")
-                    val adView = LayoutInflater.from(this@LanguageActivity)
-                        .inflate(R.layout.ads_native, null) as NativeAdView
-                    binding.frAds3.removeAllViews()
-                    binding.frAds3.addView(adView)
-
-                    Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
-                }
-
-                override fun onAdFailedToLoad() {
-                    binding.frAds3.visibility = View.GONE
-                    binding.frAds3.removeAllViews()
-                }
-            })
+//        Admob.getInstance().loadNativeAd(
+//            this,
+//            getString(R.string.id_ads_native),
+//            object : NativeCallback() {
+//                override fun onNativeAdLoaded(nativeAd: NativeAd?) {
+//                    super.onNativeAdLoaded(nativeAd)
+//                    Log.d("ThanhNT", "onNativeAdLoaded")
+//                    val adView = LayoutInflater.from(this@LanguageActivity)
+//                        .inflate(R.layout.ads_native, null) as NativeAdView
+//                    binding.frAds3.removeAllViews()
+//                    binding.frAds3.addView(adView)
+//
+//                    Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
+//                }
+//
+//                override fun onAdFailedToLoad() {
+//                    binding.frAds3.visibility = View.GONE
+//                    binding.frAds3.removeAllViews()
+//                }
+//            })
     }
 
     private fun clickButtonDone() {

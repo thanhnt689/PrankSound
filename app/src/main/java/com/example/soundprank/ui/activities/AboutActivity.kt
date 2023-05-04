@@ -10,7 +10,6 @@ import com.example.soundprank.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAboutBinding
-    private lateinit var btnBack: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAboutBinding.inflate(layoutInflater)
@@ -20,6 +19,10 @@ class AboutActivity : AppCompatActivity() {
             finish()
         }
 
-        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+        binding.tvAbout.text = getString(R.string.string_about)
+        binding.tvAppName.text = getString(R.string.app_name)
+        binding.tvVersion.text = getString(R.string.string_version_1_0)
+
+        // Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
     }
 }

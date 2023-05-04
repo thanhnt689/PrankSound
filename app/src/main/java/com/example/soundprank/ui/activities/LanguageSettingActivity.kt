@@ -73,7 +73,7 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         binding.rvLanguage.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+        // Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
     }
 

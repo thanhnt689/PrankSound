@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
@@ -30,9 +31,12 @@ import com.example.soundprank.adapters.PrankSoundAdapter
 import com.example.soundprank.callback.OnClickItemSoundPrank
 import com.example.soundprank.databinding.ActivityHomeScreenBinding
 import com.example.soundprank.models.SoundPrank
+import com.example.soundprank.utils.AdsInter
 import com.example.soundprank.utils.Const
 import com.example.soundprank.utils.LocaleHelper
 import com.example.soundprank.viewmodel.MyViewModel
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
 
@@ -86,9 +90,9 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         binding.rvListSoundPrank.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+        // Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
-        loadInter()
+        // loadInter()
 
     }
 
@@ -154,64 +158,178 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
     private fun getDataListPrankSound(): List<SoundPrank> {
         return listOf(
-            SoundPrank(R.drawable.ic_fart, getString(R.string.string_fart), "fart"),
+            SoundPrank(
+                R.drawable.ic_fart,
+                getString(R.string.string_fart),
+                "fart",
+                "#FF9832",
+                "#FFD59E"
+            ),
             SoundPrank(
                 R.drawable.ic_hair_clipper,
                 getString(R.string.string_hair_clipper),
-                "hair clipper"
+                "hair clipper", "#915EFF", "#CBB4FD"
             ),
-            SoundPrank(R.drawable.ic_air_horn, getString(R.string.string_air_horn), "air horn"),
-            SoundPrank(R.drawable.ic_scary, getString(R.string.string_scary), "scary"),
-            SoundPrank(R.drawable.ic_animals, getString(R.string.string_animals), "animals"),
-            SoundPrank(R.drawable.ic_alarm, getString(R.string.string_alarm), "alarm"),
-            SoundPrank(R.drawable.ic_cough, getString(R.string.string_cough), "cough"),
-            SoundPrank(R.drawable.ic_burp, getString(R.string.string_burp), "burp"),
-            SoundPrank(R.drawable.ic_breaking, getString(R.string.string_breaking), "breaking"),
+            SoundPrank(
+                R.drawable.ic_air_horn,
+                getString(R.string.string_air_horn),
+                "air horn",
+                "#77B6FF",
+                "#BADEFF"
+            ),
+            SoundPrank(
+                R.drawable.ic_scary,
+                getString(R.string.string_scary),
+                "scary",
+                "#E26CFF",
+                "#F4C9FF"
+            ),
+            SoundPrank(
+                R.drawable.ic_animals,
+                getString(R.string.string_animals),
+                "animals",
+                "#6B53FF",
+                "#BEB4FF"
+            ),
+            SoundPrank(
+                R.drawable.ic_alarm,
+                getString(R.string.string_alarm),
+                "alarm",
+                "#FF7A7A",
+                "#FFC9C9"
+            ),
+            SoundPrank(
+                R.drawable.ic_cough,
+                getString(R.string.string_cough),
+                "cough",
+                "#59D45E",
+                "#CBFDB4"
+            ),
+            SoundPrank(
+                R.drawable.ic_burp,
+                getString(R.string.string_burp),
+                "burp",
+                "#FFE300",
+                "#FFF5A3"
+            ),
+            SoundPrank(
+                R.drawable.ic_breaking,
+                getString(R.string.string_breaking),
+                "breaking",
+                "#2260FF",
+                "#C1D3FF"
+            ),
             SoundPrank(
                 R.drawable.ic_meme_sound,
                 getString(R.string.string_meme_sound),
-                "meme sound"
+                "meme sound", "#49BEFF", "#C1E7FD"
             ),
-            SoundPrank(R.drawable.ic_toilet, getString(R.string.string_toilet), "toilet"),
-            SoundPrank(R.drawable.ic_gun, getString(R.string.string_gun), "gun"),
-            SoundPrank(R.drawable.ic_bomb, getString(R.string.string_bomb), "bomb"),
-            SoundPrank(R.drawable.ic_snoring, getString(R.string.string_snoring), "snoring"),
-            SoundPrank(R.drawable.ic_crying, getString(R.string.string_crying), "crying"),
-            SoundPrank(R.drawable.ic_door_bell, getString(R.string.string_door_bell), "door bell"),
-            SoundPrank(R.drawable.ic_cat, getString(R.string.string_cat), "cat"),
-            SoundPrank(R.drawable.ic_dog, getString(R.string.string_dog), "dog"),
-            SoundPrank(R.drawable.ic_scissors, getString(R.string.string_scissors), "scissors"),
-            SoundPrank(R.drawable.ic_sneezing, getString(R.string.string_sneezing), "sneezing"),
-            SoundPrank(R.drawable.ic_car_horn, getString(R.string.string_car_horn), "car horn"),
+            SoundPrank(
+                R.drawable.ic_toilet,
+                getString(R.string.string_toilet),
+                "toilet",
+                "#FF7B52",
+                "#FFC5B2"
+            ),
+            SoundPrank(
+                R.drawable.ic_gun,
+                getString(R.string.string_gun),
+                "gun",
+                "#FFCE22",
+                "#FFECA8"
+            ),
+            SoundPrank(
+                R.drawable.ic_bomb,
+                getString(R.string.string_bomb),
+                "bomb",
+                "#EC3F37",
+                "#FFBFBC"
+            ),
+            SoundPrank(
+                R.drawable.ic_snoring,
+                getString(R.string.string_snoring),
+                "snoring",
+                "#ABEC42",
+                "#E3FFB5"
+            ),
+            SoundPrank(
+                R.drawable.ic_crying,
+                getString(R.string.string_crying),
+                "crying",
+                "#B455FF",
+                "#E1BBFF"
+            ),
+            SoundPrank(
+                R.drawable.ic_door_bell,
+                getString(R.string.string_door_bell),
+                "door bell",
+                "#FF9832",
+                "#FFD59E"
+            ),
+            SoundPrank(
+                R.drawable.ic_cat,
+                getString(R.string.string_cat),
+                "cat",
+                "#77B6FF",
+                "#BADEFF"
+            ),
+            SoundPrank(
+                R.drawable.ic_dog,
+                getString(R.string.string_dog),
+                "dog",
+                "#E26CFF",
+                "#F4C9FF"
+            ),
+            SoundPrank(
+                R.drawable.ic_scissors,
+                getString(R.string.string_scissors),
+                "scissors",
+                "#6B53FF",
+                "#BEB4FF"
+            ),
+            SoundPrank(
+                R.drawable.ic_sneezing,
+                getString(R.string.string_sneezing),
+                "sneezing",
+                "#FF7A7A",
+                "#FFC9C9"
+            ),
+            SoundPrank(
+                R.drawable.ic_car_horn,
+                getString(R.string.string_car_horn),
+                "car horn",
+                "#59D45E",
+                "#CBFDB4"
+            ),
         )
     }
 
     override fun onClickItemSoundPrank(soundPrank: SoundPrank, position: Int) {
-
         val num = sharedPreferences.getInt(Const.NUM_SHOW_INTER, 1)
 
-        if (num % 2 == 1) {
-            try {
-                Admob.getInstance()
-                    .showInterAds(
-                        this@HomeScreenActivity,
-                        mInterstitialAd,
-                        object : InterCallback() {
-                            override fun onNextAction() {
-                                super.onNextAction()
-                                val intent =
-                                    Intent(this@HomeScreenActivity, SoundActivity::class.java)
-                                val bundle = Bundle()
-                                bundle.putSerializable("sound_prank", soundPrank)
-                                intent.putExtras(bundle)
-                                intent.putExtra("position", position)
-                                startActivity(intent)
-                            }
-                        })
-            } catch (exception: Exception) {
-                Log.d("ntt", exception.toString())
-            }
-        } else {
+//        if (num % 2 == 1) {
+//            try {
+//                Log.d("ntt", "Load inter ads true")
+//                Admob.getInstance()
+//                    .showInterAds(
+//                        this@HomeScreenActivity,
+//                        AdsInter.inter_intro,
+//                        object : InterCallback() {
+//                            override fun onNextAction() {
+//                                super.onNextAction()
+//                                val intent =
+//                                    Intent(this@HomeScreenActivity, SoundActivity::class.java)
+//                                val bundle = Bundle()
+//                                bundle.putSerializable("sound_prank", soundPrank)
+//                                intent.putExtras(bundle)
+//                                intent.putExtra("position", position)
+//                                startActivity(intent)
+//                            }
+//                        })
+//            } catch (exception: Exception) {
+//                Log.d("ntt", "Load inter ads error: $exception")
+//            }
+//        } else {
             val intent =
                 Intent(this@HomeScreenActivity, SoundActivity::class.java)
             val bundle = Bundle()
@@ -219,23 +337,17 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
             intent.putExtras(bundle)
             intent.putExtra("position", position)
             startActivity(intent)
-        }
+//        }
 
         editTor.putInt(Const.NUM_SHOW_INTER, num + 1)
 
         editTor.apply()
     }
 
-    private fun loadInter() {
-        Admob.getInstance()
-            .loadInterAds(this, getString(R.string.id_ads_inter), object : InterCallback() {
-                override fun onInterstitialLoad(interstitialAd: InterstitialAd?) {
-                    super.onInterstitialLoad(interstitialAd)
-
-                    mInterstitialAd = interstitialAd
-
-                }
-            })
+    override fun onStart() {
+        super.onStart()
+        Log.d("ntt", "onStart")
+//        loadInter()
     }
 
     override fun onBackPressed() {
@@ -408,5 +520,31 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
         dialog.show()
     }
+
+//    private fun loadInter() {
+//        if (AdsInter.inter_intro == null) {
+//            Admob.getInstance()
+//                .loadInterAds(this, getString(R.string.id_ads_inter), object : InterCallback() {
+//                    override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
+//                        super.onInterstitialLoad(interstitialAd2)
+//                        AdsInter.inter_intro = interstitialAd2
+//                        Log.d("ntt", "Load true")
+//                        // Show button
+//                    }
+//
+//                    override fun onAdFailedToLoad(i: LoadAdError?) {
+//                        super.onAdFailedToLoad(i)
+//                        Log.d("ntt", "Load false to load")
+//                        // Show button
+//                    }
+//
+//                    override fun onAdFailedToShow(adError: AdError?) {
+//                        super.onAdFailedToShow(adError)
+//                        Log.d("ntt", "Load false to show")
+//                        // Show button
+//                    }
+//                })
+//        }
+//    }
 
 }

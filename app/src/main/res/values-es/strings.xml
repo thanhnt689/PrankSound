@@ -41,11 +41,6 @@
     <string name="string_do_you_like_the_app">¿Te gusta la aplicación?</string>
     <string name="string_loop">Bucle</string>
 
-    <string name="string_off">Apagada</string>
-    <string name="string_5s">5s</string>
-    <string name="string_10s">10s</string>
-    <string name="string_15s">15s</string>
-    <string name="string_30s">30s</string>
     <string name="string_set_timer_for_this_sound">Establecer temporizador para este sonido</string>
 
     <string name="string_select_all">Seleccionar todo</string>
@@ -53,5 +48,6 @@
     <string name="string_no_favourite_yet">Ningún favorito todavía</string>
     <string name="string_remove_from_favourite">Quitar de favoritos</string>
 
+    <string name="string_version_1_0">Versión 1.0</string>
 
 </resources>

@@ -41,11 +41,6 @@
     <string name="string_do_you_like_the_app">क्या आपको ऐप पसंद है?</string>
     <string name="string_loop">कुंडली</string>
 
-    <string name="string_off">बंद</string>
-    <string name="string_5s">5एस</string>
-    <string name="string_10s">10एस</string>
-    <string name="string_15s">15एस</string>
-    <string name="string_30s">30एस</string>
     <string name="string_set_timer_for_this_sound">इस ध्वनि के लिए टाइमर सेट करें</string>
 
     <string name="string_select_all">सबका चयन करें</string>
@@ -53,5 +48,5 @@
     <string name="string_no_favourite_yet">अभी तक कोई पसंदीदा नहीं है</string>
     <string name="string_remove_from_favourite">पसंदीदा से हटाएं</string>
 
-
+    <string name="string_version_1_0">संस्करण 1.0</string>
 </resources>

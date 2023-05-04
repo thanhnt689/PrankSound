@@ -9,8 +9,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
@@ -51,7 +53,7 @@ class IntroActivity : AppCompatActivity() {
 
         initData()
 
-        loadInter()
+        // loadInter()
 
         binding.vpIntroSlider.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
@@ -120,26 +122,27 @@ class IntroActivity : AppCompatActivity() {
 
     private fun initData() {
 
-        Admob.getInstance().loadNativeAd(
-            this,
-            getString(R.string.id_ads_native),
-            object : NativeCallback() {
-                override fun onNativeAdLoaded(nativeAd: NativeAd?) {
-                    super.onNativeAdLoaded(nativeAd)
-                    Log.d("ThanhNT", "onNativeAdLoaded")
-                    val adView = LayoutInflater.from(this@IntroActivity)
-                        .inflate(R.layout.ads_navite_small, null) as NativeAdView
-                    binding.frAds3.removeAllViews()
-                    binding.frAds3.addView(adView)
-
-                    Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
-                }
-
-                override fun onAdFailedToLoad() {
-                    binding.frAds3.visibility = View.GONE
-                    binding.frAds3.removeAllViews()
-                }
-            })
+//        Admob.getInstance().loadNativeAd(
+//            this,
+//            getString(R.string.id_ads_native),
+//            object : NativeCallback() {
+//                override fun onNativeAdLoaded(nativeAd: NativeAd?) {
+//                    super.onNativeAdLoaded(nativeAd)
+//                    Log.d("ThanhNT", "onNativeAdLoaded")
+//                    val adView = LayoutInflater.from(this@IntroActivity)
+//                        .inflate(R.layout.ads_navite_small, null) as NativeAdView
+//
+//                    binding.frAds3.removeAllViews()
+//                    binding.frAds3.addView(adView)
+//
+//                    Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
+//                }
+//
+//                override fun onAdFailedToLoad() {
+//                    binding.frAds3.visibility = View.GONE
+//                    binding.frAds3.removeAllViews()
+//                }
+//            })
 
         sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
 
@@ -203,49 +206,33 @@ class IntroActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadInter() {
-        if (AdsInter.inter_intro == null) {
-            Admob.getInstance()
-                .loadInterAds(this, getString(R.string.id_ads_inter), object : InterCallback() {
-                    override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
-                        super.onInterstitialLoad(interstitialAd2)
-                        AdsInter.inter_intro = interstitialAd2
-                        Log.d("ntt", "Load true")
-                        // Show button
-                        binding.btnNext.visibility = View.VISIBLE
-                    }
+//    private fun loadInter() {
+//        if (AdsInter.inter_intro == null) {
+//            Admob.getInstance()
+//                .loadInterAds(this, getString(R.string.id_ads_inter), object : InterCallback() {
+//                    override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
+//                        super.onInterstitialLoad(interstitialAd2)
+//                        AdsInter.inter_intro = interstitialAd2
+//                        Log.d("ntt", "Load true")
+//                        // Show button
+//                        binding.btnNext.visibility = View.VISIBLE
+//                    }
+//
+//                    override fun onAdFailedToLoad(i: LoadAdError?) {
+//                        super.onAdFailedToLoad(i)
+//                        Log.d("ntt", "Load false to load")
+//                        // Show button
+//                        binding.btnNext.visibility = View.VISIBLE
+//                    }
+//
+//                    override fun onAdFailedToShow(adError: AdError?) {
+//                        super.onAdFailedToShow(adError)
+//                        Log.d("ntt", "Load false to show")
+//                        // Show button
+//                        binding.btnNext.visibility = View.VISIBLE
+//                    }
+//                })
+//        }
+//    }
 
-                    override fun onAdFailedToLoad(i: LoadAdError?) {
-                        super.onAdFailedToLoad(i)
-                        Log.d("ntt", "Load false to load")
-                        // Show button
-                        binding.btnNext.visibility = View.VISIBLE
-                    }
-
-                    override fun onAdFailedToShow(adError: AdError?) {
-                        super.onAdFailedToShow(adError)
-                        Log.d("ntt", "Load false to show")
-                        // Show button
-                        binding.btnNext.visibility = View.VISIBLE
-                    }
-                })
-        }
-    }
-
-    private fun showActivity() {
-        try {
-            Admob.getInstance().showInterAds(this, AdsInter.inter_intro, object : InterCallback() {
-                override fun onNextAction() {
-                    super.onNextAction()
-                    val intent = Intent(this@IntroActivity, IntroActivity::class.java)
-                    startActivity(
-                        intent
-                    )
-                    finish()
-                }
-            })
-        } catch (exception: Exception) {
-            Log.d("ntt", exception.toString())
-        }
-    }
 }
