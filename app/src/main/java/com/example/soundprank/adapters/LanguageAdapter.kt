@@ -1,6 +1,9 @@
 package com.example.soundprank.adapters
 
+import android.R
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +29,7 @@ class LanguageAdapter(
                 .centerCrop()
                 .into(binding.imgLanguage)
             binding.rbLanguage.isChecked = language.isSelected
+
         }
     }
 
@@ -54,6 +58,17 @@ class LanguageAdapter(
         holder.binding.root.setOnClickListener {
             onClickItemLanguage.onClick(languages[position])
         }
+
+        val colorStateList = ColorStateList(
+            arrayOf<IntArray>(
+                intArrayOf(R.attr.state_checked), intArrayOf()
+            ), intArrayOf(
+                Color.parseColor("#F5871A"),  //checked color
+                Color.parseColor("#BEC7D8")  //normal color
+            )
+        )
+
+        holder.binding.rbLanguage.buttonTintList = colorStateList
 
         holder.binding.rbLanguage.isChecked = languages[position].isSelected
     }

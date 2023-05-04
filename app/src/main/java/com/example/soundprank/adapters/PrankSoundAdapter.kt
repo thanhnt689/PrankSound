@@ -29,14 +29,8 @@ class PrankSoundAdapter(
 
             binding.tvSoundPrank.isSelected = true
 
-            val rnd = Random()
-            val color: Int = Color.argb(145, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
             binding.clSoundPrank.setBackgroundColor(soundPrank.colorBgText.toColorInt())
             binding.tvSoundPrank.text = soundPrank.name
-
-            val rndR = Random()
-            val colorR: Int =
-                Color.argb(145, rndR.nextInt(256), rndR.nextInt(256), rndR.nextInt(256))
 
             val background: Drawable = binding.imgSoundPrank.background
             val gradientDrawable = background as GradientDrawable

@@ -46,6 +46,7 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
 class DetailPrankSoundActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityDetailPrankSoundBinding
 
     private lateinit var viewModel: MyViewModel
@@ -57,7 +58,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
     private var loop: Boolean = false
 
-    private val mediaPlayer = MediaPlayer()
+    private var mediaPlayer = MediaPlayer()
 
     private var mMediaState: Int = Const.MEDIA_IDLE
 
@@ -69,7 +70,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
     private var timer: CountDownTimer? = null
 
-    private var ntt = false
+    private var time: Long = 0L
 
     companion object {
         var check = false
@@ -201,7 +202,12 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
                 mediaPlayer.prepare()
 
-                timer = object : CountDownTimer((result.toInt() * 1000).toLong(), 1000) {
+                val t: Long = if (time == 0L) {
+                    (result.toInt() * 1000).toLong()
+                } else {
+                    time
+                }
+                timer = object : CountDownTimer(t, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val timeText = String.format(
                             "%d:%d",
@@ -214,6 +220,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                                     )
                         );
                         binding.tvTime.text = timeText
+                        time = millisUntilFinished
                         binding.btnPlayOrPause.isClickable = false
                         binding.btnFavourite.isClickable = false
                         binding.btnLoop.isClickable = false
@@ -223,31 +230,8 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                     }
 
                     override fun onFinish() {
-                        if (!ntt) {
-                            mediaPlayer.start()
-                        } else {
-
-                            mediaPlayer.reset()
-
-                            mediaPlayer.prepare()
-
-                            mediaPlayer.isLooping = loop
-
-                            val descriptor: AssetFileDescriptor =
-                                assets.openFd("${sound.folder}/${sound.path}")
-                            mediaPlayer.setDataSource(
-                                descriptor.fileDescriptor,
-                                descriptor.startOffset,
-                                descriptor.length
-                            )
-                            descriptor.close()
-
-                            mediaPlayer.prepare()
-
-                            mediaPlayer.start()
-
-                        }
-
+                        mediaPlayer.start()
+                        time = 0
                         binding.btnPlayOrPause.isClickable = true
                         binding.btnFavourite.isClickable = true
                         binding.btnLoop.isClickable = true
@@ -269,20 +253,6 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
                             checkSoundPlayOrStop(mediaPlayer)
                         }
-
-
-//                        mediaPlayer.isLooping = false
-//
-//                        mediaPlayer.setOnCompletionListener {
-//                            Log.d("ntt", "Complete")
-//                            mMediaState = Const.MEDIA_STOP
-//
-//                            if (loop) {
-//                                playSound(loop)
-//                            }
-//
-//                            checkSoundPlayOrStop(mediaPlayer)
-//                        }
                     }
                 }
                 timer?.start()
@@ -302,6 +272,25 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 //            checkSoundPlayOrStop(mediaPlayer)
 //            mMediaState = Const.MEDIA_PLAYING
 //        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (timer != null) {
+            mediaPlayer.pause()
+            mediaPlayer.stop()
+            mediaPlayer.release()
+            timer?.cancel()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (timer != null) {
+            mediaPlayer = MediaPlayer()
+            //timer!!.onTick(time)
+            playSound(loop)
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -341,23 +330,6 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        if (timer != null) {
-            mediaPlayer.pause()
-            mediaPlayer.stop()
-            mediaPlayer.release()
-            timer?.cancel()
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if (timer != null) {
-            ntt = true
-            timer?.start()
-        }
-    }
 
 //    override fun onDestroy() {
 //        super.onDestroy()
