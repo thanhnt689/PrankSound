@@ -50,7 +50,6 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
             clickButtonDone()
         }
 
-
     }
 
     private fun init() {
@@ -86,7 +85,6 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
     }
 
     private fun clickButtonDone() {
-
         if (mLanguage == null) {
             Toast.makeText(this, "Please select language", Toast.LENGTH_SHORT).show()
         } else {
@@ -110,6 +108,9 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
     }
 
     private fun setLanguageDefault(): List<Language> {
+
+        mLanguage = Language(R.drawable.language_english, "English", "en", true)
+
         val languages: MutableList<Language> = ArrayList()
         val localeHelper = LocaleHelper()
         val key: String = localeHelper.getLanguage(this).toString()
@@ -122,11 +123,12 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
             "pt" -> mLanguage = Language(R.drawable.language_portuguese, "Portuguese", "pt", false)
         }
 
-        languages.add(Language(R.drawable.language_english, "English", "en", false))
+        languages.add(Language(R.drawable.language_english, "English", "en", true))
         languages.add(Language(R.drawable.language_spanish, "Spanish", "es", false))
         languages.add(Language(R.drawable.language_french, "French", "fr", false))
         languages.add(Language(R.drawable.language_hindi, "Hindi", "hi", false))
         languages.add(Language(R.drawable.language_portuguese, "Portuguese", "pt", false))
+
 
         for (i in languages.indices) {
             if (key == languages[i].languageCode) {

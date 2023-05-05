@@ -10,15 +10,25 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.soundprank.R
 import com.example.soundprank.adapters.IntroSlideAdapter
 import com.example.soundprank.databinding.ActivityIntroBinding
 import com.example.soundprank.models.IntroSlide
+import com.example.soundprank.models.Sound
+import com.example.soundprank.models.SoundPrank
 import com.example.soundprank.utils.LocaleHelper
+import com.example.soundprank.viewmodel.SoundViewModel
+import com.example.soundprank.viewmodel.SoundViewModelFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.IOException
+import java.util.Random
 
 
 class IntroActivity : AppCompatActivity() {
@@ -35,6 +45,10 @@ class IntroActivity : AppCompatActivity() {
         IntroSlide(R.drawable.intro_slide_2),
         IntroSlide(R.drawable.intro_slide_3)
     )
+
+    private val soundViewModel: SoundViewModel by viewModels() {
+        SoundViewModelFactory(application)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +71,229 @@ class IntroActivity : AppCompatActivity() {
             clickButtonNext()
         }
 
+        lifecycleScope.launch(Dispatchers.IO) {
+            updateData()
+        }
+
+    }
+
+    private suspend fun updateData() {
+        val listPrankSound = getDataListPrankSound()
+        for (soundPrank: SoundPrank in listPrankSound) {
+            listAssetFile(soundPrank.path, soundPrank)
+        }
+    }
+
+    private fun getRandomBoolean(): Boolean {
+        var favourite = false
+        val random = Random().nextInt(14)
+        if (random == 4 || random == 5) {
+            favourite = true
+        }
+        return favourite
+    }
+
+    private fun getDataListPrankSound(): List<SoundPrank> {
+        return listOf(
+            SoundPrank(
+                R.drawable.ic_fart,
+                getString(R.string.string_fart),
+                "fart",
+                "#FF9832",
+                "#FFD59E"
+            ),
+            SoundPrank(
+                R.drawable.ic_hair_clipper,
+                getString(R.string.string_hair_clipper),
+                "hair clipper", "#915EFF", "#CBB4FD"
+            ),
+            SoundPrank(
+                R.drawable.ic_air_horn,
+                getString(R.string.string_air_horn),
+                "air horn",
+                "#77B6FF",
+                "#BADEFF"
+            ),
+            SoundPrank(
+                R.drawable.ic_scary,
+                getString(R.string.string_scary),
+                "scary",
+                "#E26CFF",
+                "#F4C9FF"
+            ),
+            SoundPrank(
+                R.drawable.ic_animals,
+                getString(R.string.string_animals),
+                "animals",
+                "#6B53FF",
+                "#BEB4FF"
+            ),
+            SoundPrank(
+                R.drawable.ic_alarm,
+                getString(R.string.string_alarm),
+                "alarm",
+                "#FF7A7A",
+                "#FFC9C9"
+            ),
+            SoundPrank(
+                R.drawable.ic_cough,
+                getString(R.string.string_cough),
+                "cough",
+                "#59D45E",
+                "#CBFDB4"
+            ),
+            SoundPrank(
+                R.drawable.ic_burp,
+                getString(R.string.string_burp),
+                "burp",
+                "#FFE300",
+                "#FFF5A3"
+            ),
+            SoundPrank(
+                R.drawable.ic_breaking,
+                getString(R.string.string_breaking),
+                "breaking",
+                "#2260FF",
+                "#C1D3FF"
+            ),
+            SoundPrank(
+                R.drawable.ic_meme_sound,
+                getString(R.string.string_meme_sound),
+                "meme sound", "#49BEFF", "#C1E7FD"
+            ),
+            SoundPrank(
+                R.drawable.ic_toilet,
+                getString(R.string.string_toilet),
+                "toilet",
+                "#FF7B52",
+                "#FFC5B2"
+            ),
+            SoundPrank(
+                R.drawable.ic_gun,
+                getString(R.string.string_gun),
+                "gun",
+                "#FFCE22",
+                "#FFECA8"
+            ),
+            SoundPrank(
+                R.drawable.ic_bomb,
+                getString(R.string.string_bomb),
+                "bomb",
+                "#EC3F37",
+                "#FFBFBC"
+            ),
+            SoundPrank(
+                R.drawable.ic_snoring,
+                getString(R.string.string_snoring),
+                "snoring",
+                "#ABEC42",
+                "#E3FFB5"
+            ),
+            SoundPrank(
+                R.drawable.ic_crying,
+                getString(R.string.string_crying),
+                "crying",
+                "#B455FF",
+                "#E1BBFF"
+            ),
+            SoundPrank(
+                R.drawable.ic_door_bell,
+                getString(R.string.string_door_bell),
+                "door bell",
+                "#FF9832",
+                "#FFD59E"
+            ),
+            SoundPrank(
+                R.drawable.ic_cat,
+                getString(R.string.string_cat),
+                "cat",
+                "#77B6FF",
+                "#BADEFF"
+            ),
+            SoundPrank(
+                R.drawable.ic_dog,
+                getString(R.string.string_dog),
+                "dog",
+                "#E26CFF",
+                "#F4C9FF"
+            ),
+            SoundPrank(
+                R.drawable.ic_scissors,
+                getString(R.string.string_scissors),
+                "scissors",
+                "#6B53FF",
+                "#BEB4FF"
+            ),
+            SoundPrank(
+                R.drawable.ic_sneezing,
+                getString(R.string.string_sneezing),
+                "sneezing",
+                "#FF7A7A",
+                "#FFC9C9"
+            ),
+            SoundPrank(
+                R.drawable.ic_car_horn,
+                getString(R.string.string_car_horn),
+                "car horn",
+                "#59D45E",
+                "#CBFDB4"
+            ),
+        )
+    }
+
+    private suspend fun listAssetFile(path: String, soundPrank: SoundPrank) {
+        val list: Array<String>?
+
+        try {
+            list = assets.list(path)
+            if (list!!.isNotEmpty()) {
+                for (file in list) {
+                    println("File path = $file")
+                    if (!soundViewModel.checkExist(file)) {
+                        soundViewModel.insertSound(
+                            Sound(
+                                name = "${soundPrank.name} ${list.indexOf(file) + 1}",
+                                path = file,
+                                folder = soundPrank.path,
+                                image = soundPrank.image,
+                                favourite = getRandomBoolean()
+                            )
+                        )
+                    } else {
+                        val sound = soundViewModel.getSoundByPath(file)
+                        soundViewModel.updateSound(
+                            Sound(
+                                name = "${soundPrank.name} ${list.indexOf(file) + 1}",
+                                path = sound.path,
+                                folder = sound.folder,
+                                image = sound.image,
+                                favourite = sound.favourite
+                            )
+                        )
+                    }
+                    if (file.indexOf(".") < 0) { // <<-- check if filename has a . then it is a file - hopefully directory names dont have .
+                        if (path == "") {
+                            listAssetFile(
+                                file,
+                                soundPrank
+                            ) // <<-- To get subdirectory files and directories list and check
+                        } else {
+                            listAssetFile(
+                                "$path/$file",
+                                soundPrank
+                            ) // <<-- For Multiple level subdirectories
+                        }
+                    } else {
+                        println("This is a file = $path/$file")
+                    }
+                }
+            } else {
+                println("Failed Path = $path")
+                println("Check path again.")
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 
     private fun clickButtonNext() {

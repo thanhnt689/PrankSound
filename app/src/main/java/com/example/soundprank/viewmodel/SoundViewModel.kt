@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class SoundViewModel(private val app: Application) : ViewModel() {
     private val soundRepository: SoundRepository = SoundRepository(
-        SoundDatabase.getInstance(app.applicationContext).getSoundDao()
+        SoundDatabase.getInstance(app.applicationContext, viewModelScope).getSoundDao()
     )
 
     val sounds = soundRepository.getAllSound()

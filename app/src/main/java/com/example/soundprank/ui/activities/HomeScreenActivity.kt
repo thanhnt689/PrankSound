@@ -1,9 +1,7 @@
 package com.example.soundprank.ui.activities
 
-import android.R.id.message
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -23,7 +21,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.soundprank.R
 import com.example.soundprank.adapters.PrankSoundAdapter
@@ -34,7 +31,11 @@ import com.example.soundprank.utils.Const
 import com.example.soundprank.utils.LocaleHelper
 import com.example.soundprank.viewmodel.MyViewModel
 import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.tasks.Task
 import com.google.android.material.navigation.NavigationView
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
 
 
 class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
@@ -53,6 +54,9 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     private lateinit var myViewModel: MyViewModel
 
     private val localeHelper = LocaleHelper()
+
+    private var manager: ReviewManager? = null
+    private var reviewInfo: ReviewInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -380,6 +384,7 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         }
     }
 
+
     @SuppressLint("IntentReset")
     private fun openRatingDialog(start: String) {
         val dialog = Dialog(this)
@@ -461,36 +466,83 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                 when (ratingBar.rating.toString()) {
                     "1.0", "2.0", "3.0" -> {
 
-//                        val uriText = "mailto:playyg@yakinglobal.com?subject=Review for Voice Lock&body=----Mail content----\nVoice Lock\nRate: $message\nContent: "
-//
-//                        val uri = Uri.parse(uriText)
-//
-//                        val sendIntent = Intent(Intent.ACTION_SENDTO)
-//
-//                        sendIntent.type = "text/html"
-//
-//                        sendIntent.putExtra(Intent.EXTRA_EMAIL, "mailto:playyg@yakinglobal.com")
-//
-//                        sendIntent.data = uri
-//
-//                        startActivity(Intent.createChooser(sendIntent, "Send Email"))
+                        val uriText =
+                            "mailto:playyg@yakinglobal.com?subject=Review for Sound Prank &body=----Mail content----\nSoundPrank\nRate: ${ratingBar.rating.toString()}\nContent: "
+
+                        val uri = Uri.parse(uriText)
+
+                        val sendIntent = Intent(Intent.ACTION_SENDTO)
+
+                        sendIntent.type = "text/html"
+
+                        sendIntent.putExtra(Intent.EXTRA_EMAIL, "mailto:playyg@yakinglobal.com")
+
+                        sendIntent.data = uri
+
+                        startActivity(Intent.createChooser(sendIntent, "Send Email"))
+
+                        if (start == "BackPress") {
+                            dialog.dismiss()
+                            finish()
+                        } else if (start == "NavigationView") {
+                            dialog.dismiss()
+                        }
+
+                        editTor.putBoolean(Const.CHECK_IS_RATING, true)
+
+                        editTor.apply()
                     }
 
                     "4.0", "5.0" -> {
 
+                        manager = ReviewManagerFactory.create(this@HomeScreenActivity)
+                        val request: Task<ReviewInfo> =
+                            manager?.requestReviewFlow() as Task<ReviewInfo>
+                        request.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                reviewInfo = task.result
+                                Log.e("ReviewInfo", "" + reviewInfo.toString())
+                                val flow: Task<Void> =
+                                    manager?.launchReviewFlow(
+                                        this@HomeScreenActivity,
+                                        reviewInfo!!
+                                    ) as Task<Void>
+                                flow.addOnSuccessListener {
+                                    if (start == "BackPress") {
+                                        dialog.dismiss()
+                                        finish()
+                                    } else if (start == "NavigationView") {
+                                        dialog.dismiss()
+                                    }
+
+                                    editTor.putBoolean(Const.CHECK_IS_RATING, true)
+
+                                    editTor.apply()
+                                    // finish()
+                                }
+                            } else {
+                                if (start == "BackPress") {
+                                    dialog.dismiss()
+                                    finish()
+                                } else if (start == "NavigationView") {
+                                    dialog.dismiss()
+                                }
+                                //finish()
+                            }
+                        }
                     }
                 }
 
-                if (start == "BackPress") {
-                    dialog.dismiss()
-                    finish()
-                } else if (start == "NavigationView") {
-                    dialog.dismiss()
-                }
-
-                editTor.putBoolean(Const.CHECK_IS_RATING, true)
-
-                editTor.apply()
+//                if (start == "BackPress") {
+//                    dialog.dismiss()
+//                    finish()
+//                } else if (start == "NavigationView") {
+//                    dialog.dismiss()
+//                }
+//
+//                editTor.putBoolean(Const.CHECK_IS_RATING, true)
+//
+//                editTor.apply()
             }
         }
 

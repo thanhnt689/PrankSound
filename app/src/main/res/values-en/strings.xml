@@ -52,6 +52,6 @@
     <string name="string_no_favourite_yet">No favourite yet</string>
     <string name="string_remove_from_favourite">Remove from favourite</string>
 
-    <string name="string_version_1_0">Version 1.0</string>
+    <string name="string_version_1_0">Version 1.0.0</string>
 
 </resources>

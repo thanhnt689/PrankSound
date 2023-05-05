@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Window
@@ -31,6 +32,10 @@ import com.example.soundprank.utils.Const
 import com.example.soundprank.viewmodel.MyViewModel
 import com.example.soundprank.viewmodel.SoundViewModel
 import com.example.soundprank.viewmodel.SoundViewModelFactory
+import com.google.android.gms.tasks.Task
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -52,6 +57,10 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
 
     private lateinit var editTor: SharedPreferences.Editor
 
+    private var manager: ReviewManager? = null
+
+    private var reviewInfo: ReviewInfo? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySoundBinding.inflate(layoutInflater)
@@ -63,9 +72,9 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
 
         //Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            listAssetFile(soundPrank.path)
-        }
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            listAssetFile(soundPrank.path)
+//        }
 
         viewModel.sounds.observe(this) {
             Log.d("ntt", it.toString())
@@ -122,58 +131,54 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
         startActivity(intent)
     }
 
-//    private fun getRandomBoolean(): Boolean {
-//        return Math.random() > 0.5
+//    private suspend fun listAssetFile(path: String) {
+//        val list: Array<String>?
+//
+//        try {
+//            list = assets.list(path)
+//            if (list!!.isNotEmpty()) {
+//                for (file in list) {
+//                    println("File path = $file")
+//                    if (!viewModel.checkExist(file)) {
+//                        viewModel.insertSound(
+//                            Sound(
+//                                name = "${soundPrank.name} ${list.indexOf(file) + 1}",
+//                                path = file,
+//                                folder = soundPrank.path,
+//                                image = soundPrank.image,
+//                                favourite = false
+//                            )
+//                        )
+//                    } else {
+//                        val sound = viewModel.getSoundByPath(file)
+//                        viewModel.updateSound(
+//                            Sound(
+//                                name = "${soundPrank.name} ${list.indexOf(file) + 1}",
+//                                path = sound.path,
+//                                folder = sound.folder,
+//                                image = sound.image,
+//                                favourite = sound.favourite
+//                            )
+//                        )
+//                    }
+//                    if (file.indexOf(".") < 0) { // <<-- check if filename has a . then it is a file - hopefully directory names dont have .
+//                        if (path == "") {
+//                            listAssetFile(file) // <<-- To get subdirectory files and directories list and check
+//                        } else {
+//                            listAssetFile("$path/$file") // <<-- For Multiple level subdirectories
+//                        }
+//                    } else {
+//                        println("This is a file = $path/$file")
+//                    }
+//                }
+//            } else {
+//                println("Failed Path = $path")
+//                println("Check path again.")
+//            }
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
 //    }
-
-    private suspend fun listAssetFile(path: String) {
-        val list: Array<String>?
-
-        try {
-            list = assets.list(path)
-            if (list!!.isNotEmpty()) {
-                for (file in list) {
-                    println("File path = $file")
-                    if (!viewModel.checkExist(file)) {
-                        viewModel.insertSound(
-                            Sound(
-                                name = "${soundPrank.name} ${list.indexOf(file) + 1}",
-                                path = file,
-                                folder = soundPrank.path,
-                                image = soundPrank.image,
-                                favourite = false
-                            )
-                        )
-                    } else {
-                        val sound = viewModel.getSoundByPath(file)
-                        viewModel.updateSound(
-                            Sound(
-                                name = "${soundPrank.name} ${list.indexOf(file) + 1}",
-                                path = sound.path,
-                                folder = sound.folder,
-                                image = sound.image,
-                                favourite = sound.favourite
-                            )
-                        )
-                    }
-                    if (file.indexOf(".") < 0) { // <<-- check if filename has a . then it is a file - hopefully directory names dont have .
-                        if (path == "") {
-                            listAssetFile(file) // <<-- To get subdirectory files and directories list and check
-                        } else {
-                            listAssetFile("$path/$file") // <<-- For Multiple level subdirectories
-                        }
-                    } else {
-                        println("This is a file = $path/$file")
-                    }
-                }
-            } else {
-                println("Failed Path = $path")
-                println("Check path again.")
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
 
     private fun openRatingDialog() {
         val dialog = Dialog(this)
@@ -246,16 +251,65 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                Toast.makeText(
-                    this,
-                    "Thank for the rate: ${ratingBar.rating}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                when (ratingBar.rating.toString()) {
+                    "1.0", "2.0", "3.0" -> {
 
-                dialog.dismiss()
+                        val uriText =
+                            "mailto:playyg@yakinglobal.com?subject=Review for Sound Prank &body=----Mail content----\nSoundPrank\nRate: ${ratingBar.rating.toString()}\nContent: "
 
-                editTor.putBoolean(Const.CHECK_IS_RATING, true)
-                editTor.apply()
+                        val uri = Uri.parse(uriText)
+
+                        val sendIntent = Intent(Intent.ACTION_SENDTO)
+
+                        sendIntent.type = "text/html"
+
+                        sendIntent.putExtra(Intent.EXTRA_EMAIL, "mailto:playyg@yakinglobal.com")
+
+                        sendIntent.data = uri
+
+                        startActivity(Intent.createChooser(sendIntent, "Send Email"))
+
+
+                        dialog.dismiss()
+
+
+                        editTor.putBoolean(Const.CHECK_IS_RATING, true)
+
+                        editTor.apply()
+                    }
+
+                    "4.0", "5.0" -> {
+
+                        manager = ReviewManagerFactory.create(this@SoundActivity)
+                        val request: Task<ReviewInfo> =
+                            manager?.requestReviewFlow() as Task<ReviewInfo>
+                        request.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                reviewInfo = task.result
+                                Log.e("ReviewInfo", "" + reviewInfo.toString())
+                                val flow: Task<Void> =
+                                    manager?.launchReviewFlow(
+                                        this@SoundActivity,
+                                        reviewInfo!!
+                                    ) as Task<Void>
+                                flow.addOnSuccessListener {
+
+                                    dialog.dismiss()
+
+                                    editTor.putBoolean(Const.CHECK_IS_RATING, true)
+
+                                    editTor.apply()
+                                    // finish()
+                                }
+                            } else {
+
+                                dialog.dismiss()
+
+                                //finish()
+                            }
+                        }
+                    }
+                }
             }
         }
 
