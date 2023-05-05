@@ -55,6 +55,8 @@ class SoundFavouriteAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(soundFavourites[position])
 
+        //holder.binding.checkBox.isChecked = checkAll
+
         holder.binding.checkBox.isChecked = checkAll
 
         holder.binding.checkBox.setOnCheckedChangeListener { compoundButton, b ->
@@ -62,7 +64,6 @@ class SoundFavouriteAdapter(
             onClickCbSound.onClickCbSound(b, soundFavourites[position])
 
         }
-
 
         holder.binding.root.setOnClickListener {
             onClickItemSound.onCLickItemSound(soundFavourites[position])

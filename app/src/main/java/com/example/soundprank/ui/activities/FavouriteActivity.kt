@@ -55,16 +55,30 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
         }
 
         binding.btnSelectAll.setOnClickListener {
+            Log.d("ThanhNT", "1. Click btn select all ${listSoundCheck.size}")
+            Log.d("ThanhNT", "1. Click btn select all ${listSound.size}")
+            listSoundCheck.clear()
             showAll = !showAll
 
             if (showAll) {
+                Log.d(
+                    "ThanhNT",
+                    "2. Click btn select all ${listSoundCheck.size}, showAll: $showAll"
+                )
                 binding.btnSelectAll.text = getString(R.string.string_remove_all)
+                listSoundCheck.addAll(listSound)
             } else {
+                Log.d(
+                    "ThanhNT",
+                    "2. Click btn select all ${listSoundCheck.size}, showAll: $showAll"
+                )
                 binding.btnSelectAll.text = getString(R.string.string_select_all)
+                listSoundCheck.clear()
             }
 
             adapter.setCheckBoxAll(showAll)
             binding.btnRemoveAll.visibility = View.VISIBLE
+
         }
 
         binding.btnRemoveAll.setOnClickListener {
@@ -129,11 +143,37 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
     }
 
     override fun onClickCbSound(check: Boolean, sound: Sound) {
+        Log.d("ThanhNT", "1. Click cb sound ${listSoundCheck.size}, showAll: $showAll")
+
         if (check) {
-            listSoundCheck.add(sound)
+            Log.d(
+                "ThanhNT",
+                "2.1. Click cb sound ${listSoundCheck.size}, showAll: $showAll, check: $check"
+            )
+            if (!listSoundCheck.contains(sound)) {
+                listSoundCheck.add(sound)
+            }
+            Log.d(
+                "ThanhNT",
+                "2.2. Click cb sound ${listSoundCheck.size}, showAll: $showAll, check: $check"
+            )
         } else {
-            listSoundCheck.remove(sound)
+            Log.d(
+                "ThanhNT",
+                "3.1. Click cb sound ${listSoundCheck.size}, showAll: $showAll, check: $check"
+            )
+            //listSoundCheck.remove(sound)
+
+            if (listSoundCheck.contains(sound)) {
+                listSoundCheck.remove(sound)
+            }
+            Log.d(
+                "ThanhNT",
+                "3.2. Click cb sound ${listSoundCheck.size}, showAll: $showAll, check: $check"
+            )
         }
+
+
 
         if (listSoundCheck.isEmpty()) {
             binding.btnRemoveAll.visibility = View.GONE
