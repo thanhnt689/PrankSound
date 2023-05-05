@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,8 +11,8 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/ic_arrow_left"
         android:background="@color/white"
+        android:src="@drawable/ic_arrow_left"
         app:layout_constraintBottom_toBottomOf="@id/tv_prank_sound"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +61,7 @@
         android:layout_marginBottom="14dp"
         android:visibility="gone"
         app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toTopOf="@id/img_sound"
+        app:layout_constraintBottom_toTopOf="@id/layout_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvt">
@@ -129,15 +130,30 @@
         app:layout_constraintTop_toBottomOf="@id/tv_prank_sound"
         app:layout_constraintTop_toTopOf="@id/tvt" />
 
-    <ImageView
-        android:id="@+id/img_sound"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginTop="60dp"
         android:background="@drawable/bg_item_sound"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvt" />
+        app:layout_constraintTop_toBottomOf="@id/tvt">
+
+        <ImageView
+            android:id="@+id/img_sound"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_fart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <ImageButton
         android:id="@+id/btn_play_or_pause"
@@ -146,10 +162,10 @@
         android:background="@drawable/bg_btn_play_pause"
         android:padding="16dp"
         android:src="@drawable/ic_play"
-        app:layout_constraintBottom_toBottomOf="@id/img_sound"
-        app:layout_constraintEnd_toEndOf="@id/img_sound"
-        app:layout_constraintStart_toStartOf="@id/img_sound"
-        app:layout_constraintTop_toBottomOf="@id/img_sound" />
+        app:layout_constraintBottom_toBottomOf="@id/layout_image"
+        app:layout_constraintEnd_toEndOf="@id/layout_image"
+        app:layout_constraintStart_toStartOf="@id/layout_image"
+        app:layout_constraintTop_toBottomOf="@id/layout_image" />
 
     <ImageButton
         android:id="@+id/btn_favourite"
@@ -158,7 +174,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/ic_favourite_f"
-        app:layout_constraintStart_toStartOf="@id/img_sound"
+        app:layout_constraintStart_toStartOf="@id/layout_image"
         app:layout_constraintTop_toBottomOf="@id/btn_play_or_pause" />
 
     <TextView
@@ -177,7 +193,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/ic_loop_f"
-        app:layout_constraintEnd_toEndOf="@id/img_sound"
+        app:layout_constraintEnd_toEndOf="@id/layout_image"
         app:layout_constraintTop_toBottomOf="@id/btn_play_or_pause" />
 
     <TextView
@@ -189,18 +205,18 @@
         app:layout_constraintStart_toStartOf="@id/btn_loop"
         app:layout_constraintTop_toBottomOf="@id/btn_loop" />
 
-<!--    <FrameLayout-->
-<!--        android:id="@+id/fr_ads3"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="24dp"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/fr_ads3"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="24dp"-->
+    <!--        android:visibility="visible"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent">-->
 
-<!--        <include layout="@layout/ads_native_shimer_3" />-->
+    <!--        <include layout="@layout/ads_native_shimer_3" />-->
 
-<!--    </FrameLayout>-->
+    <!--    </FrameLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
 

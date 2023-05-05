@@ -3,33 +3,23 @@ package com.example.soundprank.ui.activities
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
-import com.amazic.ads.callback.InterCallback
-import com.amazic.ads.callback.NativeCallback
-import com.amazic.ads.util.Admob
 import com.example.soundprank.R
 import com.example.soundprank.adapters.IntroSlideAdapter
 import com.example.soundprank.databinding.ActivityIntroBinding
 import com.example.soundprank.models.IntroSlide
-import com.example.soundprank.utils.AdsInter
 import com.example.soundprank.utils.LocaleHelper
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdView
+
 
 class IntroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntroBinding
@@ -78,43 +68,55 @@ class IntroActivity : AppCompatActivity() {
             }
         } else {
             if (sharedPreferences?.getBoolean("openLanguage", false) == true) {
-                try {
-                    Admob.getInstance().showInterAds(
-                        this@IntroActivity,
-                        AdsInter.inter_intro,
-                        object : InterCallback() {
-                            override fun onNextAction() {
-                                super.onNextAction()
-                                val intent =
-                                    Intent(this@IntroActivity, HomeScreenActivity::class.java)
-                                startActivity(
-                                    intent
-                                )
-                                finish()
-                            }
-                        })
-                } catch (exception: Exception) {
-                    Log.d("ntt", exception.toString())
-                }
+//                try {
+//                    Admob.getInstance().showInterAds(
+//                        this@IntroActivity,
+//                        AdsInter.inter_intro,
+//                        object : InterCallback() {
+//                            override fun onNextAction() {
+//                                super.onNextAction()
+//                                val intent =
+//                                    Intent(this@IntroActivity, HomeScreenActivity::class.java)
+//                                startActivity(
+//                                    intent
+//                                )
+//                                finish()
+//                            }
+//                        })
+//                } catch (exception: Exception) {
+//                    Log.d("ntt", exception.toString())
+//                }
+                val intent =
+                    Intent(this@IntroActivity, HomeScreenActivity::class.java)
+                startActivity(
+                    intent
+                )
+                finish()
             } else {
-                try {
-                    Admob.getInstance().showInterAds(
-                        this@IntroActivity,
-                        AdsInter.inter_intro,
-                        object : InterCallback() {
-                            override fun onNextAction() {
-                                super.onNextAction()
-                                val intent =
-                                    Intent(this@IntroActivity, LanguageActivity::class.java)
-                                startActivity(
-                                    intent
-                                )
-                                finish()
-                            }
-                        })
-                } catch (exception: Exception) {
-                    Log.d("ntt", exception.toString())
-                }
+//                try {
+//                    Admob.getInstance().showInterAds(
+//                        this@IntroActivity,
+//                        AdsInter.inter_intro,
+//                        object : InterCallback() {
+//                            override fun onNextAction() {
+//                                super.onNextAction()
+//                                val intent =
+//                                    Intent(this@IntroActivity, LanguageActivity::class.java)
+//                                startActivity(
+//                                    intent
+//                                )
+//                                finish()
+//                            }
+//                        })
+//                } catch (exception: Exception) {
+//                    Log.d("ntt", exception.toString())
+//                }
+                val intent =
+                    Intent(this@IntroActivity, LanguageActivity::class.java)
+                startActivity(
+                    intent
+                )
+                finish()
             }
             //finish()
         }
@@ -143,6 +145,22 @@ class IntroActivity : AppCompatActivity() {
 //                    binding.frAds3.removeAllViews()
 //                }
 //            })
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = Color.BLUE
+            window.setTitleColor(resources.getColor(R.color.white))
+        }
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            );
+        }
 
         sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
 

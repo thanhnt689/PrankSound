@@ -95,11 +95,6 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
 
         updateSound()
 
-        val intent = Intent("My Broadcast")
-
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
-
-
         finish()
 
     }

@@ -4,7 +4,8 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="start">
+    android:background="@color/white"
+    tools:openDrawer="">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,6 +16,7 @@
             android:id="@+id/btn_more"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginStart="13dp"
             android:layout_marginTop="16dp"
             android:background="@color/white"
             android:src="@drawable/ic_more"
@@ -49,13 +51,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_prank_sound" />
 
-<!--        <include-->
-<!--            android:id="@+id/include"-->
-<!--            layout="@layout/layout_banner"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent" />-->
+        <!--        <include-->
+        <!--            android:id="@+id/include"-->
+        <!--            layout="@layout/layout_banner"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -66,6 +68,8 @@
         android:layout_gravity="start"
         android:background="#FFFFFF"
         app:headerLayout="@layout/header_home"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
         app:menu="@menu/menu_home" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

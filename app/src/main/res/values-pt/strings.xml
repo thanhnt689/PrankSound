@@ -41,6 +41,11 @@
     <string name="string_do_you_like_the_app">Você gosta do aplicativo?</string>
     <string name="string_loop">Laço</string>
 
+    <string name="string_off">Desligado</string>
+    <string name="string_5s">5s</string>
+    <string name="string_10s">10s</string>
+    <string name="string_15s">15s</string>
+    <string name="string_30s">30s</string>
     <string name="string_set_timer_for_this_sound">Definir timer para este som</string>
 
     <string name="string_select_all">Selecionar tudo</string>

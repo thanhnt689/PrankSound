@@ -1,17 +1,18 @@
 package com.example.soundprank.ui.activities
 
+import android.R.id.message
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
@@ -24,21 +25,17 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.amazic.ads.callback.InterCallback
-import com.amazic.ads.util.Admob
 import com.example.soundprank.R
 import com.example.soundprank.adapters.PrankSoundAdapter
 import com.example.soundprank.callback.OnClickItemSoundPrank
 import com.example.soundprank.databinding.ActivityHomeScreenBinding
 import com.example.soundprank.models.SoundPrank
-import com.example.soundprank.utils.AdsInter
 import com.example.soundprank.utils.Const
 import com.example.soundprank.utils.LocaleHelper
 import com.example.soundprank.viewmodel.MyViewModel
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
+
 
 class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     NavigationView.OnNavigationItemSelectedListener {
@@ -46,8 +43,6 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     private lateinit var binding: ActivityHomeScreenBinding
 
     private lateinit var adapter: PrankSoundAdapter
-
-    private lateinit var mRefreshReceiver: BroadcastReceiver
 
     private var mInterstitialAd: InterstitialAd? = null
 
@@ -66,8 +61,6 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
         init()
 
-        setReloadDataChangeLanguage()
-
         myViewModel = ViewModelProvider(this)[MyViewModel::class.java]
 
         binding.btnMore.setOnClickListener {
@@ -81,7 +74,7 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
         localeHelper.setLanguage(this@HomeScreenActivity)
 
-        sharedPreferences = this.getSharedPreferences("MY_PRE", Context.MODE_PRIVATE);
+        sharedPreferences = this.getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
 
         editTor = sharedPreferences.edit()
 
@@ -96,56 +89,34 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
     }
 
-    private fun setReloadDataChangeLanguage() {
-        val filter = IntentFilter()
-        filter.addAction("My Broadcast")
-        mRefreshReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                if (intent.action == "My Broadcast") {
-                    Log.d("ntt", "broadcast")
+    override fun onStart() {
+        super.onStart()
+        Log.d("ntt", "onStart")
+//        loadInter()
+        localeHelper.setLanguage(this@HomeScreenActivity)
 
-                    localeHelper.setLanguage(this@HomeScreenActivity)
+        binding.tvPrankSound.text = getString(R.string.app_name)
 
-                    binding.tvPrankSound.text = getString(R.string.app_name)
+        val favouriteTitle = binding.navHome.menu.findItem(R.id.menu_favourite)
+        favouriteTitle.title = getString(R.string.string_favourite)
 
-                    Log.d("ntt", getString(R.string.app_name))
+        val languageTitle = binding.navHome.menu.findItem(R.id.menu_language)
+        languageTitle.title = getString(R.string.string_language)
 
-                    val favouriteTitle = binding.navHome.menu.findItem(R.id.menu_favourite)
-                    favouriteTitle.title = getString(R.string.string_favourite)
+        val rateTitle = binding.navHome.menu.findItem(R.id.menu_rate)
+        rateTitle.title = getString(R.string.string_rate)
 
-                    Log.d("ntt", getString(R.string.string_favourite))
+        val aboutTitle = binding.navHome.menu.findItem(R.id.menu_about)
+        aboutTitle.title = getString(R.string.string_about)
 
-                    val languageTitle = binding.navHome.menu.findItem(R.id.menu_language)
-                    languageTitle.title = getString(R.string.string_language)
+        val policyTitle = binding.navHome.menu.findItem(R.id.menu_policy)
+        policyTitle.title = getString(R.string.string_policy)
 
-                    Log.d("ntt", getString(R.string.string_language))
-
-                    val rateTitle = binding.navHome.menu.findItem(R.id.menu_rate)
-                    rateTitle.title = getString(R.string.string_rate)
-
-                    Log.d("ntt", getString(R.string.string_rate))
-
-                    val aboutTitle = binding.navHome.menu.findItem(R.id.menu_about)
-                    aboutTitle.title = getString(R.string.string_about)
-
-                    Log.d("ntt", getString(R.string.string_about))
-
-                    val policyTitle = binding.navHome.menu.findItem(R.id.menu_policy)
-                    policyTitle.title = getString(R.string.string_policy)
-
-                    Log.d("ntt", getString(R.string.string_policy))
-
-                    init()
-                }
-            }
-        }
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRefreshReceiver, filter);
+        init()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRefreshReceiver);
     }
 
     private fun onClickButtonMore() {
@@ -330,24 +301,18 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 //                Log.d("ntt", "Load inter ads error: $exception")
 //            }
 //        } else {
-            val intent =
-                Intent(this@HomeScreenActivity, SoundActivity::class.java)
-            val bundle = Bundle()
-            bundle.putSerializable("sound_prank", soundPrank)
-            intent.putExtras(bundle)
-            intent.putExtra("position", position)
-            startActivity(intent)
+        val intent =
+            Intent(this@HomeScreenActivity, SoundActivity::class.java)
+        val bundle = Bundle()
+        bundle.putSerializable("sound_prank", soundPrank)
+        intent.putExtras(bundle)
+        intent.putExtra("position", position)
+        startActivity(intent)
 //        }
 
         editTor.putInt(Const.NUM_SHOW_INTER, num + 1)
 
         editTor.apply()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("ntt", "onStart")
-//        loadInter()
     }
 
     override fun onBackPressed() {
@@ -415,6 +380,7 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         }
     }
 
+    @SuppressLint("IntentReset")
     private fun openRatingDialog(start: String) {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -491,6 +457,29 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                     "Thank for the rate: ${ratingBar.rating}",
                     Toast.LENGTH_SHORT
                 ).show()
+
+                when (ratingBar.rating.toString()) {
+                    "1.0", "2.0", "3.0" -> {
+
+//                        val uriText = "mailto:playyg@yakinglobal.com?subject=Review for Voice Lock&body=----Mail content----\nVoice Lock\nRate: $message\nContent: "
+//
+//                        val uri = Uri.parse(uriText)
+//
+//                        val sendIntent = Intent(Intent.ACTION_SENDTO)
+//
+//                        sendIntent.type = "text/html"
+//
+//                        sendIntent.putExtra(Intent.EXTRA_EMAIL, "mailto:playyg@yakinglobal.com")
+//
+//                        sendIntent.data = uri
+//
+//                        startActivity(Intent.createChooser(sendIntent, "Send Email"))
+                    }
+
+                    "4.0", "5.0" -> {
+
+                    }
+                }
 
                 if (start == "BackPress") {
                     dialog.dismiss()

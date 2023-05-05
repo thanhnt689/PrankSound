@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    >
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_next"
@@ -37,22 +39,22 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:overScrollMode="never"
-        app:layout_constraintDimensionRatio="4:4.89"
+        app:layout_constraintDimensionRatio="4:5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <FrameLayout-->
-<!--        android:id="@+id/fr_ads3"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="24dp"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/fr_ads3"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="24dp"-->
+    <!--        android:visibility="visible"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent">-->
 
-<!--        <include layout="@layout/ads_native_shimer_3" />-->
+    <!--        <include layout="@layout/ads_native_shimer_3" />-->
 
-<!--    </FrameLayout>-->
+    <!--    </FrameLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

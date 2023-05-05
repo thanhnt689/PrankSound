@@ -151,7 +151,6 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
         Glide.with(binding.imgSound)
             .load(sound.image)
-            .centerCrop()
             .into(binding.imgSound)
 
         binding.tvPrankSound.text = sound.name
@@ -225,7 +224,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                         binding.btnFavourite.isClickable = false
                         binding.btnLoop.isClickable = false
                         binding.btnTime.isClickable = false
-                        binding.btnBack.isClickable = false
+                        //binding.btnBack.isClickable = false
 
                     }
 
@@ -236,7 +235,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                         binding.btnFavourite.isClickable = true
                         binding.btnLoop.isClickable = true
                         binding.btnTime.isClickable = true
-                        binding.btnBack.isClickable = true
+                        //binding.btnBack.isClickable = true
 
 
                         checkSoundPlayOrStop(mediaPlayer)
