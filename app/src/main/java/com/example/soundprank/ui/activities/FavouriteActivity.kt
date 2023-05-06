@@ -126,28 +126,29 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
             Log.d("ThanhNT", "observer")
             listSound.clear()
             listSound.addAll(it)
+
+            if (it.isEmpty()) {
+                binding.cardViewCategory.visibility = View.VISIBLE
+                binding.rvSoundPrank.visibility = View.GONE
+                binding.btnRemoveAll.visibility = View.GONE
+                binding.btnCheck.visibility = View.GONE
+                binding.btnSelectAll.visibility = View.GONE
+            } else {
+                binding.cardViewCategory.visibility = View.GONE
+                binding.rvSoundPrank.visibility = View.VISIBLE
+            }
+
             adapter = SoundFavouriteAdapter(listSound, this, this)
             binding.rvSoundPrank.adapter = adapter
             binding.rvSoundPrank.layoutManager =
                 GridLayoutManager(this, 2)
 
-            if (it.isEmpty()) {
-                binding.layoutNoFavourite.visibility = View.VISIBLE
-                binding.btnRemoveAll.visibility = View.GONE
-                binding.btnCheck.visibility = View.GONE
-                binding.btnSelectAll.visibility = View.GONE
-            }
-
-            if (it.isNotEmpty()) {
-                binding.layoutNoFavourite.visibility = View.GONE
-            }
         }
 
 
         // Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
         binding.btnSelectAll.isSelected = true
-        binding.tvNoFavouriteYet.isSelected = true
     }
 
     override fun onCLickItemSound(sound: Sound) {

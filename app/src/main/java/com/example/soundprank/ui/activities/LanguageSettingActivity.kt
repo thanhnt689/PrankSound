@@ -3,14 +3,11 @@ package com.example.soundprank.ui.activities
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.os.SystemClock
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.amazic.ads.util.Admob
 import com.example.soundprank.R
 import com.example.soundprank.adapters.LanguageAdapter
 import com.example.soundprank.callback.OnClickItemLanguage
@@ -20,8 +17,7 @@ import com.example.soundprank.models.Sound
 import com.example.soundprank.utils.LocaleHelper
 import com.example.soundprank.viewmodel.SoundViewModel
 import com.example.soundprank.viewmodel.SoundViewModelFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+
 
 class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
 
@@ -101,6 +97,28 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         finish()
 
     }
+
+//    private fun doStartProgressBar2() {
+//        binding.progressBar.setIndeterminate(true)
+//        val thread = Thread { // Update interface
+//            handler.post(Runnable {
+//                textViewInfo2.setText("Working...")
+//                buttonStart2.setEnabled(false)
+//            })
+//            // Do something ... (Update database,..)
+//            SystemClock.sleep(5000) // Sleep 5 seconds.
+//            progressBar2.setIndeterminate(false)
+//            progressBar2.setMax(1)
+//            progressBar2.setProgress(1)
+//
+//            // Update interface
+//            handler.post(Runnable {
+//                textViewInfo2.setText("Completed!")
+//                buttonStart2.setEnabled(true)
+//            })
+//        }
+//        thread.start()
+//    }
 
     private fun setLanguageDefault(): List<Language> {
         val languages: MutableList<Language> = ArrayList()

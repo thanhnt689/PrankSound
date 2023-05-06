@@ -178,6 +178,14 @@
         app:layout_constraintTop_toBottomOf="@id/btn_play_or_pause" />
 
     <TextView
+        android:id="@+id/tv_isLoop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/string_favourite"

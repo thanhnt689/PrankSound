@@ -287,9 +287,19 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         super.onStart()
         if (timer != null) {
             mediaPlayer = MediaPlayer()
-            //timer!!.onTick(time)
+            var loopT = false
+            if (binding.tvIsLoop.text == "Loop") {
+                loopT = true
+            } else if (binding.tvIsLoop.text == "NLoop") {
+                loopT = false
+            }
+            Log.d("ntt", "loop T $loopT")
             if (time != 0L) {
-                playSound(loop)
+                playSound(loopT)
+                checkSoundPlayOrStop(mediaPlayer)
+            } else if (time == 0L && loopT) {
+                Log.d("ntt", "Time 0, loopT true")
+                playSound(true)
                 checkSoundPlayOrStop(mediaPlayer)
             }
 
@@ -302,6 +312,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         if (!loop) {
             binding.btnLoop.background = resources.getDrawable(R.drawable.ic_loop_t)
             loop = true
+            binding.tvIsLoop.text = "Loop"
         } else {
             binding.btnLoop.background = resources.getDrawable(R.drawable.ic_loop_f)
 
@@ -311,6 +322,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
             }
 
             loop = false
+            binding.tvIsLoop.text = "NLoop"
         }
 
     }
@@ -333,16 +345,6 @@ class DetailPrankSoundActivity : AppCompatActivity() {
             binding.btnFavourite.background = resources.getDrawable(R.drawable.ic_favourite_f)
         }
     }
-
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        if(timer != null) {
-//            mediaPlayer.pause()
-//            mediaPlayer.stop()
-//            mediaPlayer.release()
-//        }
-//    }
 
     private fun checkSoundPlayOrStop(mediaPlayer: MediaPlayer) {
         mMediaState = if (mediaPlayer.isPlaying) {

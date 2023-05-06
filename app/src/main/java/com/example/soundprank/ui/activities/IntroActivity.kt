@@ -256,7 +256,7 @@ class IntroActivity : AppCompatActivity() {
                                 path = file,
                                 folder = soundPrank.path,
                                 image = soundPrank.image,
-                                favourite = getRandomBoolean()
+                                favourite = false
                             )
                         )
                     } else {
