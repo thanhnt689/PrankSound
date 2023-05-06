@@ -86,8 +86,8 @@ class IntroActivity : AppCompatActivity() {
 
     private fun getRandomBoolean(): Boolean {
         var favourite = false
-        val random = Random().nextInt(14)
-        if (random == 4 || random == 5) {
+        val random = Random().nextInt(18)
+        if (random == 5) {
             favourite = true
         }
         return favourite

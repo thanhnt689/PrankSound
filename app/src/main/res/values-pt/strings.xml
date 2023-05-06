@@ -54,4 +54,10 @@
     <string name="string_remove_from_favourite">Remover dos favoritos</string>
 
     <string name="string_version_1_0">Versão 1.0.0</string>
+
+    <string name="string_the_sound_will_be_played_in">O som será reproduzido em:</string>
+
+    <string name="string_please_feedback">Por favor, envie sua opinião</string>
+
+    <string name="string_you_have_rated_the_app">Você avaliou o aplicativo!</string>
 </resources>

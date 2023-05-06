@@ -31,11 +31,11 @@ import com.example.soundprank.utils.Const
 import com.example.soundprank.utils.LocaleHelper
 import com.example.soundprank.viewmodel.MyViewModel
 import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.tasks.Task
 import com.google.android.material.navigation.NavigationView
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.android.play.core.tasks.Task
 
 
 class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
@@ -364,7 +364,7 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                 if (!checkIsRating) {
                     openRatingDialog("NavigationView")
                 } else {
-                    Toast.makeText(this, "You have rated the app!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.string_you_have_rated_the_app), Toast.LENGTH_SHORT).show()
                 }
 
                 true
@@ -453,15 +453,10 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
             if (ratingBar.rating.toString() == "0.0") {
                 Toast.makeText(
                     this,
-                    "Please feedback",
+                    getString(R.string.string_please_feedback),
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                Toast.makeText(
-                    this,
-                    "Thank for the rate: ${ratingBar.rating}",
-                    Toast.LENGTH_SHORT
-                ).show()
 
                 when (ratingBar.rating.toString()) {
                     "1.0", "2.0", "3.0" -> {

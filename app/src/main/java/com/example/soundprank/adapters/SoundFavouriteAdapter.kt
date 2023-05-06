@@ -33,6 +33,8 @@ class SoundFavouriteAdapter(
                 .into(binding.imgSound)
 
             binding.tvSoundName.isSelected = true
+            Log.d("ntt", "bind ${sound.isSelected}")
+            binding.checkBox.isChecked = sound.isSelected
 
         }
 
@@ -53,17 +55,45 @@ class SoundFavouriteAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(soundFavourites[position])
 
         //holder.binding.checkBox.isChecked = checkAll
+//        holder.bind(soundFavourites[position])
+        Log.d("ThanhNT", soundFavourites.toString())
+        holder.binding.tvSoundName.text = soundFavourites[position].name
 
-        holder.binding.checkBox.isChecked = checkAll
+        Glide.with(holder.binding.imgSound)
+            .load(soundFavourites[position].image)
+            .centerCrop()
+            .into(holder.binding.imgSound)
 
-        holder.binding.checkBox.setOnCheckedChangeListener { compoundButton, b ->
+        holder.binding.tvSoundName.isSelected = true
+        // Log.d("ntt", "bind ${sound.isSelected}")
+        holder.binding.checkBox.isChecked = soundFavourites[position].isSelected
 
-            onClickCbSound.onClickCbSound(b, soundFavourites[position])
+        //holder.binding.checkBox.isChecked = checkAll
+        // holder.binding.checkBox.isChecked = soundFavourites[position].isSelected
 
+        holder.binding.checkBox.setOnClickListener {
+            holder.binding.checkBox.isChecked = soundFavourites[position].isSelected
         }
+
+
+//        holder.binding.checkBox.setOnCheckedChangeListener { compoundButton, b ->
+//
+//            onClickCbSound.onClickCbSound(b, soundFavourites[position])
+//
+//           soundFavourites[position].isSelected = b
+//
+//        }
+
+        holder.binding.checkBox.setOnClickListener {
+            if (soundFavourites[position].isSelected) {
+                onClickCbSound.onClickCbSound(false, soundFavourites[position])
+            } else {
+                onClickCbSound.onClickCbSound(true, soundFavourites[position])
+            }
+        }
+
 
         holder.binding.root.setOnClickListener {
             onClickItemSound.onCLickItemSound(soundFavourites[position])

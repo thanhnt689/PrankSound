@@ -55,4 +55,10 @@
 
     <string name="string_version_1_0">Versión 1.0.0</string>
 
+    <string name="string_the_sound_will_be_played_in">El sonido se reproducirá en:</string>
+
+    <string name="string_please_feedback">Por favor deje un comentario</string>
+
+    <string name="string_you_have_rated_the_app">¡Has calificado la aplicación!</string>
+
 </resources>

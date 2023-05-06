@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amazic.ads.util.Admob
@@ -19,6 +20,8 @@ import com.example.soundprank.models.Sound
 import com.example.soundprank.utils.LocaleHelper
 import com.example.soundprank.viewmodel.SoundViewModel
 import com.example.soundprank.viewmodel.SoundViewModelFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
 
@@ -48,7 +51,7 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         setContentView(binding.root)
 
         init()
-        
+
         binding.btnBack.setOnClickListener {
             val intent = Intent(this, HomeScreenActivity::class.java)
             startActivity(intent)
@@ -61,7 +64,7 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
 
     }
 
-    private fun init(){
+    private fun init() {
         localeHelper.setLanguage(this)
 
         binding.tvLanguage.text = getString(R.string.string_language)
@@ -130,9 +133,7 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
 
     private fun updateSound() {
         for (sound: Sound in listSound) {
-
             val num = sound.name.filter { it.isDigit() }
-
             soundViewModel.updateSound(
                 Sound(
                     "${getString(convert(sound.folder))} $num",

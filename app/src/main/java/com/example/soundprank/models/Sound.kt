@@ -2,6 +2,7 @@ package com.example.soundprank.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
@@ -17,5 +18,9 @@ data class Sound(
     @ColumnInfo(name = "_image")
     var image: Int,
     @ColumnInfo(name = "_favourite")
-    var favourite: Boolean
-) : Serializable
+    var favourite: Boolean,
+    @Ignore
+    var isSelected: Boolean = false
+) : Serializable {
+    constructor() : this("", "", "", 0, false, false)
+}

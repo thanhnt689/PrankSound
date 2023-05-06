@@ -29,6 +29,7 @@ import com.example.soundprank.databinding.ActivitySoundBinding
 import com.example.soundprank.models.Sound
 import com.example.soundprank.models.SoundPrank
 import com.example.soundprank.utils.Const
+import com.example.soundprank.utils.LocaleHelper
 import com.example.soundprank.viewmodel.MyViewModel
 import com.example.soundprank.viewmodel.SoundViewModel
 import com.example.soundprank.viewmodel.SoundViewModelFactory
@@ -60,6 +61,8 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
     private var manager: ReviewManager? = null
 
     private var reviewInfo: ReviewInfo? = null
+
+    private val localeHelper = LocaleHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,6 +103,11 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
 
         editTor = sharedPreferences.edit()
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        localeHelper.setLanguage(this)
     }
 
     override fun onResume() {
@@ -247,7 +255,7 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
             if (ratingBar.rating.toString() == "0.0") {
                 Toast.makeText(
                     this,
-                    "Please feedback",
+                    getString(R.string.string_please_feedback),
                     Toast.LENGTH_SHORT
                 ).show()
             } else {

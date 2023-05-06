@@ -2,9 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ImageButton
         android:id="@+id/btn_back"
@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_sans_extralight"
-                android:text="The sound will be played in:"
+                android:text="@string/string_the_sound_will_be_played_in"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_time"
@@ -169,8 +169,8 @@
 
     <ImageButton
         android:id="@+id/btn_favourite"
-        android:layout_width="36dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="34dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/ic_favourite_f"
@@ -188,8 +188,8 @@
 
     <ImageButton
         android:id="@+id/btn_loop"
-        android:layout_width="36dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="34dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/ic_loop_f"

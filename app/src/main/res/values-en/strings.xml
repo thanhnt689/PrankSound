@@ -54,4 +54,10 @@
 
     <string name="string_version_1_0">Version 1.0.0</string>
 
+    <string name="string_the_sound_will_be_played_in">The sound will be played in:</string>
+
+    <string name="string_please_feedback">Please feedback</string>
+
+    <string name="string_you_have_rated_the_app">You have rated the app!</string>
+
 </resources>

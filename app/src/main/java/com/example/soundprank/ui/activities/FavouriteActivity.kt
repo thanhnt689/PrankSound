@@ -14,6 +14,7 @@ import com.example.soundprank.callback.OnClickCbSound
 import com.example.soundprank.callback.OnClickItemSound
 import com.example.soundprank.databinding.ActivityFavouriteBinding
 import com.example.soundprank.models.Sound
+import com.example.soundprank.utils.LocaleHelper
 import com.example.soundprank.viewmodel.SoundViewModel
 import com.example.soundprank.viewmodel.SoundViewModelFactory
 import kotlin.system.exitProcess
@@ -35,6 +36,8 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
         SoundViewModelFactory(application)
     }
 
+    private val localeHelper = LocaleHelper()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFavouriteBinding.inflate(layoutInflater)
@@ -55,43 +58,52 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
         }
 
         binding.btnSelectAll.setOnClickListener {
-            Log.d("ThanhNT", "1. Click btn select all ${listSoundCheck.size}")
-            Log.d("ThanhNT", "1. Click btn select all ${listSound.size}")
+
             listSoundCheck.clear()
+
             showAll = !showAll
 
             if (showAll) {
-                Log.d(
-                    "ThanhNT",
-                    "2. Click btn select all ${listSoundCheck.size}, showAll: $showAll"
-                )
+
                 binding.btnSelectAll.text = getString(R.string.string_remove_all)
                 listSoundCheck.addAll(listSound)
-            } else {
-                Log.d(
-                    "ThanhNT",
-                    "2. Click btn select all ${listSoundCheck.size}, showAll: $showAll"
-                )
-                binding.btnSelectAll.text = getString(R.string.string_select_all)
-                listSoundCheck.clear()
-            }
 
-            adapter.setCheckBoxAll(showAll)
-            binding.btnRemoveAll.visibility = View.VISIBLE
+                for (sound: Sound in listSound) {
+                    sound.isSelected = true
+                }
+                adapter.notifyDataSetChanged()
+
+                binding.btnRemoveAll.visibility = View.VISIBLE
+            } else {
+
+                binding.btnSelectAll.text = getString(R.string.string_select_all)
+
+                for (sound: Sound in listSound) {
+                    sound.isSelected = false
+                }
+                adapter.notifyDataSetChanged()
+
+                listSoundCheck.clear()
+
+                binding.btnRemoveAll.visibility = View.GONE
+
+            }
 
         }
 
         binding.btnRemoveAll.setOnClickListener {
-            for (sound: Sound in listSoundCheck) {
-                soundViewModel.updateSound(
-                    Sound(
-                        sound.name,
-                        sound.path,
-                        sound.folder,
-                        sound.image,
-                        false
+            for (sound: Sound in listSound) {
+                if (sound.isSelected) {
+                    soundViewModel.updateSound(
+                        Sound(
+                            sound.name,
+                            sound.path,
+                            sound.folder,
+                            sound.image,
+                            false
+                        )
                     )
-                )
+                }
             }
 
             binding.btnSelectAll.visibility = View.GONE
@@ -104,13 +116,17 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        localeHelper.setLanguage(this)
+    }
+
     private fun init() {
         soundViewModel.soundFavourite.observe(this) {
+            Log.d("ThanhNT", "observer")
             listSound.clear()
-            val listSoundFavourite = arrayListOf<Sound>()
-            listSoundFavourite.addAll(it)
             listSound.addAll(it)
-            adapter = SoundFavouriteAdapter(listSoundFavourite, this, this)
+            adapter = SoundFavouriteAdapter(listSound, this, this)
             binding.rvSoundPrank.adapter = adapter
             binding.rvSoundPrank.layoutManager =
                 GridLayoutManager(this, 2)
@@ -126,6 +142,7 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
                 binding.layoutNoFavourite.visibility = View.GONE
             }
         }
+
 
         // Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
@@ -143,38 +160,29 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
     }
 
     override fun onClickCbSound(check: Boolean, sound: Sound) {
-        Log.d("ThanhNT", "1. Click cb sound ${listSoundCheck.size}, showAll: $showAll")
+
+        for (soundI: Sound in listSound) {
+            if (soundI == sound) {
+                soundI.isSelected = check
+            }
+        }
 
         if (check) {
-            Log.d(
-                "ThanhNT",
-                "2.1. Click cb sound ${listSoundCheck.size}, showAll: $showAll, check: $check"
-            )
+
             if (!listSoundCheck.contains(sound)) {
                 listSoundCheck.add(sound)
             }
-            Log.d(
-                "ThanhNT",
-                "2.2. Click cb sound ${listSoundCheck.size}, showAll: $showAll, check: $check"
-            )
+
         } else {
-            Log.d(
-                "ThanhNT",
-                "3.1. Click cb sound ${listSoundCheck.size}, showAll: $showAll, check: $check"
-            )
             //listSoundCheck.remove(sound)
 
             if (listSoundCheck.contains(sound)) {
                 listSoundCheck.remove(sound)
             }
-            Log.d(
-                "ThanhNT",
-                "3.2. Click cb sound ${listSoundCheck.size}, showAll: $showAll, check: $check"
-            )
+
         }
 
-
-
+        Log.d("ThanhNT", "OnCLickSound: ${listSoundCheck.size}")
         if (listSoundCheck.isEmpty()) {
             binding.btnRemoveAll.visibility = View.GONE
             binding.btnSelectAll.text = getText(R.string.string_select_all)

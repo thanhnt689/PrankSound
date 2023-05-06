@@ -288,7 +288,12 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         if (timer != null) {
             mediaPlayer = MediaPlayer()
             //timer!!.onTick(time)
-            playSound(loop)
+            if (time != 0L) {
+                playSound(loop)
+                checkSoundPlayOrStop(mediaPlayer)
+            }
+
+            checkSoundPlayOrStop(mediaPlayer)
         }
     }
 
