@@ -1,12 +1,14 @@
 package com.example.soundprank.ui.activities
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.SystemClock
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.soundprank.R
 import com.example.soundprank.adapters.LanguageAdapter
@@ -17,6 +19,10 @@ import com.example.soundprank.models.Sound
 import com.example.soundprank.utils.LocaleHelper
 import com.example.soundprank.viewmodel.SoundViewModel
 import com.example.soundprank.viewmodel.SoundViewModelFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
@@ -30,6 +36,8 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
     private val soundViewModel: SoundViewModel by viewModels() {
         SoundViewModelFactory(application)
     }
+
+    private lateinit var progressBar: ProgressDialog
 
     private var mLanguage: Language? = null
 
@@ -92,33 +100,35 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         mLanguage?.let { localeHelper.setPreLanguage(this, it.languageCode) }
         localeHelper.setLanguage(this)
 
-        updateSound()
+        //updateSound()
 
-        finish()
+        progressBar = ProgressDialog(this)
+        progressBar.setCancelable(false)
+        progressBar.setMessage("Đang xử lý, vui lòng đợi...")
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        progressBar.show()
+
+//        Thread {
+//            updateSound()
+//            Thread.sleep(1000)
+//            progressBar.dismiss();
+//            finish()
+//        }.start()
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            updateSound()
+            delay(5000)
+            withContext(Dispatchers.Main) {
+                progressBar.dismiss();
+                finish()
+            }
+        }
+
+//        finish()
 
     }
 
-//    private fun doStartProgressBar2() {
-//        binding.progressBar.setIndeterminate(true)
-//        val thread = Thread { // Update interface
-//            handler.post(Runnable {
-//                textViewInfo2.setText("Working...")
-//                buttonStart2.setEnabled(false)
-//            })
-//            // Do something ... (Update database,..)
-//            SystemClock.sleep(5000) // Sleep 5 seconds.
-//            progressBar2.setIndeterminate(false)
-//            progressBar2.setMax(1)
-//            progressBar2.setProgress(1)
-//
-//            // Update interface
-//            handler.post(Runnable {
-//                textViewInfo2.setText("Completed!")
-//                buttonStart2.setEnabled(true)
-//            })
-//        }
-//        thread.start()
-//    }
 
     private fun setLanguageDefault(): List<Language> {
         val languages: MutableList<Language> = ArrayList()
@@ -150,19 +160,50 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
     }
 
     private fun updateSound() {
+
+        val map = HashMap<String, Sound>()
+        Log.d("ntt","${listSound.size}")
         for (sound: Sound in listSound) {
             val num = sound.name.filter { it.isDigit() }
+            map[num] = sound
+            Log.d("ntt", "${map.size}")
+//            soundViewModel.updateSound(
+//                Sound(
+//                    "${getString(convert(sound.folder))} $num",
+//                    sound.path,
+//                    sound.folder,
+//                    sound.image,
+//                    sound.favourite
+//                )
+//            )
+        }
+
+//        val set: MutableSet<String> = map.keys
+//        for (key in set) {
+//            soundViewModel.updateSound(
+//                Sound(
+//                    "${getString(convert(map[key]!!.folder))} $key",
+//                    map[key]!!.path,
+//                    map[key]!!.folder,
+//                    map[key]!!.image,
+//                    map[key]!!.favourite
+//                )
+//            )
+//        }
+
+        for (entry: Map.Entry<String, Sound> in map.entries) {
+            Log.d("ntt", "$entry")
             soundViewModel.updateSound(
                 Sound(
-                    "${getString(convert(sound.folder))} $num",
-                    sound.path,
-                    sound.folder,
-                    sound.image,
-                    sound.favourite
+                    "${getString(convert(entry.value.folder))} ${entry.key}",
+                    entry.value.path,
+                    entry.value.folder,
+                    entry.value.image,
+                    entry.value.favourite
                 )
             )
-
         }
+
     }
 
     private fun convert(string: String): Int {
