@@ -61,4 +61,6 @@
 
     <string name="string_you_have_rated_the_app">Vous avez évalué l\'application!</string>
 
+    <string name="string_its_loading">Ça charge ...</string>
+
 </resources>

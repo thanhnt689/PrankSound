@@ -60,4 +60,6 @@
 
     <string name="string_you_have_rated_the_app">You have rated the app!</string>
 
+    <string name="string_its_loading">Its loading ...</string>
+
 </resources>

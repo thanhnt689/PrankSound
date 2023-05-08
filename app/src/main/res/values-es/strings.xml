@@ -61,4 +61,6 @@
 
     <string name="string_you_have_rated_the_app">¡Has calificado la aplicación!</string>
 
+    <string name="string_its_loading">Está cargando ...</string>
+
 </resources>

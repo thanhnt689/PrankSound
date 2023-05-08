@@ -60,4 +60,6 @@
     <string name="string_please_feedback">कृपया अपनी प्रतिक्रिया दें</string>
 
     <string name="string_you_have_rated_the_app">आपने ऐप को रेट किया है!</string>
+
+    <string name="string_its_loading">लोड हो रहा है ...</string>
 </resources>

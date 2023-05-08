@@ -12,11 +12,10 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/logo_2x"
+        android:icon="@drawable/opt"
         android:label="@string/app_name"
         android:screenOrientation="landscape"
         android:supportsRtl="true"
-
         android:theme="@style/Theme.SoundPrank"
         tools:targetApi="31">
         <activity

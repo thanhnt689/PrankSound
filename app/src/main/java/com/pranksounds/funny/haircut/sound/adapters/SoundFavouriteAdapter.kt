@@ -104,9 +104,4 @@ class SoundFavouriteAdapter(
         notifyDataSetChanged()
     }
 
-    fun setCheckBoxAll(sCheckAll: Boolean) {
-        checkAll = sCheckAll
-        notifyDataSetChanged()
-    }
-
 }

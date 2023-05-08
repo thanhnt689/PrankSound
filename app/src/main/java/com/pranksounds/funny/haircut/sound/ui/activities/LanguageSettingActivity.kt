@@ -5,10 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pranksounds.funny.haircut.sound.R
 import com.pranksounds.funny.haircut.sound.adapters.LanguageAdapter
@@ -19,10 +17,6 @@ import com.pranksounds.funny.haircut.sound.models.Sound
 import com.pranksounds.funny.haircut.sound.utils.LocaleHelper
 import com.pranksounds.funny.haircut.sound.viewmodel.SoundViewModel
 import com.pranksounds.funny.haircut.sound.viewmodel.SoundViewModelFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
@@ -36,6 +30,8 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
     private val soundViewModel: SoundViewModel by viewModels() {
         SoundViewModelFactory(application)
     }
+
+    private lateinit var progressDialog: ProgressDialog
 
     private var mLanguage: Language? = null
 
@@ -86,6 +82,10 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
 
         checkChangeLanguage = true
 
+        progressDialog = ProgressDialog(this)
+        progressDialog.setMessage(getString(R.string.string_its_loading))
+        progressDialog.setCancelable(false)
+
         adapter?.setSelectLanguage(language)
         mLanguage = language
 
@@ -98,7 +98,21 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         mLanguage?.let { localeHelper.setPreLanguage(this, it.languageCode) }
         localeHelper.setLanguage(this)
 
-        finish()
+        progressDialog.show()
+
+        object : Thread() {
+            override fun run() {
+                super.run()
+                try {
+                    sleep(500)
+                    if (progressDialog.isShowing) progressDialog.dismiss()
+                    finish()
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
+            }
+        }.start()
+
 
     }
 

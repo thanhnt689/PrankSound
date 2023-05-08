@@ -119,9 +119,6 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         init()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 
     private fun onClickButtonMore() {
         if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
