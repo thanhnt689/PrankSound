@@ -89,7 +89,7 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
                 }
             }
             binding.tvPrankSound.text = soundPrank.name
-            adapter = SoundAdapter(list, this)
+            adapter = SoundAdapter(this,list, this)
             binding.rvSoundPrank.adapter = adapter
             binding.rvSoundPrank.layoutManager = GridLayoutManager(this, 2)
 

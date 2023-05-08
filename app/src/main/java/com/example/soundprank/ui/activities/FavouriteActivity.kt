@@ -96,11 +96,12 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
                 if (sound.isSelected) {
                     soundViewModel.updateSound(
                         Sound(
-                            sound.name,
+                            sound.num,
                             sound.path,
                             sound.folder,
                             sound.image,
-                            false
+                            false,
+                            sound.idString
                         )
                     )
                 }
@@ -138,7 +139,7 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
                 binding.rvSoundPrank.visibility = View.VISIBLE
             }
 
-            adapter = SoundFavouriteAdapter(listSound, this, this)
+            adapter = SoundFavouriteAdapter(this, listSound, this, this)
             binding.rvSoundPrank.adapter = adapter
             binding.rvSoundPrank.layoutManager =
                 GridLayoutManager(this, 2)

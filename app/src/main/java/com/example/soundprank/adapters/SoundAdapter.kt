@@ -1,5 +1,7 @@
 package com.example.soundprank.adapters
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,20 +11,24 @@ import com.example.soundprank.databinding.LayoutItemSoundBinding
 import com.example.soundprank.models.Sound
 
 class SoundAdapter(
+    private val context: Context,
     private var sounds: ArrayList<Sound>,
     private val onClickItemSound: OnClickItemSound
 ) :
     RecyclerView.Adapter<SoundAdapter.ViewHolder>() {
-    class ViewHolder(val binding: LayoutItemSoundBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: LayoutItemSoundBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(sound: Sound) {
-            binding.tvSoundName.text = sound.name
 
+            binding.tvSoundName.text = "${context.getString(sound.idString)} ${sound.num}"
             Glide.with(binding.imgSound)
                 .load(sound.image)
                 .centerCrop()
                 .into(binding.imgSound)
 
             binding.tvSoundName.isSelected = true
+
         }
 
     }

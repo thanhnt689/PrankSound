@@ -8,8 +8,8 @@ import java.io.Serializable
 
 @Entity(tableName = "sound")
 data class Sound(
-    @ColumnInfo(name = "_name")
-    var name: String = "",
+    @ColumnInfo(name = "_num")
+    var num: Int = 0,
     @PrimaryKey
     @ColumnInfo(name = "_path")
     var path: String = "",
@@ -19,8 +19,10 @@ data class Sound(
     var image: Int,
     @ColumnInfo(name = "_favourite")
     var favourite: Boolean,
+    @ColumnInfo(name = "_idString")
+    var idString: Int,
     @Ignore
     var isSelected: Boolean = false
 ) : Serializable {
-    constructor() : this("", "", "", 0, false, false)
+    constructor() : this(0, "", "", 0, false, 0, false)
 }

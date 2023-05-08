@@ -37,8 +37,6 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         SoundViewModelFactory(application)
     }
 
-    private lateinit var progressBar: ProgressDialog
-
     private var mLanguage: Language? = null
 
     private var adapter: LanguageAdapter? = null
@@ -100,32 +98,7 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         mLanguage?.let { localeHelper.setPreLanguage(this, it.languageCode) }
         localeHelper.setLanguage(this)
 
-        //updateSound()
-
-        progressBar = ProgressDialog(this)
-        progressBar.setCancelable(false)
-        progressBar.setMessage("Đang xử lý, vui lòng đợi...")
-        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
-        progressBar.show()
-
-//        Thread {
-//            updateSound()
-//            Thread.sleep(1000)
-//            progressBar.dismiss();
-//            finish()
-//        }.start()
-
-        lifecycleScope.launch(Dispatchers.IO) {
-            updateSound()
-            delay(5000)
-            withContext(Dispatchers.Main) {
-                progressBar.dismiss();
-                finish()
-            }
-        }
-
-//        finish()
+        finish()
 
     }
 
@@ -159,78 +132,4 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         return languages
     }
 
-    private fun updateSound() {
-
-        val map = HashMap<String, Sound>()
-        Log.d("ntt","${listSound.size}")
-        for (sound: Sound in listSound) {
-            val num = sound.name.filter { it.isDigit() }
-            map[num] = sound
-            Log.d("ntt", "${map.size}")
-//            soundViewModel.updateSound(
-//                Sound(
-//                    "${getString(convert(sound.folder))} $num",
-//                    sound.path,
-//                    sound.folder,
-//                    sound.image,
-//                    sound.favourite
-//                )
-//            )
-        }
-
-//        val set: MutableSet<String> = map.keys
-//        for (key in set) {
-//            soundViewModel.updateSound(
-//                Sound(
-//                    "${getString(convert(map[key]!!.folder))} $key",
-//                    map[key]!!.path,
-//                    map[key]!!.folder,
-//                    map[key]!!.image,
-//                    map[key]!!.favourite
-//                )
-//            )
-//        }
-
-        for (entry: Map.Entry<String, Sound> in map.entries) {
-            Log.d("ntt", "$entry")
-            soundViewModel.updateSound(
-                Sound(
-                    "${getString(convert(entry.value.folder))} ${entry.key}",
-                    entry.value.path,
-                    entry.value.folder,
-                    entry.value.image,
-                    entry.value.favourite
-                )
-            )
-        }
-
-    }
-
-    private fun convert(string: String): Int {
-        var resource = 0
-        when (string) {
-            "fart" -> resource = R.string.string_fart
-            "hair clipper" -> resource = R.string.string_hair_clipper
-            "air horn" -> resource = R.string.string_air_horn
-            "scary" -> resource = R.string.string_scary
-            "animals" -> resource = R.string.string_animals
-            "alarm" -> resource = R.string.string_alarm
-            "cough" -> resource = R.string.string_cough
-            "burp" -> resource = R.string.string_burp
-            "breaking" -> resource = R.string.string_breaking
-            "meme sound" -> resource = R.string.string_meme_sound
-            "toilet" -> resource = R.string.string_toilet
-            "gun" -> resource = R.string.string_gun
-            "bomb" -> resource = R.string.string_bomb
-            "snoring" -> resource = R.string.string_snoring
-            "crying" -> resource = R.string.string_crying
-            "door bell" -> resource = R.string.string_door_bell
-            "cat" -> resource = R.string.string_cat
-            "dog" -> resource = R.string.string_dog
-            "scissors" -> resource = R.string.string_scissors
-            "sneezing" -> resource = R.string.string_sneezing
-            "car horn" -> resource = R.string.string_car_horn
-        }
-        return resource
-    }
 }

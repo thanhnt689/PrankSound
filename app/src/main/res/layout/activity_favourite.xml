@@ -51,7 +51,7 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="Fart 1"
+                android:text="@string/string_fart"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp" />

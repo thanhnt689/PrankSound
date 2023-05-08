@@ -7,6 +7,7 @@ import android.widget.ImageButton
 import com.amazic.ads.util.Admob
 import com.example.soundprank.R
 import com.example.soundprank.databinding.ActivityAboutBinding
+import com.example.soundprank.utils.LocaleHelper
 
 class AboutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAboutBinding
@@ -18,7 +19,6 @@ class AboutActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
-
         binding.tvAbout.text = getString(R.string.string_about)
         binding.tvAppName.text = getString(R.string.app_name)
         binding.tvVersion.text = getString(R.string.string_version_1_0)

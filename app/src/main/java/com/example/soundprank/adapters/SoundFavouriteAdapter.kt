@@ -1,5 +1,7 @@
 package com.example.soundprank.adapters
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import com.example.soundprank.databinding.LayoutItemSoundFavouriteBinding
 import com.example.soundprank.models.Sound
 
 class SoundFavouriteAdapter(
+    private val context: Context,
     private val soundFavourites: ArrayList<Sound>,
     private val onClickItemSound: OnClickItemSound,
     private val onClickCbSound: OnClickCbSound
@@ -22,10 +25,12 @@ class SoundFavouriteAdapter(
 
     var checkAll = false
 
-    class ViewHolder(val binding: LayoutItemSoundFavouriteBinding) :
+    inner class ViewHolder(val binding: LayoutItemSoundFavouriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(sound: Sound) {
-            binding.tvSoundName.text = sound.name
+            //binding.tvSoundName.text = sound.name
+            binding.tvSoundName.text = "${context.getString(sound.idString)} ${sound.num}"
 
             Glide.with(binding.imgSound)
                 .load(sound.image)
@@ -54,12 +59,11 @@ class SoundFavouriteAdapter(
         return soundFavourites.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        //holder.binding.checkBox.isChecked = checkAll
-//        holder.bind(soundFavourites[position])
-        Log.d("ThanhNT", soundFavourites.toString())
-        holder.binding.tvSoundName.text = soundFavourites[position].name
+        holder.binding.tvSoundName.text =
+            "${context.getString(soundFavourites[position].idString)} ${soundFavourites[position].num}"
 
         Glide.with(holder.binding.imgSound)
             .load(soundFavourites[position].image)
@@ -67,24 +71,12 @@ class SoundFavouriteAdapter(
             .into(holder.binding.imgSound)
 
         holder.binding.tvSoundName.isSelected = true
-        // Log.d("ntt", "bind ${sound.isSelected}")
-        holder.binding.checkBox.isChecked = soundFavourites[position].isSelected
 
-        //holder.binding.checkBox.isChecked = checkAll
-        // holder.binding.checkBox.isChecked = soundFavourites[position].isSelected
+        holder.binding.checkBox.isChecked = soundFavourites[position].isSelected
 
         holder.binding.checkBox.setOnClickListener {
             holder.binding.checkBox.isChecked = soundFavourites[position].isSelected
         }
-
-
-//        holder.binding.checkBox.setOnCheckedChangeListener { compoundButton, b ->
-//
-//            onClickCbSound.onClickCbSound(b, soundFavourites[position])
-//
-//           soundFavourites[position].isSelected = b
-//
-//        }
 
         holder.binding.checkBox.setOnClickListener {
             if (soundFavourites[position].isSelected) {

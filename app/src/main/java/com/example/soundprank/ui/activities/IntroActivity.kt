@@ -84,14 +84,6 @@ class IntroActivity : AppCompatActivity() {
         }
     }
 
-    private fun getRandomBoolean(): Boolean {
-        var favourite = false
-        val random = Random().nextInt(18)
-        if (random == 5) {
-            favourite = true
-        }
-        return favourite
-    }
 
     private fun getDataListPrankSound(): List<SoundPrank> {
         return listOf(
@@ -252,22 +244,24 @@ class IntroActivity : AppCompatActivity() {
                     if (!soundViewModel.checkExist(file)) {
                         soundViewModel.insertSound(
                             Sound(
-                                name = "${soundPrank.name} ${list.indexOf(file) + 1}",
+                                num = list.indexOf(file) + 1,
                                 path = file,
                                 folder = soundPrank.path,
                                 image = soundPrank.image,
-                                favourite = false
+                                favourite = false,
+                                idString = convert(soundPrank.path)
                             )
                         )
                     } else {
                         val sound = soundViewModel.getSoundByPath(file)
                         soundViewModel.updateSound(
                             Sound(
-                                name = "${soundPrank.name} ${list.indexOf(file) + 1}",
+                                num = list.indexOf(file) + 1,
                                 path = sound.path,
                                 folder = sound.folder,
                                 image = sound.image,
-                                favourite = sound.favourite
+                                favourite = sound.favourite,
+                                idString = convert(soundPrank.path)
                             )
                         )
                     }
@@ -294,6 +288,34 @@ class IntroActivity : AppCompatActivity() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+    }
+
+    private fun convert(string: String): Int {
+        var resource = 0
+        when (string) {
+            "fart" -> resource = R.string.string_fart
+            "hair clipper" -> resource = R.string.string_hair_clipper
+            "air horn" -> resource = R.string.string_air_horn
+            "scary" -> resource = R.string.string_scary
+            "animals" -> resource = R.string.string_animals
+            "alarm" -> resource = R.string.string_alarm
+            "cough" -> resource = R.string.string_cough
+            "burp" -> resource = R.string.string_burp
+            "breaking" -> resource = R.string.string_breaking
+            "meme sound" -> resource = R.string.string_meme_sound
+            "toilet" -> resource = R.string.string_toilet
+            "gun" -> resource = R.string.string_gun
+            "bomb" -> resource = R.string.string_bomb
+            "snoring" -> resource = R.string.string_snoring
+            "crying" -> resource = R.string.string_crying
+            "door bell" -> resource = R.string.string_door_bell
+            "cat" -> resource = R.string.string_cat
+            "dog" -> resource = R.string.string_dog
+            "scissors" -> resource = R.string.string_scissors
+            "sneezing" -> resource = R.string.string_sneezing
+            "car horn" -> resource = R.string.string_car_horn
+        }
+        return resource
     }
 
     private fun clickButtonNext() {

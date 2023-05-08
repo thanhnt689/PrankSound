@@ -138,7 +138,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
     }
 
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
     private fun init() {
 
         localeHelper.setLanguage(this)
@@ -153,7 +153,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
             .load(sound.image)
             .into(binding.imgSound)
 
-        binding.tvPrankSound.text = sound.name
+        binding.tvPrankSound.text = "${getString(sound.idString)} ${sound.num}"
 
         binding.tvt.isSelected = true
 
@@ -331,7 +331,14 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         sound.favourite = !sound.favourite
 
         soundViewModel.updateSound(
-            Sound(sound.name, sound.path, sound.folder, sound.image, sound.favourite)
+            Sound(
+                sound.num,
+                sound.path,
+                sound.folder,
+                sound.image,
+                sound.favourite,
+                sound.idString
+            )
         )
 
         loadFavourite()

@@ -55,7 +55,7 @@ class PrankSoundAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(soundPranks[position])
         holder.binding.root.setOnClickListener {
-            onClickItemSoundPrank.onClickItemSoundPrank(soundPranks[position],position)
+            onClickItemSoundPrank.onClickItemSoundPrank(soundPranks[position], position)
         }
     }
 
