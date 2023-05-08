@@ -19,6 +19,9 @@ class PrankSoundAdapter(
     private val onClickItemSoundPrank: OnClickItemSoundPrank
 ) :
     RecyclerView.Adapter<PrankSoundAdapter.ViewHolder>() {
+
+    private var clicked = false
+
     class ViewHolder(val binding: LayoutItemSoundPrankBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(soundPrank: SoundPrank) {
@@ -55,6 +58,11 @@ class PrankSoundAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(soundPranks[position])
         holder.binding.root.setOnClickListener {
+            if (clicked) {
+                return@setOnClickListener
+            }
+            clicked = true
+            it.handler.postDelayed({ clicked = false }, 500)
             onClickItemSoundPrank.onClickItemSoundPrank(soundPranks[position], position)
         }
     }
