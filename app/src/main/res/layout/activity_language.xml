@@ -46,17 +46,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_language" />
 
-<!--    <FrameLayout-->
-<!--        android:id="@+id/fr_ads3"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="24dp"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
+    <FrameLayout
+        android:id="@+id/fr_ads3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-<!--        <include layout="@layout/ads_navite_shimer_2" />-->
+        <include layout="@layout/ads_navite_shimer_2" />
 
-<!--    </FrameLayout>-->
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

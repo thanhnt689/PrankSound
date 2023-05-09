@@ -6,6 +6,9 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
@@ -16,12 +19,21 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.amazic.ads.callback.InterCallback
+import com.amazic.ads.callback.NativeCallback
+import com.amazic.ads.util.Admob
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.pranksounds.funny.haircut.sound.R
 import com.pranksounds.funny.haircut.sound.adapters.IntroSlideAdapter
 import com.pranksounds.funny.haircut.sound.databinding.ActivityIntroBinding
 import com.pranksounds.funny.haircut.sound.models.IntroSlide
 import com.pranksounds.funny.haircut.sound.models.Sound
 import com.pranksounds.funny.haircut.sound.models.SoundPrank
+import com.pranksounds.funny.haircut.sound.utils.AdsInter
 import com.pranksounds.funny.haircut.sound.utils.LocaleHelper
 import com.pranksounds.funny.haircut.sound.viewmodel.SoundViewModel
 import com.pranksounds.funny.haircut.sound.viewmodel.SoundViewModelFactory
@@ -55,8 +67,8 @@ class IntroActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initData()
-
-        // loadInter()
+        AdsInter.inter_intro = null
+        loadInter()
 
         binding.vpIntroSlider.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
@@ -326,55 +338,57 @@ class IntroActivity : AppCompatActivity() {
             }
         } else {
             if (sharedPreferences?.getBoolean("openLanguage", false) == true) {
-//                try {
-//                    Admob.getInstance().showInterAds(
-//                        this@IntroActivity,
-//                        AdsInter.inter_intro,
-//                        object : InterCallback() {
-//                            override fun onNextAction() {
-//                                super.onNextAction()
-//                                val intent =
-//                                    Intent(this@IntroActivity, HomeScreenActivity::class.java)
-//                                startActivity(
-//                                    intent
-//                                )
-//                                finish()
-//                            }
-//                        })
-//                } catch (exception: Exception) {
-//                    Log.d("ntt", exception.toString())
-//                }
-                val intent =
-                    Intent(this@IntroActivity, HomeScreenActivity::class.java)
-                startActivity(
-                    intent
-                )
-                finish()
+                try {
+                    Admob.getInstance().showInterAds(
+                        this@IntroActivity,
+                        AdsInter.inter_intro,
+                        object : InterCallback() {
+                            override fun onNextAction() {
+                                super.onNextAction()
+                                val intent =
+                                    Intent(this@IntroActivity, HomeScreenActivity::class.java)
+                                startActivity(
+                                    intent
+                                )
+                                AdsInter.inter_intro = null
+                                finish()
+                            }
+                        })
+                } catch (exception: Exception) {
+                    Log.d("ntt", exception.toString())
+                }
+//                val intent =
+//                    Intent(this@IntroActivity, HomeScreenActivity::class.java)
+//                startActivity(
+//                    intent
+//                )
+//                finish()
             } else {
-//                try {
-//                    Admob.getInstance().showInterAds(
-//                        this@IntroActivity,
-//                        AdsInter.inter_intro,
-//                        object : InterCallback() {
-//                            override fun onNextAction() {
-//                                super.onNextAction()
-//                                val intent =
-//                                    Intent(this@IntroActivity, LanguageActivity::class.java)
-//                                startActivity(
-//                                    intent
-//                                )
-//                                finish()
-//                            }
-//                        })
-//                } catch (exception: Exception) {
-//                    Log.d("ntt", exception.toString())
-//                }
-                val intent =
-                    Intent(this@IntroActivity, LanguageActivity::class.java)
-                startActivity(
-                    intent
-                )
-                finish()
+                try {
+                    Admob.getInstance().showInterAds(
+                        this@IntroActivity,
+                        AdsInter.inter_intro,
+                        object : InterCallback() {
+                            override fun onNextAction() {
+                                super.onNextAction()
+                                val intent =
+                                    Intent(this@IntroActivity, LanguageActivity::class.java)
+                                startActivity(
+                                    intent
+                                )
+                                AdsInter.inter_intro = null
+                                finish()
+                            }
+                        })
+                } catch (exception: Exception) {
+                    Log.d("ntt", exception.toString())
+                }
+//                val intent =
+//                    Intent(this@IntroActivity, LanguageActivity::class.java)
+//                startActivity(
+//                    intent
+//                )
+//                finish()
             }
             //finish()
         }
@@ -382,43 +396,43 @@ class IntroActivity : AppCompatActivity() {
 
     private fun initData() {
 
-//        Admob.getInstance().loadNativeAd(
-//            this,
-//            getString(R.string.id_ads_native),
-//            object : NativeCallback() {
-//                override fun onNativeAdLoaded(nativeAd: NativeAd?) {
-//                    super.onNativeAdLoaded(nativeAd)
-//                    Log.d("ThanhNT", "onNativeAdLoaded")
-//                    val adView = LayoutInflater.from(this@IntroActivity)
-//                        .inflate(R.layout.ads_navite_small, null) as NativeAdView
+        Admob.getInstance().loadNativeAd(
+            this,
+            getString(R.string.id_ads_native),
+            object : NativeCallback() {
+                override fun onNativeAdLoaded(nativeAd: NativeAd?) {
+                    super.onNativeAdLoaded(nativeAd)
+                    Log.d("ThanhNT", "onNativeAdLoaded")
+                    val adView = LayoutInflater.from(this@IntroActivity)
+                        .inflate(R.layout.ads_navite_small, null) as NativeAdView
+
+                    binding.frAds3.removeAllViews()
+                    binding.frAds3.addView(adView)
+
+                    Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
+                }
+
+                override fun onAdFailedToLoad() {
+                    binding.frAds3.visibility = View.GONE
+                    binding.frAds3.removeAllViews()
+                }
+            })
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            val window = window
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//            window.statusBarColor = Color.BLUE
+//            window.setTitleColor(resources.getColor(R.color.white))
+//        }
 //
-//                    binding.frAds3.removeAllViews()
-//                    binding.frAds3.addView(adView)
 //
-//                    Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
-//                }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //
-//                override fun onAdFailedToLoad() {
-//                    binding.frAds3.visibility = View.GONE
-//                    binding.frAds3.removeAllViews()
-//                }
-//            })
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.BLUE
-            window.setTitleColor(resources.getColor(R.color.white))
-        }
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            );
-        }
+//            window.setFlags(
+//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+//            );
+//        }
 
         sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
 
@@ -482,33 +496,33 @@ class IntroActivity : AppCompatActivity() {
         }
     }
 
-//    private fun loadInter() {
-//        if (AdsInter.inter_intro == null) {
-//            Admob.getInstance()
-//                .loadInterAds(this, getString(R.string.id_ads_inter), object : InterCallback() {
-//                    override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
-//                        super.onInterstitialLoad(interstitialAd2)
-//                        AdsInter.inter_intro = interstitialAd2
-//                        Log.d("ntt", "Load true")
-//                        // Show button
-//                        binding.btnNext.visibility = View.VISIBLE
-//                    }
-//
-//                    override fun onAdFailedToLoad(i: LoadAdError?) {
-//                        super.onAdFailedToLoad(i)
-//                        Log.d("ntt", "Load false to load")
-//                        // Show button
-//                        binding.btnNext.visibility = View.VISIBLE
-//                    }
-//
-//                    override fun onAdFailedToShow(adError: AdError?) {
-//                        super.onAdFailedToShow(adError)
-//                        Log.d("ntt", "Load false to show")
-//                        // Show button
-//                        binding.btnNext.visibility = View.VISIBLE
-//                    }
-//                })
-//        }
-//    }
+    private fun loadInter() {
+        if (AdsInter.inter_intro == null) {
+            Admob.getInstance()
+                .loadInterAds(this, getString(R.string.id_ads_inter), object : InterCallback() {
+                    override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
+                        super.onInterstitialLoad(interstitialAd2)
+                        AdsInter.inter_intro = interstitialAd2
+                        Log.d("ntt", "Load true")
+                        // Show button
+                        binding.btnNext.visibility = View.VISIBLE
+                    }
+
+                    override fun onAdFailedToLoad(i: LoadAdError?) {
+                        super.onAdFailedToLoad(i)
+                        Log.d("ntt", "Load false to load")
+                        // Show button
+                        binding.btnNext.visibility = View.VISIBLE
+                    }
+
+                    override fun onAdFailedToShow(adError: AdError?) {
+                        super.onAdFailedToShow(adError)
+                        Log.d("ntt", "Load false to show")
+                        // Show button
+                        binding.btnNext.visibility = View.VISIBLE
+                    }
+                })
+        }
+    }
 
 }

@@ -76,9 +76,6 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
 
         //Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            listAssetFile(soundPrank.path)
-//        }
 
         viewModel.sounds.observe(this) {
             Log.d("ntt", it.toString())
