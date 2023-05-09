@@ -55,7 +55,6 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         SoundViewModelFactory(application)
     }
 
-    private val myViewModel: MyViewModel by viewModels()
     private lateinit var sound: Sound
 
     private var loop: Boolean = false
@@ -76,6 +75,7 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
     companion object {
         var check = false
+        var isDefault = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -162,6 +162,8 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         viewModel.setValueTime(getString(R.string.string_off))
 
         loadFavourite()
+
+        isDefault = true
     }
 
     private fun playSound(isLoop: Boolean) {
@@ -345,6 +347,8 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         )
 
         loadFavourite()
+
+        isDefault = false
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

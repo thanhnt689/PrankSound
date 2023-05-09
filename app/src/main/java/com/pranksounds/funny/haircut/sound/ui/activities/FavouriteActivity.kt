@@ -59,15 +59,21 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
             binding.btnSelectAll.visibility = View.VISIBLE
             binding.btnCheck.visibility = View.GONE
 
+            if (!DetailPrankSoundActivity.isDefault) {
+                binding.btnRemoveAll.visibility = View.GONE
+            }
+
             myViewModel.num.observe(this) {
                 if (it != 0) {
                     binding.btnRemoveAll.visibility = View.VISIBLE
                 }
             }
+
+
         }
 
         binding.btnSelectAll.setOnClickListener {
-            Log.d("ntt","Click Select all")
+            Log.d("ntt", "Click Select all")
             listSoundCheck.clear()
 
             showAll = !showAll
@@ -124,6 +130,7 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
             binding.btnCheck.visibility = View.VISIBLE
             binding.btnRemoveAll.visibility = View.GONE
             binding.btnSelectAll.text = getString(R.string.string_select_all)
+            adapter.setShowOrHideCheckBox(false)
 
             listSoundCheck.clear()
             showAll = false
@@ -132,7 +139,7 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
 
     override fun onResume() {
         super.onResume()
-        Log.d("ntt","onResume")
+        Log.d("ntt", "onResume")
         localeHelper.setLanguage(this)
 //        binding.btnRemoveAll.visibility = View.GONE
 //
@@ -144,18 +151,25 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
 //                binding.btnCheck.visibility = View.GONE
 //            }
 //        }
-
+        binding.btnCheck.visibility = View.VISIBLE
+        binding.btnSelectAll.visibility = View.GONE
         binding.btnRemoveAll.visibility = View.GONE
+
+        if (!DetailPrankSoundActivity.isDefault) {
+            binding.btnSelectAll.text = getString(R.string.string_select_all)
+        }
 
         init()
 
         myViewModel.num.observe(this) {
             Log.d("ntt", "it $it")
             if (it == 0) {
+                Log.d("ntt", "0 it $it")
                 binding.btnRemoveAll.visibility = View.GONE
                 binding.btnSelectAll.text = getText(R.string.string_select_all)
                 showAll = false
             } else if (it == listSound.size) {
+                Log.d("ntt", "== it $it")
                 binding.btnSelectAll.text = getText(R.string.string_remove_all)
                 adapter.setShowOrHideCheckBox(true)
                 show = true
@@ -163,35 +177,52 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
                 binding.btnSelectAll.visibility = View.VISIBLE
                 showAll = true
                 binding.btnRemoveAll.visibility = View.VISIBLE
-            }else if(it == -1){
-                Log.d("ntt","-1")
+            } else if (it == -1) {
+                Log.d("ntt", "-1 it $it")
                 binding.btnCheck.visibility = View.VISIBLE
+                binding.btnSelectAll.text = getString(R.string.string_select_all)
                 binding.btnSelectAll.visibility = View.GONE
                 binding.btnRemoveAll.visibility = View.GONE
                 showAll = false
-            }
-            else {
+            } else if (it == -2) {
+                Log.d("ntt", "-2 it $it")
+                binding.btnCheck.visibility = View.VISIBLE
+                binding.btnSelectAll.text = getString(R.string.string_remove_all)
+                binding.btnSelectAll.visibility = View.GONE
+                binding.btnRemoveAll.visibility = View.GONE
+            } else {
+                Log.d("ntt", "nothing it $it")
                 //binding.btnRemoveAll.visibility = View.
-                binding.btnSelectAll.text = getText(R.string.string_remove_all)
+                binding.btnSelectAll.text = getText(R.string.string_select_all)
                 adapter.setShowOrHideCheckBox(true)
-                show = true
+                show = false
                 binding.btnCheck.visibility = View.GONE
                 binding.btnSelectAll.visibility = View.VISIBLE
-                showAll = true
+                showAll = false
                 binding.btnRemoveAll.visibility = View.VISIBLE
             }
+        }
+
+        if (!DetailPrankSoundActivity.isDefault) {
+            binding.btnSelectAll.text = getString(R.string.string_select_all)
         }
     }
 
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
 
-        binding.btnCheck.visibility = View.VISIBLE
+        //binding.btnCheck.visibility = View.GONE
         binding.btnSelectAll.visibility = View.GONE
         binding.btnRemoveAll.visibility = View.GONE
 
         adapter.setShowOrHideCheckBox(false)
+        if (listSoundCheck == listSound) {
+            myViewModel.setValueNum(-2)
+        } else {
+            myViewModel.setValueNum(-1)
+        }
+        binding.btnSelectAll.text = getString(R.string.string_select_all)
 
 //        listSoundCheck.clear()
 //
@@ -199,6 +230,22 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
 //            binding.btnRemoveAll.visibility = View.VISIBLE
 //        }
 
+    }
+
+    override fun onStop() {
+        super.onStop()
+        //binding.btnCheck.visibility = View.GONE
+        binding.btnSelectAll.visibility = View.GONE
+        binding.btnRemoveAll.visibility = View.GONE
+
+        adapter.setShowOrHideCheckBox(false)
+        adapter.setShowOrHideCheckBox(false)
+        if (listSoundCheck == listSound) {
+            myViewModel.setValueNum(-2)
+        } else {
+            myViewModel.setValueNum(-1)
+        }
+        binding.btnSelectAll.text = getString(R.string.string_select_all)
     }
 
     private fun init() {

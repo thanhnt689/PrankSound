@@ -1,9 +1,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ImageButton
         android:id="@+id/btn_back"
@@ -36,7 +36,7 @@
         android:layout_height="180dp"
         android:layout_marginTop="120dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/logo_2x"
+        android:src="@drawable/logo_test"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -68,12 +68,12 @@
         app:layout_constraintStart_toStartOf="@id/img_logo"
         app:layout_constraintTop_toBottomOf="@id/img_logo" />
 
-<!--    <include-->
-<!--        android:id="@+id/include"-->
-<!--        layout="@layout/layout_banner"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
+    <!--    <include-->
+    <!--        android:id="@+id/include"-->
+    <!--        layout="@layout/layout_banner"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
 

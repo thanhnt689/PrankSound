@@ -19,7 +19,7 @@ abstract class SoundDatabase : RoomDatabase() {
     companion object {
         private var INSTANCE: SoundDatabase? = null
 
-        fun getInstance(ctx: Context, scope: CoroutineScope): SoundDatabase {
+        fun getInstance(ctx: Context): SoundDatabase {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(
                     ctx,

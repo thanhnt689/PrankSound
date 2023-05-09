@@ -30,7 +30,6 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import java.util.Random
 
-
 class IntroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntroBinding
 
