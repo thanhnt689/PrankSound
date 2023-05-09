@@ -54,6 +54,8 @@ class DetailPrankSoundActivity : AppCompatActivity() {
     private val soundViewModel: SoundViewModel by viewModels() {
         SoundViewModelFactory(application)
     }
+
+    private val myViewModel: MyViewModel by viewModels()
     private lateinit var sound: Sound
 
     private var loop: Boolean = false
@@ -337,7 +339,8 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                 sound.folder,
                 sound.image,
                 sound.favourite,
-                sound.idString
+                sound.idString,
+                false
             )
         )
 
