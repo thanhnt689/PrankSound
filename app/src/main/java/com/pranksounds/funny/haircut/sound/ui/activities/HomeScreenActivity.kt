@@ -76,6 +76,12 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
             onClickButtonMore()
         }
 
+        AdsInter.inter_home = null
+
+        loadInter()
+
+        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+
     }
 
     private fun init() {
@@ -92,19 +98,20 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         binding.rvListSoundPrank.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+//        AdsInter.inter_home = null
+//
+//        loadInter()
 
-        loadInter()
-
-        AdsInter.inter_intro = null
 
     }
 
     override fun onStart() {
         super.onStart()
         Log.d("ntt", "onStart")
-        loadInter()
+
         localeHelper.setLanguage(this@HomeScreenActivity)
+
+        init()
 
         binding.tvPrankSound.text = getString(R.string.app_name)
 
@@ -123,12 +130,12 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         val policyTitle = binding.navHome.menu.findItem(R.id.menu_policy)
         policyTitle.title = getString(R.string.string_policy)
 
-        init()
     }
 
     override fun onResume() {
         super.onResume()
-        AdsInter.inter_intro = null
+        Log.d("ntt", "onResume")
+//        loadInter()
     }
 
 
@@ -290,14 +297,15 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
     override fun onClickItemSoundPrank(soundPrank: SoundPrank, position: Int) {
         val num = sharedPreferences.getInt(Const.NUM_SHOW_INTER, 1)
-
+        Log.d("ntt", "$num")
         if (num % 2 == 1) {
+            Log.d("ntt", "$num show intro")
             try {
                 Log.d("ntt", "Load inter ads true")
                 Admob.getInstance()
                     .showInterAds(
                         this@HomeScreenActivity,
-                        AdsInter.inter_intro,
+                        AdsInter.inter_home,
                         object : InterCallback() {
                             override fun onNextAction() {
                                 super.onNextAction()
@@ -307,21 +315,26 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                                 bundle.putSerializable("sound_prank", soundPrank)
                                 intent.putExtras(bundle)
                                 intent.putExtra("position", position)
-                                AdsInter.inter_intro = null
                                 startActivity(intent)
+                                AdsInter.inter_home = null
+                                loadInter()
                             }
                         })
             } catch (exception: Exception) {
                 Log.d("ntt", "Load inter ads error: $exception")
             }
         } else {
+            Log.d("ntt", "$num show activity")
             val intent =
                 Intent(this@HomeScreenActivity, SoundActivity::class.java)
             val bundle = Bundle()
             bundle.putSerializable("sound_prank", soundPrank)
             intent.putExtras(bundle)
             intent.putExtra("position", position)
+
             startActivity(intent)
+            AdsInter.inter_home = null
+            loadInter()
         }
 
         editTor.putInt(Const.NUM_SHOW_INTER, num + 1)
@@ -574,28 +587,31 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     }
 
     private fun loadInter() {
-        if (AdsInter.inter_intro == null) {
+        if (AdsInter.inter_home == null) {
             Admob.getInstance()
-                .loadInterAds(this, getString(R.string.id_ads_inter), object : InterCallback() {
-                    override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
-                        super.onInterstitialLoad(interstitialAd2)
-                        AdsInter.inter_intro = interstitialAd2
-                        Log.d("ntt", "Load true")
-                        // Show button
-                    }
+                .loadInterAds(
+                    this,
+                    getString(R.string.id_ads_inter_home),
+                    object : InterCallback() {
+                        override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
+                            super.onInterstitialLoad(interstitialAd2)
+                            AdsInter.inter_home = interstitialAd2
+                            Log.d("ntt", "Load true")
+                            // Show button
+                        }
 
-                    override fun onAdFailedToLoad(i: LoadAdError?) {
-                        super.onAdFailedToLoad(i)
-                        Log.d("ntt", "Load false to load")
-                        // Show button
-                    }
+                        override fun onAdFailedToLoad(i: LoadAdError?) {
+                            super.onAdFailedToLoad(i)
+                            Log.d("ntt", "Load false to load")
+                            // Show button
+                        }
 
-                    override fun onAdFailedToShow(adError: AdError?) {
-                        super.onAdFailedToShow(adError)
-                        Log.d("ntt", "Load false to show")
-                        // Show button
-                    }
-                })
+                        override fun onAdFailedToShow(adError: AdError?) {
+                            super.onAdFailedToShow(adError)
+                            Log.d("ntt", "Load false to show")
+                            // Show button
+                        }
+                    })
         }
     }
 

@@ -24,7 +24,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var sharedPreferences: SharedPreferences
 
-
     private lateinit var editTor: SharedPreferences.Editor
 
     private val localeHelper = LocaleHelper()
@@ -34,7 +33,16 @@ class SplashScreenActivity : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (!isTaskRoot
+            && intent.hasCategory(Intent.CATEGORY_LAUNCHER)
+            && intent.action != null && intent.action.equals(Intent.ACTION_MAIN)
+        ) {
+            finish()
+        }
+
         AdsInter.inter_splash = null
+
+        loadInter()
 
         sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
 
@@ -45,7 +53,6 @@ class SplashScreenActivity : AppCompatActivity() {
             binding.btnStart.text = getText(R.string.string_start)
         }
 
-        loadInter()
 
         binding.btnStart.setOnClickListener {
             showActivity()
@@ -66,31 +73,31 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun loadInter() {
         //if (AdsInter.inter_splash == null) {
-            Admob.getInstance()
-                .loadInterAds(this, getString(R.string.id_ads_inter_splash), object : InterCallback() {
-                    override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
-                        super.onInterstitialLoad(interstitialAd2)
-                        AdsInter.inter_splash = interstitialAd2
-                        Log.d("ntt", "Load true")
-                        // Show button
-                        binding.btnStart.visibility = View.VISIBLE
-                    }
+        Admob.getInstance()
+            .loadInterAds(this, getString(R.string.id_ads_inter_splash), object : InterCallback() {
+                override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
+                    super.onInterstitialLoad(interstitialAd2)
+                    AdsInter.inter_splash = interstitialAd2
+                    Log.d("ntt", "Load true")
+                    // Show button
+                    binding.btnStart.visibility = View.VISIBLE
+                }
 
-                    override fun onAdFailedToLoad(i: LoadAdError?) {
-                        super.onAdFailedToLoad(i)
-                        Log.d("ntt", "Load false to load")
-                        // Show button
-                        binding.btnStart.visibility = View.VISIBLE
-                    }
+                override fun onAdFailedToLoad(i: LoadAdError?) {
+                    super.onAdFailedToLoad(i)
+                    Log.d("ntt", "Load false to load")
+                    // Show button
+                    binding.btnStart.visibility = View.VISIBLE
+                }
 
-                    override fun onAdFailedToShow(adError: AdError?) {
-                        super.onAdFailedToShow(adError)
-                        Log.d("ntt", "Load false to show")
-                        // Show button
-                        binding.btnStart.visibility = View.VISIBLE
-                    }
-                })
-       // }
+                override fun onAdFailedToShow(adError: AdError?) {
+                    super.onAdFailedToShow(adError)
+                    Log.d("ntt", "Load false to show")
+                    // Show button
+                    binding.btnStart.visibility = View.VISIBLE
+                }
+            })
+        // }
     }
 
     private fun showActivity() {

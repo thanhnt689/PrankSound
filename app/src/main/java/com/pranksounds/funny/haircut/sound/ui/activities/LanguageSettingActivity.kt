@@ -8,12 +8,14 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amazic.ads.util.Admob
 import com.pranksounds.funny.haircut.sound.R
 import com.pranksounds.funny.haircut.sound.adapters.LanguageAdapter
 import com.pranksounds.funny.haircut.sound.callback.OnClickItemLanguage
 import com.pranksounds.funny.haircut.sound.databinding.ActivityLanguageSettingBinding
 import com.pranksounds.funny.haircut.sound.models.Language
 import com.pranksounds.funny.haircut.sound.models.Sound
+import com.pranksounds.funny.haircut.sound.utils.Const
 import com.pranksounds.funny.haircut.sound.utils.LocaleHelper
 import com.pranksounds.funny.haircut.sound.viewmodel.SoundViewModel
 import com.pranksounds.funny.haircut.sound.viewmodel.SoundViewModelFactory
@@ -74,7 +76,7 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         binding.rvLanguage.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        // Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
     }
 
@@ -93,6 +95,9 @@ class LanguageSettingActivity : AppCompatActivity(), OnClickItemLanguage {
         val editor: SharedPreferences.Editor =
             getSharedPreferences("MY_PRE", Context.MODE_PRIVATE).edit()
         editor.putBoolean("openLanguage", true)
+
+        editor.putInt(Const.NUM_SHOW_INTER, 1)
+
         editor.apply()
 
         mLanguage?.let { localeHelper.setPreLanguage(this, it.languageCode) }

@@ -70,7 +70,7 @@ class LanguageActivity : AppCompatActivity(), OnClickItemLanguage {
                     super.onNativeAdLoaded(nativeAd)
                     Log.d("ThanhNT", "onNativeAdLoaded")
                     val adView = LayoutInflater.from(this@LanguageActivity)
-                        .inflate(R.layout.ads_native, null) as NativeAdView
+                        .inflate(R.layout.ads_navite_small, null) as NativeAdView
                     binding.frAds3.removeAllViews()
                     binding.frAds3.addView(adView)
 

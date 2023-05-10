@@ -51,13 +51,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_prank_sound" />
 
-                <include
-                    android:id="@+id/include"
-                    layout="@layout/layout_banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+        <include
+            android:id="@+id/include"
+            layout="@layout/layout_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/view"
+            app:layout_constraintStart_toStartOf="parent" />
+        <View
+            android:id="@+id/view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="#F5871A"
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

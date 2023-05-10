@@ -48,6 +48,8 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
 
         init()
 
+
+
         binding.btnBack.setOnClickListener {
             finish()
         }
@@ -135,6 +137,8 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
             listSoundCheck.clear()
             showAll = false
         }
+
+        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
     }
 
     override fun onResume() {
@@ -271,9 +275,6 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
                 GridLayoutManager(this, 2)
 
         }
-
-
-        // Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
         binding.btnSelectAll.isSelected = true
     }

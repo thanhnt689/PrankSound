@@ -74,7 +74,7 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
 
         myViewModel = ViewModelProvider(this)[MyViewModel::class.java]
 
-        //Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
 
 
         viewModel.sounds.observe(this) {
@@ -111,6 +111,8 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
     override fun onResume() {
         super.onResume()
 
+        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+
         if (DetailPrankSoundActivity.check) {
 
             DetailPrankSoundActivity.check = false
@@ -136,55 +138,6 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
         intent.putExtras(bundle)
         startActivity(intent)
     }
-
-//    private suspend fun listAssetFile(path: String) {
-//        val list: Array<String>?
-//
-//        try {
-//            list = assets.list(path)
-//            if (list!!.isNotEmpty()) {
-//                for (file in list) {
-//                    println("File path = $file")
-//                    if (!viewModel.checkExist(file)) {
-//                        viewModel.insertSound(
-//                            Sound(
-//                                name = "${soundPrank.name} ${list.indexOf(file) + 1}",
-//                                path = file,
-//                                folder = soundPrank.path,
-//                                image = soundPrank.image,
-//                                favourite = false
-//                            )
-//                        )
-//                    } else {
-//                        val sound = viewModel.getSoundByPath(file)
-//                        viewModel.updateSound(
-//                            Sound(
-//                                name = "${soundPrank.name} ${list.indexOf(file) + 1}",
-//                                path = sound.path,
-//                                folder = sound.folder,
-//                                image = sound.image,
-//                                favourite = sound.favourite
-//                            )
-//                        )
-//                    }
-//                    if (file.indexOf(".") < 0) { // <<-- check if filename has a . then it is a file - hopefully directory names dont have .
-//                        if (path == "") {
-//                            listAssetFile(file) // <<-- To get subdirectory files and directories list and check
-//                        } else {
-//                            listAssetFile("$path/$file") // <<-- For Multiple level subdirectories
-//                        }
-//                    } else {
-//                        println("This is a file = $path/$file")
-//                    }
-//                }
-//            } else {
-//                println("Failed Path = $path")
-//                println("Check path again.")
-//            }
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//    }
 
     @SuppressLint("IntentReset")
     private fun openRatingDialog() {

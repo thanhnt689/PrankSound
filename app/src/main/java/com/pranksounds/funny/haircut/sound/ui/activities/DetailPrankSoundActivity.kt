@@ -114,28 +114,28 @@ class DetailPrankSoundActivity : AppCompatActivity() {
             playSound(loop)
         }
 
-//        Admob.getInstance().loadNativeAd(
-//            this,
-//            getString(R.string.id_ads_native),
-//            object : NativeCallback() {
-//                override fun onNativeAdLoaded(nativeAd: NativeAd?) {
-//                    super.onNativeAdLoaded(nativeAd)
-//                    Log.d("ThanhNT", "onNativeAdLoaded")
-//                    val adView = LayoutInflater.from(this@DetailPrankSoundActivity)
-//                        .inflate(R.layout.ads_navite_small, null) as NativeAdView
-//
-//
-//                    binding.frAds3.removeAllViews()
-//                    binding.frAds3.addView(adView)
-//
-//                    Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
-//                }
-//
-//                override fun onAdFailedToLoad() {
-//                    binding.frAds3.visibility = View.GONE
-//                    binding.frAds3.removeAllViews()
-//                }
-//            })
+        Admob.getInstance().loadNativeAd(
+            this,
+            getString(R.string.id_ads_native),
+            object : NativeCallback() {
+                override fun onNativeAdLoaded(nativeAd: NativeAd?) {
+                    super.onNativeAdLoaded(nativeAd)
+                    Log.d("ThanhNT", "onNativeAdLoaded")
+                    val adView = LayoutInflater.from(this@DetailPrankSoundActivity)
+                        .inflate(R.layout.ads_navite_small, null) as NativeAdView
+
+
+                    binding.frAds3.removeAllViews()
+                    binding.frAds3.addView(adView)
+
+                    Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
+                }
+
+                override fun onAdFailedToLoad() {
+                    binding.frAds3.visibility = View.GONE
+                    binding.frAds3.removeAllViews()
+                }
+            })
         check = true
     }
 
@@ -277,8 +277,8 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 //        }
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         if (timer != null) {
             mediaPlayer.pause()
             mediaPlayer.stop()
@@ -287,8 +287,8 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         if (timer != null) {
             mediaPlayer = MediaPlayer()
             var loopT = false

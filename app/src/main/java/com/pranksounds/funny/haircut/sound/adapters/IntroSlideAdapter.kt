@@ -14,7 +14,6 @@ class IntroSlideAdapter(private val introSlides: List<IntroSlide>) :
         fun bind(introSlide: IntroSlide) {
             Glide.with(binding.root)
                 .load(introSlide.icon)
-                .centerCrop()
                 .into(binding.imgSlideIcon)
         }
 
