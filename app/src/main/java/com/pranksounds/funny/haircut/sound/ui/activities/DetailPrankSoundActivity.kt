@@ -228,7 +228,6 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                         binding.btnFavourite.isClickable = false
                         binding.btnLoop.isClickable = false
                         binding.btnTime.isClickable = false
-                        //binding.btnBack.isClickable = false
 
                     }
 
@@ -239,7 +238,6 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                         binding.btnFavourite.isClickable = true
                         binding.btnLoop.isClickable = true
                         binding.btnTime.isClickable = true
-                        //binding.btnBack.isClickable = true
 
 
                         checkSoundPlayOrStop(mediaPlayer)
@@ -269,12 +267,6 @@ class DetailPrankSoundActivity : AppCompatActivity() {
             mMediaState = Const.MEDIA_STOP
         }
 
-//        } else if (mMediaState == Const.MEDIA_PAUSE) {
-//            mediaPlayer.start()
-//            mediaPlayer.isLooping = loop
-//            checkSoundPlayOrStop(mediaPlayer)
-//            mMediaState = Const.MEDIA_PLAYING
-//        }
     }
 
     override fun onPause() {

@@ -357,12 +357,7 @@ class IntroActivity : AppCompatActivity() {
                 } catch (exception: Exception) {
                     Log.d("ntt", exception.toString())
                 }
-//                val intent =
-//                    Intent(this@IntroActivity, HomeScreenActivity::class.java)
-//                startActivity(
-//                    intent
-//                )
-//                finish()
+
             } else {
                 try {
                     Admob.getInstance().showInterAds(
@@ -383,14 +378,8 @@ class IntroActivity : AppCompatActivity() {
                 } catch (exception: Exception) {
                     Log.d("ntt", exception.toString())
                 }
-//                val intent =
-//                    Intent(this@IntroActivity, LanguageActivity::class.java)
-//                startActivity(
-//                    intent
-//                )
-//                finish()
+
             }
-            //finish()
         }
     }
 
@@ -417,22 +406,6 @@ class IntroActivity : AppCompatActivity() {
                     binding.frAds3.removeAllViews()
                 }
             })
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            val window = window
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-//            window.statusBarColor = Color.BLUE
-//            window.setTitleColor(resources.getColor(R.color.white))
-//        }
-//
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//
-//            window.setFlags(
-//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-//            );
-//        }
 
         sharedPreferences = getSharedPreferences("MY_PRE", Context.MODE_PRIVATE)
 

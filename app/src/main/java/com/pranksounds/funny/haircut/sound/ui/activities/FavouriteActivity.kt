@@ -48,8 +48,6 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
 
         init()
 
-
-
         binding.btnBack.setOnClickListener {
             finish()
         }
@@ -145,16 +143,7 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
         super.onResume()
         Log.d("ntt", "onResume")
         localeHelper.setLanguage(this)
-//        binding.btnRemoveAll.visibility = View.GONE
-//
-//        binding.btnSelectAll.text = getText(R.string.string_select_all)
-//        myViewModel.sounds.observe(this) {
-//            if (it != null) {
-//                binding.btnRemoveAll.visibility = View.VISIBLE
-//                binding.btnSelectAll.visibility = View.VISIBLE
-//                binding.btnCheck.visibility = View.GONE
-//            }
-//        }
+
         binding.btnCheck.visibility = View.VISIBLE
         binding.btnSelectAll.visibility = View.GONE
         binding.btnRemoveAll.visibility = View.GONE
@@ -216,7 +205,6 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
     override fun onPause() {
         super.onPause()
 
-        //binding.btnCheck.visibility = View.GONE
         binding.btnSelectAll.visibility = View.GONE
         binding.btnRemoveAll.visibility = View.GONE
 
@@ -228,17 +216,11 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
         }
         binding.btnSelectAll.text = getString(R.string.string_select_all)
 
-//        listSoundCheck.clear()
-//
-//        if (listSoundCheck != null) {
-//            binding.btnRemoveAll.visibility = View.VISIBLE
-//        }
 
     }
 
     override fun onStop() {
         super.onStop()
-        //binding.btnCheck.visibility = View.GONE
         binding.btnSelectAll.visibility = View.GONE
         binding.btnRemoveAll.visibility = View.GONE
 
@@ -303,12 +285,10 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
 
 
         } else {
-            //listSoundCheck.remove(sound)
 
             if (listSoundCheck.contains(sound)) {
                 listSoundCheck.remove(sound)
             }
-            //myViewModel.getSounds(listSoundCheck)
         }
 
         myViewModel.setValueNum(listSoundCheck.size)

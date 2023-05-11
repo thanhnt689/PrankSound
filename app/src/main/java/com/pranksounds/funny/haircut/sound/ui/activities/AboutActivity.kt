@@ -23,6 +23,6 @@ class AboutActivity : AppCompatActivity() {
         binding.tvAppName.text = getString(R.string.app_name)
         binding.tvVersion.text = getString(R.string.string_version_1_0)
 
-         Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
     }
 }

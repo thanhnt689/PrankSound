@@ -50,8 +50,6 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
     private lateinit var adapter: PrankSoundAdapter
 
-    private var mInterstitialAd: InterstitialAd? = null
-
     private lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var editTor: SharedPreferences.Editor
@@ -98,11 +96,6 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         binding.rvListSoundPrank.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-//        AdsInter.inter_home = null
-//
-//        loadInter()
-
-
     }
 
     override fun onStart() {
@@ -135,7 +128,6 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     override fun onResume() {
         super.onResume()
         Log.d("ntt", "onResume")
-//        loadInter()
     }
 
 
@@ -557,16 +549,6 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                     }
                 }
 
-//                if (start == "BackPress") {
-//                    dialog.dismiss()
-//                    finish()
-//                } else if (start == "NavigationView") {
-//                    dialog.dismiss()
-//                }
-//
-//                editTor.putBoolean(Const.CHECK_IS_RATING, true)
-//
-//                editTor.apply()
             }
         }
 
@@ -596,19 +578,16 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                         override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
                             super.onInterstitialLoad(interstitialAd2)
                             AdsInter.inter_home = interstitialAd2
-                            Log.d("ntt", "Load true")
                             // Show button
                         }
 
                         override fun onAdFailedToLoad(i: LoadAdError?) {
                             super.onAdFailedToLoad(i)
-                            Log.d("ntt", "Load false to load")
                             // Show button
                         }
 
                         override fun onAdFailedToShow(adError: AdError?) {
                             super.onAdFailedToShow(adError)
-                            Log.d("ntt", "Load false to show")
                             // Show button
                         }
                     })

@@ -57,17 +57,6 @@ class SplashScreenActivity : AppCompatActivity() {
         binding.btnStart.setOnClickListener {
             showActivity()
 
-//            val intent = Intent(this@SplashScreenActivity, IntroActivity::class.java)
-//            startActivity(
-//                intent
-//            )
-//            finish()
-//
-//            editTor.putInt(Const.NUM_SHOW_INTER, 1)
-//
-//            editTor.putInt(Const.NUM_SHOW_RATING, 0)
-//
-//            editTor.apply()
         }
     }
 
@@ -78,21 +67,18 @@ class SplashScreenActivity : AppCompatActivity() {
                 override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
                     super.onInterstitialLoad(interstitialAd2)
                     AdsInter.inter_splash = interstitialAd2
-                    Log.d("ntt", "Load true")
                     // Show button
                     binding.btnStart.visibility = View.VISIBLE
                 }
 
                 override fun onAdFailedToLoad(i: LoadAdError?) {
                     super.onAdFailedToLoad(i)
-                    Log.d("ntt", "Load false to load")
                     // Show button
                     binding.btnStart.visibility = View.VISIBLE
                 }
 
                 override fun onAdFailedToShow(adError: AdError?) {
                     super.onAdFailedToShow(adError)
-                    Log.d("ntt", "Load false to show")
                     // Show button
                     binding.btnStart.visibility = View.VISIBLE
                 }

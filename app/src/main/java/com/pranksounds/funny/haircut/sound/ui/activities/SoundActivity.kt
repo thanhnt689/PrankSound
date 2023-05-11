@@ -259,13 +259,11 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
                                     editTor.putBoolean(Const.CHECK_IS_RATING, true)
 
                                     editTor.apply()
-                                    // finish()
                                 }
                             } else {
 
                                 dialog.dismiss()
 
-                                //finish()
                             }
                         }
                     }
