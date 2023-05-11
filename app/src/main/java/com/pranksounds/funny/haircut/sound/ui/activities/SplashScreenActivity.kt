@@ -67,18 +67,24 @@ class SplashScreenActivity : AppCompatActivity() {
                 override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
                     super.onInterstitialLoad(interstitialAd2)
                     AdsInter.inter_splash = interstitialAd2
+                    binding.progressBar.visibility = View.GONE
+                    binding.tvText.visibility = View.GONE
                     // Show button
                     binding.btnStart.visibility = View.VISIBLE
                 }
 
                 override fun onAdFailedToLoad(i: LoadAdError?) {
                     super.onAdFailedToLoad(i)
+                    binding.progressBar.visibility = View.GONE
+                    binding.tvText.visibility = View.GONE
                     // Show button
                     binding.btnStart.visibility = View.VISIBLE
                 }
 
                 override fun onAdFailedToShow(adError: AdError?) {
                     super.onAdFailedToShow(adError)
+                    binding.progressBar.visibility = View.GONE
+                    binding.tvText.visibility = View.GONE
                     // Show button
                     binding.btnStart.visibility = View.VISIBLE
                 }

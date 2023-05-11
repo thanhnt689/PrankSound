@@ -62,4 +62,6 @@
     <string name="string_you_have_rated_the_app">आपने ऐप को रेट किया है!</string>
 
     <string name="string_its_loading">लोड हो रहा है ...</string>
+
+    <string name="string_this_action_can_contain_ads">इस क्रिया में विज्ञापन हो सकते हैं ...</string>
 </resources>

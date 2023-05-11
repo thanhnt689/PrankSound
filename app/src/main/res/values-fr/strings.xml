@@ -63,4 +63,7 @@
 
     <string name="string_its_loading">Ça charge ...</string>
 
+    <string name="string_this_action_can_contain_ads">Cette action peut contenir des publicités...</string>
+
+
 </resources>

@@ -9,14 +9,40 @@
     tools:context=".ui.activities.SplashScreenActivity">
 
     <ImageView
+        android:id="@+id/img_logo"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:scaleType="centerCrop"
         android:src="@drawable/logo_test"
-        app:layout_constraintBottom_toTopOf="@id/btn_start"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/fredoka_one"
+        android:text="@string/string_this_action_can_contain_ads"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/progress_bar"
+        app:layout_constraintStart_toStartOf="@id/progress_bar"
+        app:layout_constraintTop_toBottomOf="@id/progress_bar" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_start"

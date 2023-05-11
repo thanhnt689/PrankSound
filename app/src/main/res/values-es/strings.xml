@@ -63,4 +63,6 @@
 
     <string name="string_its_loading">Está cargando ...</string>
 
+    <string name="string_this_action_can_contain_ads">Esta acción puede contener anuncios ...</string>
+
 </resources>

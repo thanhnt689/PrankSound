@@ -62,4 +62,6 @@
     <string name="string_you_have_rated_the_app">Você avaliou o aplicativo!</string>
 
     <string name="string_its_loading">Está carregando ...</string>
+
+    <string name="string_this_action_can_contain_ads">Esta ação pode conter anúncios ...</string>
 </resources>

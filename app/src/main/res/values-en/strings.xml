@@ -62,4 +62,7 @@
 
     <string name="string_its_loading">Its loading ...</string>
 
+    <string name="string_this_action_can_contain_ads">This action can contain ads ...</string>
+
+
 </resources>
