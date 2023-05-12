@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.amazic.ads.util.Admob
@@ -41,6 +42,9 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
 
     private val localeHelper = LocaleHelper()
 
+    private var toast: Toast? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFavouriteBinding.inflate(layoutInflater)
@@ -50,6 +54,9 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
 
         binding.btnBack.setOnClickListener {
             finish()
+            if (toast != null) {
+                toast?.cancel()
+            }
         }
 
         binding.btnCheck.setOnClickListener {
@@ -108,6 +115,10 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
 
             }
 
+        }
+
+        binding.cardViewCategory.setOnClickListener {
+            toast?.show()
         }
 
         binding.btnRemoveAll.setOnClickListener {
@@ -216,7 +227,6 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
         }
         binding.btnSelectAll.text = getString(R.string.string_select_all)
 
-
     }
 
     override fun onStop() {
@@ -259,6 +269,12 @@ class FavouriteActivity : AppCompatActivity(), OnClickItemSound, OnClickCbSound 
         }
 
         binding.btnSelectAll.isSelected = true
+
+        toast = Toast.makeText(
+            this,
+            getString(R.string.string_this_is_the_sample_file),
+            Toast.LENGTH_SHORT
+        )
     }
 
     override fun onCLickItemSound(sound: Sound) {

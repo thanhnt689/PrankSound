@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.amazic.ads.util.Admob
+import com.amazic.ads.util.AppOpenManager
 import com.pranksounds.funny.haircut.sound.R
 import com.pranksounds.funny.haircut.sound.adapters.SoundAdapter
 import com.pranksounds.funny.haircut.sound.callback.OnClickItemSound
@@ -101,6 +102,8 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
 
         editTor = sharedPreferences.edit()
 
+        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+
     }
 
     override fun onStart() {
@@ -111,7 +114,7 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
     override fun onResume() {
         super.onResume()
 
-        Admob.getInstance().loadBanner(this, getString(R.string.id_ads_banner))
+        AppOpenManager.getInstance().enableAppResumeWithActivity(SoundActivity::class.java)
 
         if (DetailPrankSoundActivity.check) {
 
@@ -226,6 +229,9 @@ class SoundActivity : AppCompatActivity(), OnClickItemSound {
                         sendIntent.putExtra(Intent.EXTRA_EMAIL, "mailto:bingooteam@gmail.com")
 
                         sendIntent.data = uri
+
+                        AppOpenManager.getInstance()
+                            .disableAppResumeWithActivity(SoundActivity::class.java)
 
                         startActivity(Intent.createChooser(sendIntent, "Send Email"))
 

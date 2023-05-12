@@ -64,6 +64,6 @@
     <string name="string_its_loading">Ça charge ...</string>
 
     <string name="string_this_action_can_contain_ads">Cette action peut contenir des publicités...</string>
-
+    <string name="string_this_is_the_sample_file">Ceci est le fichier d\'exemple!</string>
 
 </resources>

@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amazic.ads.callback.InterCallback
 import com.amazic.ads.util.Admob
+import com.amazic.ads.util.AppOpenManager
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.LoadAdError
 import com.pranksounds.funny.haircut.sound.R
@@ -49,6 +50,8 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     private lateinit var binding: ActivityHomeScreenBinding
 
     private lateinit var adapter: PrankSoundAdapter
+
+    private var mInterstitialAd: InterstitialAd? = null
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -96,6 +99,7 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
         binding.rvListSoundPrank.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
+
     }
 
     override fun onStart() {
@@ -128,6 +132,7 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
     override fun onResume() {
         super.onResume()
         Log.d("ntt", "onResume")
+        AppOpenManager.getInstance().enableAppResumeWithActivity(HomeScreenActivity::class.java)
     }
 
 
@@ -397,6 +402,9 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
             R.id.menu_policy -> {
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(Const.LINK_POLICY))
+
+                AppOpenManager.getInstance().disableAppResumeWithActivity(HomeScreenActivity::class.java)
+
                 startActivity(browserIntent)
                 true
             }
@@ -495,6 +503,9 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
 
                         sendIntent.data = uri
 
+                        AppOpenManager.getInstance()
+                            .disableAppResumeWithActivity(HomeScreenActivity::class.java)
+
                         startActivity(Intent.createChooser(sendIntent, "Send Email"))
 
                         if (start == "BackPress") {
@@ -578,16 +589,19 @@ class HomeScreenActivity : AppCompatActivity(), OnClickItemSoundPrank,
                         override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
                             super.onInterstitialLoad(interstitialAd2)
                             AdsInter.inter_home = interstitialAd2
+                            Log.d("ntt", "Load true")
                             // Show button
                         }
 
                         override fun onAdFailedToLoad(i: LoadAdError?) {
                             super.onAdFailedToLoad(i)
+                            Log.d("ntt", "Load false to load")
                             // Show button
                         }
 
                         override fun onAdFailedToShow(adError: AdError?) {
                             super.onAdFailedToShow(adError)
+                            Log.d("ntt", "Load false to show")
                             // Show button
                         }
                     })

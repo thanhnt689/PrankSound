@@ -331,6 +331,9 @@ class IntroActivity : AppCompatActivity() {
 
     private fun clickButtonNext() {
 
+        val editor: SharedPreferences.Editor =
+            getSharedPreferences("MY_PRE", Context.MODE_PRIVATE).edit()
+
         if (binding.vpIntroSlider.currentItem + 1 < adapter.itemCount) {
             binding.vpIntroSlider.currentItem += 1
             if (binding.vpIntroSlider.currentItem + 1 == adapter.itemCount) {
@@ -351,6 +354,10 @@ class IntroActivity : AppCompatActivity() {
                                     intent
                                 )
                                 AdsInter.inter_intro = null
+
+                                editor.putBoolean("openIntro", true)
+                                editor.apply()
+
                                 finish()
                             }
                         })
@@ -372,6 +379,10 @@ class IntroActivity : AppCompatActivity() {
                                     intent
                                 )
                                 AdsInter.inter_intro = null
+
+                                editor.putBoolean("openIntro", true)
+                                editor.apply()
+
                                 finish()
                             }
                         })

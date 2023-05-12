@@ -51,30 +51,39 @@ class SplashScreenActivity : AppCompatActivity() {
         if (sharedPreferences.getBoolean("openLanguage", false)) {
             localeHelper.setLanguage(this)
             binding.btnStart.text = getText(R.string.string_start)
+            binding.tvText.text = getString(R.string.string_this_action_can_contain_ads)
         }
-
 
         binding.btnStart.setOnClickListener {
             showActivity()
-
         }
+
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("ntt", "OnResume Splash")
+
+    }
+
+
     private fun loadInter() {
-        //if (AdsInter.inter_splash == null) {
         Admob.getInstance()
             .loadInterAds(this, getString(R.string.id_ads_inter_splash), object : InterCallback() {
                 override fun onInterstitialLoad(interstitialAd2: InterstitialAd) {
                     super.onInterstitialLoad(interstitialAd2)
                     AdsInter.inter_splash = interstitialAd2
+                    Log.d("ntt", "Load true")
                     binding.progressBar.visibility = View.GONE
                     binding.tvText.visibility = View.GONE
+
                     // Show button
                     binding.btnStart.visibility = View.VISIBLE
                 }
 
                 override fun onAdFailedToLoad(i: LoadAdError?) {
                     super.onAdFailedToLoad(i)
+                    Log.d("ntt", "Load false to load")
                     binding.progressBar.visibility = View.GONE
                     binding.tvText.visibility = View.GONE
                     // Show button
@@ -83,13 +92,13 @@ class SplashScreenActivity : AppCompatActivity() {
 
                 override fun onAdFailedToShow(adError: AdError?) {
                     super.onAdFailedToShow(adError)
+                    Log.d("ntt", "Load false to show")
                     binding.progressBar.visibility = View.GONE
                     binding.tvText.visibility = View.GONE
                     // Show button
                     binding.btnStart.visibility = View.VISIBLE
                 }
             })
-        // }
     }
 
     private fun showActivity() {
@@ -97,12 +106,40 @@ class SplashScreenActivity : AppCompatActivity() {
             Admob.getInstance().showInterAds(this, AdsInter.inter_splash, object : InterCallback() {
                 override fun onNextAction() {
                     super.onNextAction()
-                    val intent = Intent(this@SplashScreenActivity, IntroActivity::class.java)
-                    startActivity(
-                        intent
-                    )
-                    AdsInter.inter_splash = null
-                    finish()
+
+                    val show = sharedPreferences.getBoolean("openIntro", false)
+                    val showLanguage = sharedPreferences.getBoolean("openLanguage", false)
+
+                    if (!show) {
+                        Log.d("ntt", "show Intro")
+                        val intent = Intent(this@SplashScreenActivity, IntroActivity::class.java)
+                        startActivity(
+                            intent
+                        )
+                        AdsInter.inter_splash = null
+                        finish()
+
+                    } else if (show && showLanguage) {
+                        Log.d("ntt", "show home")
+                        val intent =
+                            Intent(this@SplashScreenActivity, HomeScreenActivity::class.java)
+                        startActivity(
+                            intent
+                        )
+                        AdsInter.inter_splash = null
+                        finish()
+
+                    } else if (show && !showLanguage) {
+                        Log.d("ntt", "show language")
+                        val intent =
+                            Intent(this@SplashScreenActivity, LanguageActivity::class.java)
+                        startActivity(
+                            intent
+                        )
+                        AdsInter.inter_splash = null
+                        finish()
+
+                    }
 
                     editTor.putInt(Const.NUM_SHOW_INTER, 1)
 
@@ -110,9 +147,12 @@ class SplashScreenActivity : AppCompatActivity() {
 
                     editTor.apply()
                 }
+
             })
         } catch (exception: Exception) {
             Log.d("ntt", exception.toString())
         }
+
+
     }
 }

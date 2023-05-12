@@ -164,6 +164,8 @@ class DetailPrankSoundActivity : AppCompatActivity() {
         loadFavourite()
 
         isDefault = true
+
+        binding.btnTime.isSelected = true
     }
 
     private fun playSound(isLoop: Boolean) {
@@ -225,9 +227,9 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                         binding.tvTime.text = timeText
                         time = millisUntilFinished
                         binding.btnPlayOrPause.isClickable = false
-                        binding.btnFavourite.isClickable = false
-                        binding.btnLoop.isClickable = false
-                        binding.btnTime.isClickable = false
+                        //binding.btnFavourite.isClickable = false
+                        //binding.btnLoop.isClickable = false
+                        // binding.btnTime.isClickable = false
 
                     }
 
@@ -235,10 +237,9 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                         mediaPlayer.start()
                         time = 0
                         binding.btnPlayOrPause.isClickable = true
-                        binding.btnFavourite.isClickable = true
-                        binding.btnLoop.isClickable = true
-                        binding.btnTime.isClickable = true
-
+                        //binding.btnFavourite.isClickable = true
+                        //binding.btnLoop.isClickable = true
+                        //binding.btnTime.isClickable = true
 
                         checkSoundPlayOrStop(mediaPlayer)
 
@@ -271,16 +272,29 @@ class DetailPrankSoundActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        if (timer != null) {
+        Log.d("ntt", "onPause")
+        Log.d("ntt", "$mMediaState")
+        if (mMediaState == Const.MEDIA_PLAYING) {
             mediaPlayer.pause()
             mediaPlayer.stop()
+            mMediaState = Const.MEDIA_IDLE
+            checkSoundPlayOrStop(mediaPlayer)
             mediaPlayer.release()
+        }
+
+
+        if (timer != null) {
+//            mediaPlayer.pause()
+//            mediaPlayer.stop()
+//            mediaPlayer.release()
             timer?.cancel()
         }
     }
 
     override fun onResume() {
         super.onResume()
+        Log.d("ntt", "onResume ${mMediaState}")
+        mediaPlayer = MediaPlayer()
         if (timer != null) {
             mediaPlayer = MediaPlayer()
             var loopT = false
@@ -300,6 +314,22 @@ class DetailPrankSoundActivity : AppCompatActivity() {
             }
 
             checkSoundPlayOrStop(mediaPlayer)
+//        } else if (mMediaState != Const.MEDIA_PLAYING && mMediaState != Const.MEDIA_STOP && binding.btnTime.text == getString(
+//                R.string.string_off
+//            )
+//        ) {
+//            mediaPlayer = MediaPlayer()
+//            var loopT = false
+//            if (binding.tvIsLoop.text == "Loop") {
+//                loopT = true
+//            } else if (binding.tvIsLoop.text == "NLoop") {
+//                loopT = false
+//            }
+//            Log.d("ntt", "loop T $loopT")
+//            playSound(loopT)
+//            checkSoundPlayOrStop(mediaPlayer)
+//        } else {
+//            mediaPlayer = MediaPlayer()
         }
     }
 
@@ -397,8 +427,10 @@ class DetailPrankSoundActivity : AppCompatActivity() {
                     btnTime10s.background = bgNChoose
                     btnTime15s.background = bgNChoose
                     btnTime30s.background = bgNChoose
-                    if (binding.layoutInformTime.visibility != View.GONE) {
+                    if (binding.layoutInformTime.visibility != View.GONE && timer == null) {
                         binding.layoutInformTime.visibility = View.GONE
+                    } else if (binding.layoutInformTime.visibility != View.GONE && timer != null) {
+                        binding.layoutInformTime.visibility = View.VISIBLE
                     }
                 }
 

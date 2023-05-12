@@ -64,4 +64,5 @@
     <string name="string_its_loading">लोड हो रहा है ...</string>
 
     <string name="string_this_action_can_contain_ads">इस क्रिया में विज्ञापन हो सकते हैं ...</string>
+    <string name="string_this_is_the_sample_file">यह नमूना फाइल है!</string>
 </resources>
